@@ -13,6 +13,7 @@ import UIKit
  if necessary, since views don't have access to EKAttributes.
  This is a solution to bug #117 (round buttons in alert)
  */
+@MainActor
 protocol EntryAppearanceDescriptor: AnyObject {
     var bottomCornerRadius: CGFloat { get set }
 }

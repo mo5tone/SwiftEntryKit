@@ -35,6 +35,7 @@ public extension EKAttributes {
         
         /** Returns the status bar appearance.
          Note: See *Appearance* */
+        @MainActor
         public var appearance: Appearance {
             switch self {
             case .dark:
@@ -64,24 +65,29 @@ public extension EKAttributes {
         }
         
         /** Returns the current appearance */
+        @MainActor
         public static var currentAppearance: Appearance {
             return (StatusBar.isCurrentVisible, StatusBar.currentStyle)
         }
         
         /** Returns the current status bar */
+        @MainActor
         public static var currentStatusBar: StatusBar {
             return statusBar(by: currentAppearance)
         }
         
         // Accessors
+        @MainActor
         private static var currentStyle: UIStatusBarStyle {
             return currentStatusBarManager?.statusBarStyle ?? .default
         }
 
+        @MainActor
         private static var isCurrentVisible: Bool {
             return currentStatusBarManager?.isStatusBarHidden == false
         }
 
+        @MainActor
         private static var currentStatusBarManager: UIStatusBarManager? {
             return UIApplication.shared.ekActiveScene?.statusBarManager
         }

@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 // MARK: Multiple Views in Array
+@MainActor
 public extension Array where Element: QLView {
     
     /**

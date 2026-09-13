@@ -15,6 +15,7 @@ class EKEntryView: EKStyleView {
         var view: UIView!
         var attributes: EKAttributes
         
+        @MainActor
         init(viewController: UIViewController, attributes: EKAttributes) {
             self.viewController = viewController
             self.view = viewController.view

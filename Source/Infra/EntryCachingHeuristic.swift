@@ -14,6 +14,7 @@ struct CachedEntry {
     let rollbackWindow: SwiftEntryKit.RollbackWindow
 }
 
+@MainActor
 protocol EntryCachingHeuristic: AnyObject {
     var entries: [CachedEntry] { set get }
     var isEmpty: Bool { get }
@@ -63,6 +64,7 @@ extension EntryCachingHeuristic {
     }
 }
 
+@MainActor
 class EKEntryChronologicalQueue: EntryCachingHeuristic {
     
     var entries: [CachedEntry] = []
@@ -72,6 +74,7 @@ class EKEntryChronologicalQueue: EntryCachingHeuristic {
     }
 }
 
+@MainActor
 class EKEntryPriorityQueue: EntryCachingHeuristic {
     
     var entries: [CachedEntry] = []

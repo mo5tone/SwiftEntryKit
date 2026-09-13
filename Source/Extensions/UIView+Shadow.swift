@@ -23,6 +23,7 @@ extension UIView {
     }
 }
 
+@MainActor
 extension CALayer {
     func applyDropShadow(withOffset offset: CGSize,
                          opacity: Float,

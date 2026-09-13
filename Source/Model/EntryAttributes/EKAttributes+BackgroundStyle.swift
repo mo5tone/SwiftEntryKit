@@ -65,6 +65,7 @@ public extension EKAttributes {
                 }
             }
             
+            @MainActor
             public func blurEffect(for traits: UITraitCollection,
                                    mode: EKAttributes.DisplayMode) -> UIBlurEffect {
                 return UIBlurEffect(style: blurStyle(for: traits, mode: mode))

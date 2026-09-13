@@ -66,6 +66,7 @@ public extension EKAttributes {
             case priority
             
             /** Returns the caching heuristics mechanism that determines the priority in queue */
+            @MainActor
             var heuristic: EntryCachingHeuristic {
                 switch self {
                 case .chronological:
