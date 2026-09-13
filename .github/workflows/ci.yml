@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  test:
+    name: Test (iOS)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      # Snapshot tests compare rendered views against committed reference images.
+      # The reference images are recorded on a specific simulator OS, so the
+      # destination below MUST match the recording environment. If the runner
+      # bumps its iOS version, re-record by deleting Tests/__Snapshots__ and
+      # re-running, then commit the updated images.
+      - name: Run tests
+        run: |
+          xcodebuild test \
+            -scheme SwiftEntryKit \
+            -destination 'platform=iOS Simulator,name=iPhone 17' \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Upload snapshot artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: snapshot-artifacts
+          path: Tests/__Snapshots__/
+          if-no-files-found: ignore
