@@ -14,8 +14,7 @@ class EKWindow: UIWindow {
     
     init(with rootVC: UIViewController) {
         if #available(iOS 13.0, *) {
-            // TODO: Patched to support SwiftUI out of the box but should require attendance
-            if let scene = UIApplication.shared.connectedScenes.filter({$0.activationState == .foregroundActive}).first as? UIWindowScene {
+            if let scene = UIApplication.shared.ekActiveScene {
                 super.init(windowScene: scene)
             } else {
                 super.init(frame: UIScreen.main.bounds)

@@ -74,7 +74,12 @@ class EKRootViewController: UIViewController {
     
     private var statusBar: EKAttributes.StatusBar? = nil {
         didSet {
-            if let statusBar = statusBar, ![statusBar, oldValue].contains(.ignored) {
+            guard let statusBar = statusBar, ![statusBar, oldValue].contains(.ignored) else {
+                return
+            }
+            if #available(iOS 13.0, *) {
+                setNeedsStatusBarAppearanceUpdate()
+            } else {
                 UIApplication.shared.set(statusBarStyle: statusBar)
             }
         }

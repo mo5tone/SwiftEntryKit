@@ -23,11 +23,20 @@ public class EKXStatusBarMessageView: UIView {
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    private static var statusBarHeight: CGFloat {
+        if #available(iOS 13.0, *) {
+            if let height = UIApplication.shared.ekActiveScene?.statusBarManager?.statusBarFrame.height, height > 0 {
+                return height
+            }
+        }
+        return UIApplication.shared.statusBarFrame.maxY
+    }
     
     private func setup(leading: EKProperty.LabelContent, trailing: EKProperty.LabelContent) {
         clipsToBounds = true
         
-        set(.height, of: UIApplication.shared.statusBarFrame.maxY)
+        set(.height, of: Self.statusBarHeight)
         
         addSubview(leadingLabel)
         leadingLabel.content = leading
