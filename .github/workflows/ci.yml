@@ -62,7 +62,7 @@ jobs:
 
       - name: Generate coverage report
         run: |
-          python3 Scripts/generate-coverage-report.py TestResults.xcresult coverage.html > coverage-summary.md
+          mise run coverage:report > coverage-summary.md
           cat coverage-summary.md >> "$GITHUB_STEP_SUMMARY"
           overall=$(sed -n '3p' coverage-summary.md | tr -d '*')
           echo "::notice title=Code Coverage::$overall"
