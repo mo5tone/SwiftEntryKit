@@ -44,3 +44,9 @@ Carthage/Build
 
 # SwiftPM
 .swiftpm/
+
+# Coverage
+coverage.html
+coverage.json
+coverage.lcov
+*.xcresult

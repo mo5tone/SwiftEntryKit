@@ -60,32 +60,15 @@ jobs:
             -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.2' \
             CODE_SIGNING_ALLOWED=NO | xcbeautify
 
-      - name: Convert coverage to lcov
-        run: |
-          xcrun xccov view --report --json TestResults.xcresult > coverage.json
-          python3 - > coverage.lcov <<'PY'
-          import json, os
-          data = json.load(open("coverage.json"))
-          root = os.getcwd() + os.sep
-          for target in data.get("targets", []):
-              for f in target.get("files", []):
-                  path = f.get("path") or f.get("name")
-                  if path.startswith(root):
-                      path = path[len(root):]
-                  print(f"SF:{path}")
-                  for fn in f.get("functions", []):
-                      print(f"DA:{fn.get('lineNumber', 0)},{fn.get('executionCount', 0)}")
-                  print(f"LF:{f.get('executableLines', 0)}")
-                  print(f"LH:{f.get('coveredLines', 0)}")
-                  print("end_of_record")
-          PY
+      - name: Generate coverage report
+        run: python3 Scripts/generate-coverage-report.py TestResults.xcresult coverage.html
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
         with:
-          files: coverage.lcov
-          fail_ci_if_error: false
-          token: ${{ secrets.CODECOV_TOKEN }}
+          name: coverage-report
+          path: coverage.html
+          if-no-files-found: error
 
       - name: Upload snapshot artifacts on failure
         if: failure()
