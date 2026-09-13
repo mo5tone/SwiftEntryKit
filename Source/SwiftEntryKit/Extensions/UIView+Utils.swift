@@ -1,5 +1,5 @@
 //
-//  UILabel+Message.swift
+//  UIView+Utils.swift
 //  SwiftEntryKit
 //
 //  Created by Daniel Huri on 04/14/2018.
@@ -17,13 +17,13 @@ extension UILabel {
             numberOfLines = newValue.numberOfLines
         }
         get {
-            return EKProperty.LabelStyle(font: font,
-                                         color: EKColor(textColor),
-                                         alignment: textAlignment,
-                                         numberOfLines: numberOfLines)
+            EKProperty.LabelStyle(font: font,
+                                  color: EKColor(textColor),
+                                  alignment: textAlignment,
+                                  numberOfLines: numberOfLines)
         }
     }
-    
+
     var content: EKProperty.LabelContent {
         set {
             text = newValue.text
@@ -31,7 +31,7 @@ extension UILabel {
             style = newValue.style
         }
         get {
-            return EKProperty.LabelContent(text: text ?? "", style: style)
+            EKProperty.LabelContent(text: text ?? "", style: style)
         }
     }
 }
@@ -66,19 +66,19 @@ extension UIImageView {
                 }
                 animationDuration = newValue.imageSequenceAnimationDuration
             }
-            
+
             contentMode = newValue.contentMode
             tintColor = newValue.tint?.color(for: traitCollection,
                                              mode: newValue.displayMode)
             accessibilityIdentifier = newValue.accessibilityIdentifier
-            
+
             if let size = newValue.size {
                 set(.width, of: size.width)
                 set(.height, of: size.height)
             } else {
                 forceContentWrap()
             }
-            
+
             if newValue.makesRound {
                 clipsToBounds = true
                 if let size = newValue.size {
@@ -88,12 +88,13 @@ extension UIImageView {
                     layer.cornerRadius = min(bounds.width, bounds.height) * 0.5
                 }
             }
-            
+
             startAnimating()
-            
-            if case .animate(duration: let duration,
-                             options: let options,
-                             transform: let transform) = newValue.animation {
+
+            if case let .animate(duration: duration,
+                                 options: options,
+                                 transform: transform) = newValue.animation
+            {
                 let options: UIView.AnimationOptions = [.repeat, .autoreverse, options]
                 // A hack that forces the animation to run on the main thread,
                 // on one of the next run loops
@@ -102,8 +103,8 @@ extension UIImageView {
                                    delay: 0,
                                    options: options,
                                    animations: {
-                        self.transform = transform
-                    }, completion: nil)
+                                       self.transform = transform
+                                   }, completion: nil)
                 }
             }
         }
@@ -114,14 +115,13 @@ extension UIImageView {
 }
 
 extension UITextField {
-    
     var placeholder: EKProperty.LabelContent {
         set {
             attributedPlaceholder = NSAttributedString(
                 string: newValue.text,
                 attributes: [
                     .font: newValue.style.font,
-                    .foregroundColor: newValue.style.color(for: traitCollection)
+                    .foregroundColor: newValue.style.color(for: traitCollection),
                 ]
             )
         }
@@ -129,7 +129,7 @@ extension UITextField {
             fatalError("placeholder doesn't have a getter")
         }
     }
-    
+
     var textFieldContent: EKProperty.TextFieldContent {
         set {
             placeholder = newValue.placeholder

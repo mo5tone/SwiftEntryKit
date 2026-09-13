@@ -3,13 +3,12 @@
 //  SwiftEntryKitTests
 //
 
+@testable import SwiftEntryKit
 import Testing
 import UIKit
-@testable import SwiftEntryKit
 
 @MainActor
 struct EKPropertyDefaultsTests {
-
     @Test func labelStyleDefaults() {
         let style = EKProperty.LabelStyle(font: .systemFont(ofSize: 14), color: .white)
         #expect(style.alignment == .left)

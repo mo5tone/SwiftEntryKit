@@ -6,11 +6,11 @@
 //  Copyright © 2019 CocoaPods. All rights reserved.
 //
 
-import UIKit
 import SwiftEntryKit
+import UIKit
 
 class ExampleNavigationViewController: UINavigationController {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    override func traitCollectionDidChange(_: UITraitCollection?) {
         navigationBar.tintColor = EKColor.navigationItemColor.color(for: traitCollection, mode: .inferred)
     }
 }

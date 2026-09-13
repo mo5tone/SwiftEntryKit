@@ -5,4 +5,4 @@
 
 --swift-version 5.10
 --indent 4
---exclude Example/Derived,Example/Project.swift,Workspace.swift
+--exclude Example/Derived

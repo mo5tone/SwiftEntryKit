@@ -7,99 +7,92 @@
 
 import Foundation
 
-fileprivate extension Int {
+private extension Int {
     var isValidDisplayPriority: Bool {
-        return self >= EKAttributes.Precedence.Priority.minRawValue && self <= EKAttributes.Precedence.Priority.maxRawValue
+        self >= EKAttributes.Precedence.Priority.minRawValue && self <= EKAttributes.Precedence.Priority.maxRawValue
     }
 }
 
 public extension EKAttributes {
-    
     /**
      Describes the manner on which the entry is pushed and displayed.
      See the various values of more explanation.
      */
     enum Precedence {
-        
         /**
          The display priority of the entry - Determines whether is can be overriden by other entries.
          Must be in range [0...1000]
          */
         public struct Priority: Hashable, Equatable, RawRepresentable, Comparable, @unchecked Sendable {
             public var rawValue: Int
-            
+
             public var hashValue: Int {
-                return rawValue
+                rawValue
             }
-            
+
             public init(_ rawValue: Int) {
                 assert(rawValue.isValidDisplayPriority, "Display Priority must be in range [\(Priority.minRawValue)...\(Priority.maxRawValue)]")
                 self.rawValue = rawValue
             }
-            
+
             public init(rawValue: Int) {
                 assert(rawValue.isValidDisplayPriority, "Display Priority must be in range [\(Priority.minRawValue)...\(Priority.maxRawValue)]")
                 self.rawValue = rawValue
             }
-            
-            public static func == (lhs: Priority, rhs: Priority) -> Bool {
-                return lhs.rawValue == rhs.rawValue
-            }
-            
+
             public static func < (lhs: Priority, rhs: Priority) -> Bool {
-                return lhs.rawValue < rhs.rawValue
+                lhs.rawValue < rhs.rawValue
             }
         }
-        
+
         /**
          Describes the queueing heoristic of entries.
          */
         public enum QueueingHeuristic {
-            
             /** Determines the heuristic which the entry-queue is based on */
             public nonisolated(unsafe) static var value = QueueingHeuristic.priority
-            
+
             /** Chronological - FIFO */
             case chronological
-            
+
             /** Ordered by priority */
             case priority
-            
+
             /** Returns the caching heuristics mechanism that determines the priority in queue */
             @MainActor
             var heuristic: EntryCachingHeuristic {
                 switch self {
                 case .chronological:
-                    return EKEntryChronologicalQueue()
+                    EKEntryChronologicalQueue()
                 case .priority:
-                    return EKEntryPriorityQueue()
+                    EKEntryPriorityQueue()
                 }
             }
         }
-        
+
         /**
          Describes an *overriding* behavior for a new entry.
          - In case no previous entry is currently presented, display the new entry.
          - In case there is an entry that is currently presented - override it using the new entry. Also optionally drop all previously enqueued entries.
          */
         case override(priority: Priority, dropEnqueuedEntries: Bool)
-        
+
         /**
          Describes a FIFO behavior for an entry presentation.
          - In case no previous entry is currently presented, display the new entry.
          - In case there is an entry that is currently presented - enqueue the new entry, an present it just after the previous one is dismissed.
          */
         case enqueue(priority: Priority)
-        
+
         var isEnqueue: Bool {
             switch self {
             case .enqueue:
-                return true
+                true
             default:
-                return false
+                false
             }
         }
-        
+
         /** Setter / Getter for the display priority */
         public var priority: Priority {
             set {
@@ -112,10 +105,10 @@ public extension EKAttributes {
             }
             get {
                 switch self {
-                case .enqueue(priority: let priority):
-                    return priority
+                case let .enqueue(priority: priority):
+                    priority
                 case .override(priority: let priority, dropEnqueuedEntries: _):
-                    return priority
+                    priority
                 }
             }
         }
@@ -140,4 +133,3 @@ public extension EKAttributes.Precedence.Priority {
     static let low = EKAttributes.Precedence.Priority(rawValue: lowRawValue)
     static let min = EKAttributes.Precedence.Priority(rawValue: minRawValue)
 }
-

@@ -3,13 +3,12 @@
 //  SwiftEntryKitTests
 //
 
+@testable import SwiftEntryKit
 import Testing
 import UIKit
-@testable import SwiftEntryKit
 
 @MainActor
 struct EKColorTests {
-
     @Test func inferredResolvesByInterfaceStyle() {
         let color = EKColor(light: .white, dark: .black)
 

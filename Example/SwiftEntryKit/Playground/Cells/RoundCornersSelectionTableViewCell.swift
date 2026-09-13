@@ -6,11 +6,10 @@
 //  Copyright (c) 2018 huri000@gmail.com. All rights reserved.
 //
 
-import UIKit
 import SwiftEntryKit
+import UIKit
 
 final class RoundCornersSelectionTableViewCell: SelectionTableViewCell {
-    
     override func configure(attributesWrapper: EntryAttributeWrapper) {
         super.configure(attributesWrapper: attributesWrapper)
         titleValue = "Round Corners"
@@ -18,7 +17,7 @@ final class RoundCornersSelectionTableViewCell: SelectionTableViewCell {
         insertSegments(by: ["None", "Top", "Bottom", "All"])
         selectSegment()
     }
-    
+
     private func selectSegment() {
         switch attributesWrapper.attributes.roundCorners {
         case .none:
@@ -31,7 +30,7 @@ final class RoundCornersSelectionTableViewCell: SelectionTableViewCell {
             segmentedControl.selectedSegmentIndex = 3
         }
     }
-    
+
     @objc override func segmentChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:

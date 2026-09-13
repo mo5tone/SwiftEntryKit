@@ -1,5 +1,5 @@
 //
-//  EKEntryCacher.swift
+//  EntryCachingHeuristic.swift
 //  SwiftEntryKit
 //
 //  Created by Daniel Huri on 9/1/18.
@@ -18,27 +18,26 @@ struct CachedEntry {
 protocol EntryCachingHeuristic: AnyObject {
     var entries: [CachedEntry] { set get }
     var isEmpty: Bool { get }
-    
+
     func dequeue() -> CachedEntry?
     func enqueue(entry: CachedEntry)
-    
+
     func removeEntries(by name: String)
     func removeEntries(withPriorityLowerOrEqualTo priority: EKAttributes.Precedence.Priority)
     func removeAll()
-    
+
     func contains(entryNamed name: String) -> Bool
 }
 
 extension EntryCachingHeuristic {
-    
     var isEmpty: Bool {
-        return entries.isEmpty
+        entries.isEmpty
     }
-    
+
     func contains(entryNamed name: String) -> Bool {
-        return entries.contains { $0.view.attributes.name == name }
+        entries.contains { $0.view.attributes.name == name }
     }
-    
+
     func dequeue() -> CachedEntry? {
         guard let first = entries.first else {
             return nil
@@ -46,19 +45,19 @@ extension EntryCachingHeuristic {
         entries.removeFirst()
         return first
     }
-    
+
     func removeEntries(withPriorityLowerOrEqualTo priority: EKAttributes.Precedence.Priority) {
         while let index = (entries.firstIndex { $0.view.attributes.precedence.priority <= priority }) {
             entries.remove(at: index)
         }
     }
-    
+
     func removeEntries(by name: String) {
         while let index = (entries.firstIndex { $0.view.attributes.name == name }) {
             entries.remove(at: index)
         }
     }
-    
+
     func removeAll() {
         entries.removeAll()
     }
@@ -66,9 +65,8 @@ extension EntryCachingHeuristic {
 
 @MainActor
 class EKEntryChronologicalQueue: EntryCachingHeuristic {
-    
     var entries: [CachedEntry] = []
-    
+
     func enqueue(entry: CachedEntry) {
         entries.append(entry)
     }
@@ -76,15 +74,14 @@ class EKEntryChronologicalQueue: EntryCachingHeuristic {
 
 @MainActor
 class EKEntryPriorityQueue: EntryCachingHeuristic {
-    
     var entries: [CachedEntry] = []
-    
+
     func enqueue(entry: CachedEntry) {
         let entryPriority = entry.view.attributes.precedence.priority
         let index = entries.firstIndex {
-            return entryPriority > $0.view.attributes.precedence.priority
+            entryPriority > $0.view.attributes.precedence.priority
         }
-        if let index = index {
+        if let index {
             entries.insert(entry, at: index)
         } else {
             entries.append(entry)

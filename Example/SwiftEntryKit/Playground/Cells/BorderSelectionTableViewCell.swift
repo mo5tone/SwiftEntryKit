@@ -9,7 +9,6 @@
 import UIKit
 
 final class BorderSelectionTableViewCell: SelectionTableViewCell {
-
     override func configure(attributesWrapper: EntryAttributeWrapper) {
         super.configure(attributesWrapper: attributesWrapper)
         titleValue = "Border"
@@ -17,7 +16,7 @@ final class BorderSelectionTableViewCell: SelectionTableViewCell {
         insertSegments(by: ["Off", "On"])
         selectSegment()
     }
-    
+
     private func selectSegment() {
         switch attributesWrapper.attributes.border {
         case .none:
@@ -26,7 +25,7 @@ final class BorderSelectionTableViewCell: SelectionTableViewCell {
             segmentedControl.selectedSegmentIndex = 1
         }
     }
-    
+
     @objc override func segmentChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:

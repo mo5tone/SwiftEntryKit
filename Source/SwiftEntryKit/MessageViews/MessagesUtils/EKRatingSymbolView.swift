@@ -8,25 +8,24 @@
 
 import UIKit
 
-final public class EKRatingSymbolView: UIView {
-    
+public final class EKRatingSymbolView: UIView {
     private let button = UIButton()
     private let imageView = UIImageView()
-    
+
     private let unselectedImage: EKProperty.ImageContent
     private let selectedImage: EKProperty.ImageContent
-    
+
     var selection: EKRatingMessage.Selection
-    
+
     public var isSelected: Bool {
         set {
             imageView.imageContent = newValue ? selectedImage : unselectedImage
         }
         get {
-            return imageView.image == selectedImage.images.first
+            imageView.image == selectedImage.images.first
         }
     }
-    
+
     public init(unselectedImage: EKProperty.ImageContent, selectedImage: EKProperty.ImageContent, selection: @escaping EKRatingMessage.Selection) {
         self.unselectedImage = unselectedImage
         self.selectedImage = selectedImage
@@ -35,11 +34,12 @@ final public class EKRatingSymbolView: UIView {
         setupImageView()
         setupButton()
     }
-    
-    required public init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupButton() {
         addSubview(button)
         button.fillSuperview()
@@ -47,22 +47,22 @@ final public class EKRatingSymbolView: UIView {
         button.addTarget(self, action: #selector(touchDown), for: [.touchDown])
         button.addTarget(self, action: #selector(touchUp), for: [.touchUpInside, .touchUpOutside, .touchCancel])
     }
-    
+
     private func setupImageView() {
         addSubview(imageView)
         imageView.imageContent = unselectedImage
         imageView.centerInSuperview()
         imageView.sizeToSuperview(withRatio: 0.7)
     }
-    
+
     @objc func touchUpInside() {
         selection(tag)
     }
-    
+
     @objc func touchDown() {
         transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
     }
-    
+
     @objc func touchUp() {
         transform = CGAffineTransform(scaleX: 1, y: 1)
     }

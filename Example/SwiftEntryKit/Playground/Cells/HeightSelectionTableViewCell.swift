@@ -16,7 +16,7 @@ final class HeightSelectionTableViewCell: SelectionTableViewCell {
         insertSegments(by: ["Intrinsic", "100pts", "50% Ratio"])
         selectSegment()
     }
-    
+
     private func selectSegment() {
         switch attributesWrapper.attributes.positionConstraints.size.height {
         case .intrinsic:
@@ -29,7 +29,7 @@ final class HeightSelectionTableViewCell: SelectionTableViewCell {
             break
         }
     }
-    
+
     @objc override func segmentChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:

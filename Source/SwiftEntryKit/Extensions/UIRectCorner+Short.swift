@@ -1,5 +1,5 @@
 //
-//  UIView+FrameStyle.swift
+//  UIRectCorner+Short.swift
 //  SwiftEntryKit
 //
 //  Created by Daniel Huri on 4/24/18.

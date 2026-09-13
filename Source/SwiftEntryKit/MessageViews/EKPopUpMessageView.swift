@@ -8,19 +8,18 @@
 
 import UIKit
 
-final public class EKPopUpMessageView: UIView {
-
+public final class EKPopUpMessageView: UIView {
     // MARK: - Properties
-    
+
     private var imageView: UIImageView!
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
     private let actionButton = UIButton()
-    
+
     private let message: EKPopUpMessage
-    
+
     // MARK: - Setup
-    
+
     public init(with message: EKPopUpMessage) {
         self.message = message
         super.init(frame: UIScreen.main.bounds)
@@ -30,11 +29,12 @@ final public class EKPopUpMessageView: UIView {
         setupActionButton()
         setupInterfaceStyle()
     }
-    
-    public required init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupImageView() {
         guard let themeImage = message.themeImage else {
             return
@@ -43,26 +43,26 @@ final public class EKPopUpMessageView: UIView {
         addSubview(imageView)
         imageView.layoutToSuperview(.centerX)
         switch themeImage.position {
-        case .centerToTop(offset: let value):
+        case let .centerToTop(offset: value):
             imageView.layout(.centerY, to: .top, of: self, offset: value)
-        case .topToTop(offset: let value):
+        case let .topToTop(offset: value):
             imageView.layoutToSuperview(.top, offset: value)
         }
         imageView.imageContent = themeImage.image
     }
-    
+
     private func setupTitleLabel() {
         addSubview(titleLabel)
         titleLabel.content = message.title
         titleLabel.layoutToSuperview(axis: .horizontally, offset: 30)
-        if let imageView = imageView {
+        if let imageView {
             titleLabel.layout(.top, to: .bottom, of: imageView, offset: 20)
         } else {
             titleLabel.layoutToSuperview(.top, offset: 20)
         }
         titleLabel.forceContentWrap(.vertically)
     }
-    
+
     private func setupDescriptionLabel() {
         addSubview(descriptionLabel)
         descriptionLabel.content = message.description
@@ -70,7 +70,7 @@ final public class EKPopUpMessageView: UIView {
         descriptionLabel.layout(.top, to: .bottom, of: titleLabel, offset: 16)
         descriptionLabel.forceContentWrap(.vertically)
     }
-    
+
     private func setupActionButton() {
         addSubview(actionButton)
         let height: CGFloat = 45
@@ -78,14 +78,14 @@ final public class EKPopUpMessageView: UIView {
         actionButton.layout(.top, to: .bottom, of: descriptionLabel, offset: 30)
         actionButton.layoutToSuperview(.bottom, offset: -30)
         actionButton.layoutToSuperview(.centerX)
-        
+
         let buttonAttributes = message.button
         actionButton.buttonContent = buttonAttributes
         actionButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
         actionButton.layer.cornerRadius = height * 0.5
         actionButton.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
     }
-    
+
     private func setupInterfaceStyle() {
         titleLabel.textColor = message.title.style.color(for: traitCollection)
         imageView?.tintColor = message.themeImage?.image.tintColor(for: traitCollection)
@@ -93,13 +93,13 @@ final public class EKPopUpMessageView: UIView {
         actionButton.setTitleColor(tapColor, for: .highlighted)
         actionButton.setTitleColor(tapColor, for: .selected)
     }
-    
-    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+
+    override public func traitCollectionDidChange(_: UITraitCollection?) {
         setupInterfaceStyle()
     }
-    
+
     // MARK: - User Interaction
-    
+
     @objc func actionButtonPressed() {
         message.action()
     }

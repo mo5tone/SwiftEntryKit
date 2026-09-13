@@ -8,42 +8,44 @@
 
 import UIKit
 
-final public class EKNotificationMessageView: EKSimpleMessageView {
-    
+public final class EKNotificationMessageView: EKSimpleMessageView {
     // MARK: Props
+
     private var auxLabel: UILabel!
     private var auxiliaryContent: EKProperty.LabelContent!
-    
+
     private let message: EKNotificationMessage
-    
+
     // MARK: Setup
+
     public init(with message: EKNotificationMessage) {
         self.message = message
         super.init(with: message.simpleMessage)
         setupAuxLabel(with: message.auxiliary)
         layoutContent(with: message.insets)
     }
-    
-    public required init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupAuxLabel(with content: EKProperty.LabelContent?) {
         auxiliaryContent = content
-        guard let content = content else {
+        guard let content else {
             return
         }
         auxLabel = UILabel()
         auxLabel.content = content
         addSubview(auxLabel)
     }
-    
+
     private func layoutContent(with insets: EKNotificationMessage.Insets) {
         messageContentView.verticalMargins = 0
         messageContentView.horizontalMargins = 0
         messageContentView.labelsOffset = insets.titleToDescription
-        
-        if let thumbImageView = thumbImageView {
+
+        if let thumbImageView {
             thumbImageView.layoutToSuperview(.left, offset: insets.contentInsets.left)
             thumbImageView.layoutToSuperview(.top, offset: insets.contentInsets.top)
             messageContentView.layout(.left, to: .right, of: thumbImageView, offset: 12)
@@ -53,7 +55,7 @@ final public class EKNotificationMessageView: EKSimpleMessageView {
             messageContentView.layoutToSuperview(.top, offset: insets.contentInsets.top)
         }
 
-        if let auxLabel = auxLabel {
+        if let auxLabel {
             auxLabel.layoutToSuperview(.right, offset: -insets.contentInsets.right)
             auxLabel.layoutToSuperview(.top, offset: insets.contentInsets.top + 2)
             auxLabel.forceContentWrap()
@@ -63,8 +65,8 @@ final public class EKNotificationMessageView: EKSimpleMessageView {
         }
         messageContentView.layoutToSuperview(.bottom, offset: -insets.contentInsets.bottom)
     }
-    
-    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+
+    override public func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         auxLabel?.textColor = auxiliaryContent?.style.color(for: traitCollection)
     }

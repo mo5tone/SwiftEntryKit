@@ -11,62 +11,61 @@ import UIKit
 
 /** This view controller offers presets to choose from */
 class PresetsViewController: UIViewController {
-    
     enum DisplayModeSegment: Int {
         case light
         case dark
         case inferred
-        
+
         var displayMode: EKAttributes.DisplayMode {
             switch self {
             case .light:
-                return .light
+                .light
             case .dark:
-                return .dark
+                .dark
             case .inferred:
-                return .inferred
+                .inferred
             }
         }
     }
-    
+
     // MARK: - Properties
-    
+
     private var displayMode: EKAttributes.DisplayMode {
-        return PresetsDataSource.displayMode
+        PresetsDataSource.displayMode
     }
-    
+
     private var dataSource = PresetsDataSource()
     private let tableView = UITableView()
     @IBOutlet private var displayModeSegmentedControl: UISegmentedControl!
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         switch PresetsDataSource.displayMode {
         case .dark:
-            return .lightContent
+            .lightContent
         case .light:
             if #available(iOS 13, *) {
-                return .darkContent
+                .darkContent
             } else {
-                return .default
+                .default
             }
         case .inferred:
-            return super.preferredStatusBarStyle
+            super.preferredStatusBarStyle
         }
     }
-    
+
     // MARK: - Lifecycle & Setup
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupInterfaceStyle()
         setupTableView()
         displayModeSegmentedControl.selectedSegmentIndex = DisplayModeSegment.inferred.rawValue
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+
+    override func traitCollectionDidChange(_: UITraitCollection?) {
         setupInterfaceStyle()
     }
-    
+
     @IBAction private func displayModeSegmentedControlValueChanged() {
         guard let segment = DisplayModeSegment(rawValue: displayModeSegmentedControl.selectedSegmentIndex) else {
             return
@@ -76,13 +75,13 @@ class PresetsViewController: UIViewController {
         setupInterfaceStyle()
         tableView.reloadData()
     }
-    
+
     private func setupInterfaceStyle() {
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: EKColor.standardContent.color(
                 for: traitCollection,
                 mode: PresetsDataSource.displayMode
-            )
+            ),
         ]
         navigationController?.navigationBar.tintColor = EKColor.navigationItemColor.color(
             for: traitCollection,
@@ -97,8 +96,7 @@ class PresetsViewController: UIViewController {
                 EKColor.standardContent.color(
                     for: traitCollection,
                     mode: PresetsDataSource.displayMode
-                )
-            ],
+                )],
             for: .normal
         )
         displayModeSegmentedControl.setTitleTextAttributes(
@@ -106,8 +104,7 @@ class PresetsViewController: UIViewController {
                 EKColor.standardContent.color(
                     for: traitCollection,
                     mode: PresetsDataSource.displayMode
-                )
-            ],
+                )],
             for: .selected
         )
         displayModeSegmentedControl.tintColor = EKColor.selectedBackground.color(
@@ -130,7 +127,7 @@ class PresetsViewController: UIViewController {
         UIApplication.shared.statusBarStyle = preferredStatusBarStyle
         setNeedsStatusBarAppearanceUpdate()
     }
-    
+
     private func setupTableView() {
         view.addSubview(tableView)
         tableView.estimatedRowHeight = UITableView.automaticDimension
@@ -147,10 +144,10 @@ class PresetsViewController: UIViewController {
         tableView.delegate = self
         tableView.fillSuperview()
     }
-    
+
     // MARK: Entry Samples
-    
-    // Bumps a standard note
+
+    /// Bumps a standard note
     private func showNote(attributes: EKAttributes) {
         let text = "Pssst! I have something to tell you..."
         let style = EKProperty.LabelStyle(
@@ -165,7 +162,7 @@ class PresetsViewController: UIViewController {
         let contentView = EKNoteMessageView(with: labelContent)
         SwiftEntryKit.display(entry: contentView, using: attributes)
     }
-    
+
     private func showImageNote(attributes: EKAttributes) {
         let text = "The thrill is gone"
         let style = EKProperty.LabelStyle(
@@ -188,7 +185,7 @@ class PresetsViewController: UIViewController {
         )
         SwiftEntryKit.display(entry: contentView, using: attributes)
     }
-    
+
     private func showAnimatingImageNote(attributes: EKAttributes) {
         let text = "Up and charge"
         let style = EKProperty.LabelStyle(
@@ -201,7 +198,7 @@ class PresetsViewController: UIViewController {
             text: text,
             style: style
         )
-        let sequence = (0...5).map { "battery\($0)" }
+        let sequence = (0 ... 5).map { "battery\($0)" }
         let animationDuration: TimeInterval = 1
         let animation = EKProperty.ImageContent.TransformAnimation.animate(
             duration: animationDuration,
@@ -223,7 +220,7 @@ class PresetsViewController: UIViewController {
         )
         SwiftEntryKit.display(entry: contentView, using: attributes)
     }
-    
+
     private func showProcessingNote(attributes: EKAttributes) {
         let text = "Waiting for the goodies to arrive!"
         let style = EKProperty.LabelStyle(
@@ -242,8 +239,8 @@ class PresetsViewController: UIViewController {
         )
         SwiftEntryKit.display(entry: contentView, using: attributes)
     }
-    
-    // Bumps a status bar replacement entry
+
+    /// Bumps a status bar replacement entry
     private func showStatusBarMessage(attributes: EKAttributes) {
         let statusBarHeight = UIApplication.shared.statusBarFrame.maxY
         let contentView: UIView
@@ -279,8 +276,8 @@ class PresetsViewController: UIViewController {
         }
         SwiftEntryKit.display(entry: contentView, using: attributes)
     }
-    
-    // Show rating view
+
+    /// Show rating view
     private func showRatingView(attributes: EKAttributes) {
         let unselectedImage = EKProperty.ImageContent(
             image: UIImage(named: "ic_star_unselected")!.withRenderingMode(.alwaysTemplate),
@@ -312,32 +309,32 @@ class PresetsViewController: UIViewController {
         )
         let items = [("💩", "Pooish!"), ("🤨", "Ahhh?!"), ("👍", "OK!"),
                      ("👌", "Tasty!"), ("😋", "Delicius!")].map { texts -> EKProperty.EKRatingItemContent in
-                        let itemTitle = EKProperty.LabelContent(
-                            text: texts.0,
-                            style: .init(
-                                font: MainFont.medium.with(size: 48),
-                                color: .standardContent,
-                                alignment: .center,
-                                displayMode: displayMode
-                            )
-                        )
-                        let itemDescription = EKProperty.LabelContent(
-                            text: texts.1,
-                            style: .init(
-                                font: MainFont.light.with(size: 24),
-                                color: .standardContent,
-                                alignment: .center,
-                                displayMode: displayMode
-                            )
-                        )
-                        return EKProperty.EKRatingItemContent(
-                            title: itemTitle,
-                            description: itemDescription,
-                            unselectedImage: unselectedImage,
-                            selectedImage: selectedImage
-                        )
+            let itemTitle = EKProperty.LabelContent(
+                text: texts.0,
+                style: .init(
+                    font: MainFont.medium.with(size: 48),
+                    color: .standardContent,
+                    alignment: .center,
+                    displayMode: displayMode
+                )
+            )
+            let itemDescription = EKProperty.LabelContent(
+                text: texts.1,
+                style: .init(
+                    font: MainFont.light.with(size: 24),
+                    color: .standardContent,
+                    alignment: .center,
+                    displayMode: displayMode
+                )
+            )
+            return EKProperty.EKRatingItemContent(
+                title: itemTitle,
+                description: itemDescription,
+                unselectedImage: unselectedImage,
+                selectedImage: selectedImage
+            )
         }
-        
+
         var message: EKRatingMessage!
         let lightFont = MainFont.light.with(size: 20)
         let mediumFont = MainFont.medium.with(size: 20)
@@ -354,12 +351,13 @@ class PresetsViewController: UIViewController {
             label: closeButtonLabel,
             backgroundColor: .clear,
             highlightedBackgroundColor: EKColor.standardBackground.with(alpha: 0.2),
-            displayMode: displayMode) {
-                SwiftEntryKit.dismiss {
-                    // Here you may perform a completion handler
-                }
+            displayMode: displayMode
+        ) {
+            SwiftEntryKit.dismiss {
+                // Here you may perform a completion handler
+            }
         }
-        
+
         let pinkyColor = EKColor.pinky
         let okButtonLabelStyle = EKProperty.LabelStyle(
             font: lightFont,
@@ -374,8 +372,9 @@ class PresetsViewController: UIViewController {
             label: okButtonLabel,
             backgroundColor: .clear,
             highlightedBackgroundColor: pinkyColor.with(alpha: 0.05),
-            displayMode: displayMode) {
-                SwiftEntryKit.dismiss()
+            displayMode: displayMode
+        ) {
+            SwiftEntryKit.dismiss()
         }
         let buttonsBarContent = EKProperty.ButtonBarContent(
             with: closeButton, okButton,
@@ -388,19 +387,21 @@ class PresetsViewController: UIViewController {
             initialTitle: initialTitle,
             initialDescription: initialDescription,
             ratingItems: items,
-            buttonBarContent: buttonsBarContent) { index in
-                // Rating selected - do something
+            buttonBarContent: buttonsBarContent
+        ) { _ in
+            // Rating selected - do something
         }
         let contentView = EKRatingMessageView(with: message)
         SwiftEntryKit.display(entry: contentView, using: attributes)
     }
-    
-    // Bumps a notification structured entry
+
+    /// Bumps a notification structured entry
     private func showNotificationMessage(attributes: EKAttributes,
                                          title: String,
                                          desc: String,
                                          textColor: EKColor,
-                                         imageName: String? = nil) {
+                                         imageName: String? = nil)
+    {
         let title = EKProperty.LabelContent(
             text: title,
             style: .init(
@@ -420,7 +421,7 @@ class PresetsViewController: UIViewController {
             accessibilityIdentifier: "description"
         )
         var image: EKProperty.ImageContent?
-        if let imageName = imageName {
+        if let imageName {
             image = EKProperty.ImageContent(
                 image: UIImage(named: imageName)!.withRenderingMode(.alwaysTemplate),
                 displayMode: displayMode,
@@ -438,8 +439,8 @@ class PresetsViewController: UIViewController {
         let contentView = EKNotificationMessageView(with: notificationMessage)
         SwiftEntryKit.display(entry: contentView, using: attributes)
     }
-    
-    // Bumps a chat message structured entry
+
+    /// Bumps a chat message structured entry
     private func showChatNotificationMessage(attributes: EKAttributes) {
         let title = EKProperty.LabelContent(
             text: "Madi",
@@ -481,16 +482,16 @@ class PresetsViewController: UIViewController {
         let contentView = EKNotificationMessageView(with: notificationMessage)
         SwiftEntryKit.display(entry: contentView, using: attributes)
     }
-    
+
     private func showDarkAwesomePopupMessage(attributes: EKAttributes) {
         let image = UIImage(named: "ic_done_all_dark_48pt")!.withRenderingMode(.alwaysTemplate)
         let title = "Awesome!"
         let description =
-        """
-        You are using SwiftEntryKit, \
-        and this is a customized alert \
-        view that is floating at the bottom.
-        """
+            """
+            You are using SwiftEntryKit, \
+            and this is a customized alert \
+            view that is floating at the bottom.
+            """
         showPopupMessage(attributes: attributes,
                          title: title,
                          titleColor: .text,
@@ -500,7 +501,7 @@ class PresetsViewController: UIViewController {
                          buttonBackgroundColor: .amber,
                          image: image)
     }
-    
+
     private func showLightAwesomePopupMessage(attributes: EKAttributes) {
         let image = UIImage(named: "ic_done_all_light_48pt")!.withRenderingMode(.alwaysTemplate)
         let title = "Awesome!"
@@ -514,7 +515,7 @@ class PresetsViewController: UIViewController {
                          buttonBackgroundColor: .white,
                          image: image)
     }
-    
+
     private func showPopupMessage(attributes: EKAttributes,
                                   title: String,
                                   titleColor: EKColor,
@@ -522,11 +523,11 @@ class PresetsViewController: UIViewController {
                                   descriptionColor: EKColor,
                                   buttonTitleColor: EKColor,
                                   buttonBackgroundColor: EKColor,
-                                  image: UIImage? = nil) {
-        
+                                  image: UIImage? = nil)
+    {
         var themeImage: EKPopUpMessage.ThemeImage?
-        
-        if let image = image {
+
+        if let image {
             themeImage = EKPopUpMessage.ThemeImage(
                 image: EKProperty.ImageContent(
                     image: image,
@@ -575,13 +576,14 @@ class PresetsViewController: UIViewController {
             themeImage: themeImage,
             title: title,
             description: description,
-            button: button) {
-                SwiftEntryKit.dismiss()
+            button: button
+        ) {
+            SwiftEntryKit.dismiss()
         }
         let contentView = EKPopUpMessageView(with: message)
         SwiftEntryKit.display(entry: contentView, using: attributes)
     }
-    
+
     private func showButtonBarMessage(attributes: EKAttributes) {
         let title = EKProperty.LabelContent(
             text: "Dear Reader!",
@@ -627,8 +629,9 @@ class PresetsViewController: UIViewController {
             label: closeButtonLabel,
             backgroundColor: .clear,
             highlightedBackgroundColor: Color.Gray.a800.with(alpha: 0.05),
-            accessibilityIdentifier: "close-button") {
-                SwiftEntryKit.dismiss()
+            accessibilityIdentifier: "close-button"
+        ) {
+            SwiftEntryKit.dismiss()
         }
         let okButtonLabelStyle = EKProperty.LabelStyle(
             font: buttonFont,
@@ -644,25 +647,26 @@ class PresetsViewController: UIViewController {
             backgroundColor: .clear,
             highlightedBackgroundColor: Color.Teal.a600.with(alpha: 0.05),
             displayMode: displayMode,
-            accessibilityIdentifier: "ok-button") { [unowned self] in
-                var attributes = self.dataSource.bottomAlertAttributes
-                attributes.entryBackground = .color(color: Color.Teal.a600)
-                attributes.entranceAnimation = .init(
-                    translate: .init(duration: 0.65, spring: .init(damping: 0.8, initialVelocity: 0))
-                )
-                let image = UIImage(named: "ic_success")!
-                let title = "Congratz!"
-                let description = "Your book coupon is 5w1ft3ntr1k1t"
-                self.showPopupMessage(
-                    attributes: attributes,
-                    title: title,
-                    titleColor: .white,
-                    description: description,
-                    descriptionColor: .white,
-                    buttonTitleColor: .subText,
-                    buttonBackgroundColor: .white,
-                    image: image
-                )
+            accessibilityIdentifier: "ok-button"
+        ) { [unowned self] in
+            var attributes = dataSource.bottomAlertAttributes
+            attributes.entryBackground = .color(color: Color.Teal.a600)
+            attributes.entranceAnimation = .init(
+                translate: .init(duration: 0.65, spring: .init(damping: 0.8, initialVelocity: 0))
+            )
+            let image = UIImage(named: "ic_success")!
+            let title = "Congratz!"
+            let description = "Your book coupon is 5w1ft3ntr1k1t"
+            showPopupMessage(
+                attributes: attributes,
+                title: title,
+                titleColor: .white,
+                description: description,
+                descriptionColor: .white,
+                buttonTitleColor: .subText,
+                buttonBackgroundColor: .white,
+                image: image
+            )
         }
         let buttonsBarContent = EKProperty.ButtonBarContent(
             with: closeButton, okButton,
@@ -679,7 +683,7 @@ class PresetsViewController: UIViewController {
         let contentView = EKAlertMessageView(with: alertMessage)
         SwiftEntryKit.display(entry: contentView, using: attributes)
     }
-    
+
     private func showAlertView(attributes: EKAttributes) {
         let title = EKProperty.LabelContent(
             text: "Hopa!",
@@ -691,11 +695,11 @@ class PresetsViewController: UIViewController {
             )
         )
         let text =
-        """
-        This is a system-like alert, with several buttons. \
-        You can display even more buttons if you want. \
-        Click on one of them to dismiss it.
-        """
+            """
+            This is a system-like alert, with several buttons. \
+            You can display even more buttons if you want. \
+            Click on one of them to dismiss it.
+            """
         let description = EKProperty.LabelContent(
             text: text,
             style: .init(
@@ -730,8 +734,9 @@ class PresetsViewController: UIViewController {
             label: closeButtonLabel,
             backgroundColor: .clear,
             highlightedBackgroundColor: Color.Gray.a800.with(alpha: 0.05),
-            displayMode: displayMode) {
-                SwiftEntryKit.dismiss()
+            displayMode: displayMode
+        ) {
+            SwiftEntryKit.dismiss()
         }
         let laterButtonLabelStyle = EKProperty.LabelStyle(
             font: buttonFont,
@@ -746,8 +751,9 @@ class PresetsViewController: UIViewController {
             label: laterButtonLabel,
             backgroundColor: .clear,
             highlightedBackgroundColor: Color.Teal.a600.with(alpha: 0.05),
-            displayMode: displayMode) {
-                SwiftEntryKit.dismiss()
+            displayMode: displayMode
+        ) {
+            SwiftEntryKit.dismiss()
         }
         let okButtonLabelStyle = EKProperty.LabelStyle(
             font: buttonFont,
@@ -762,8 +768,9 @@ class PresetsViewController: UIViewController {
             label: okButtonLabel,
             backgroundColor: .clear,
             highlightedBackgroundColor: Color.Teal.a600.with(alpha: 0.05),
-            displayMode: displayMode) {
-                SwiftEntryKit.dismiss()
+            displayMode: displayMode
+        ) {
+            SwiftEntryKit.dismiss()
         }
         // Generate the content
         let buttonsBarContent = EKProperty.ButtonBarContent(
@@ -779,26 +786,26 @@ class PresetsViewController: UIViewController {
         let contentView = EKAlertMessageView(with: alertMessage)
         SwiftEntryKit.display(entry: contentView, using: attributes)
     }
-    
-    // Bumps a navigation controller
+
+    /// Bumps a navigation controller
     private func showNavigationController(with attributes: EKAttributes) {
         let viewController = ContactsViewController()
         let navigationController = ExampleNavigationViewController(rootViewController: viewController)
         SwiftEntryKit.display(entry: navigationController, using: attributes)
     }
-    
-    // Bumps a custom nib originated view
+
+    /// Bumps a custom nib originated view
     private func showCustomNibView(attributes: EKAttributes) {
         SwiftEntryKit.display(entry: NibExampleView(), using: attributes)
     }
-    
-    // Bumps a custom view controller that is using a view from nib
+
+    /// Bumps a custom view controller that is using a view from nib
     private func showCustomViewController(attributes: EKAttributes) {
         let viewController = ExampleViewController(with: NibExampleView())
         SwiftEntryKit.display(entry: viewController, using: attributes)
     }
-    
-    // Sign in form
+
+    /// Sign in form
     private func showSigninForm(attributes: EKAttributes, style: FormStyle) {
         let titleStyle = EKProperty.LabelStyle(
             font: MainFont.medium.with(size: 16),
@@ -819,8 +826,9 @@ class PresetsViewController: UIViewController {
             backgroundColor: style.buttonBackground,
             highlightedBackgroundColor: style.buttonBackground.with(alpha: 0.8),
             displayMode: displayMode,
-            accessibilityIdentifier: "continueButton") {
-                SwiftEntryKit.dismiss()
+            accessibilityIdentifier: "continueButton"
+        ) {
+            SwiftEntryKit.dismiss()
         }
         let contentView = EKFormMessageView(
             with: title,
@@ -829,8 +837,8 @@ class PresetsViewController: UIViewController {
         )
         SwiftEntryKit.display(entry: contentView, using: attributes)
     }
-    
-    // Sign up form
+
+    /// Sign up form
     private func showSignupForm(attributes: inout EKAttributes, style: FormStyle) {
         let titleStyle = EKProperty.LabelStyle(
             font: MainFont.light.with(size: 14),
@@ -849,8 +857,9 @@ class PresetsViewController: UIViewController {
             label: .init(text: "Continue", style: style.buttonTitle),
             backgroundColor: style.buttonBackground,
             highlightedBackgroundColor: style.buttonBackground.with(alpha: 0.8),
-            displayMode: displayMode) {
-                SwiftEntryKit.dismiss()
+            displayMode: displayMode
+        ) {
+            SwiftEntryKit.dismiss()
         }
         let contentView = EKFormMessageView(
             with: title,
@@ -889,7 +898,7 @@ extension PresetsViewController: UITableViewDelegate, UITableViewDataSource {
             break
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PresetTableViewCell.className,
                                                  for: indexPath) as! PresetTableViewCell
@@ -897,34 +906,34 @@ extension PresetsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.displayMode = PresetsDataSource.displayMode
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: SelectionHeaderView.className) as! SelectionHeaderView
         header.text = dataSource[section].title
         header.displayMode = PresetsDataSource.displayMode
         return header
     }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return dataSource.dataSource.count
+
+    func numberOfSections(in _: UITableView) -> Int {
+        dataSource.dataSource.count
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource[section].data.count
+
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        dataSource[section].data.count
     }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+
+    func tableView(_: UITableView, estimatedHeightForRowAt _: IndexPath) -> CGFloat {
+        80
     }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        return 60
+
+    func tableView(_: UITableView, estimatedHeightForHeaderInSection _: Int) -> CGFloat {
+        60
     }
 }
 
 // MARK: Selection Helpers
+
 extension PresetsViewController {
-    
     private func toastCellSelected(with attributes: EKAttributes, row: Int) {
         switch row {
         case 0:
@@ -948,9 +957,9 @@ extension PresetsViewController {
         case 3:
             let title = "Simple Notification-Like Message"
             let desc =
-            """
-            Robot moustache gentleman lip warmer nefarious, lip warmer robot moustache gentleman brandy crumb catcher groomed testosterone trophy nefarious, cappuccino collector testosterone trophy top gun testosterone trophy consectetur nefarious groomed brandy gentleman lip warmer robot moustache super mario crumb catcher. Toothbrush timothy dalton goose dali, louis xiii horseshoe mark lawrenson goose wario graeme souness tricky sneezes timothy dalton toothbrush louis xiii id dali?
-            """
+                """
+                Robot moustache gentleman lip warmer nefarious, lip warmer robot moustache gentleman brandy crumb catcher groomed testosterone trophy nefarious, cappuccino collector testosterone trophy top gun testosterone trophy consectetur nefarious groomed brandy gentleman lip warmer robot moustache super mario crumb catcher. Toothbrush timothy dalton goose dali, louis xiii horseshoe mark lawrenson goose wario graeme souness tricky sneezes timothy dalton toothbrush louis xiii id dali?
+                """
             showNotificationMessage(attributes: attributes,
                                     title: title,
                                     desc: desc,
@@ -959,7 +968,7 @@ extension PresetsViewController {
             break
         }
     }
-    
+
     private func noteCellSelected(with attributes: EKAttributes, row: Int) {
         switch row {
         case 0:
@@ -978,7 +987,7 @@ extension PresetsViewController {
             break
         }
     }
-    
+
     private func floatCellSelected(with attributes: EKAttributes, row: Int) {
         let title = "Kofi Shop"
         let desc = "Over two weeks of quality coffee beans concentrated into a single entry kit"
@@ -1000,7 +1009,7 @@ extension PresetsViewController {
             break
         }
     }
-    
+
     private func popupCellSelected(with attributes: EKAttributes, row: Int) {
         switch row {
         case 0:
@@ -1019,7 +1028,7 @@ extension PresetsViewController {
             break
         }
     }
-    
+
     private func formCellSelected(with attributes: EKAttributes, row: Int) {
         switch row {
         case 0:
@@ -1034,7 +1043,7 @@ extension PresetsViewController {
             break
         }
     }
-    
+
     private func customCellSelected(with attributes: EKAttributes, row: Int) {
         switch row {
         case 0:

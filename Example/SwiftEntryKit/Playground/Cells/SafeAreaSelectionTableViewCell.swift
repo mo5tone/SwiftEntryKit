@@ -16,12 +16,12 @@ final class SafeAreaSelectionTableViewCell: SelectionTableViewCell {
         insertSegments(by: ["Colored", "Uncolored", "Override"])
         selectSegment()
     }
-    
+
     private func selectSegment() {
         switch attributesWrapper.attributes.positionConstraints.safeArea {
-        case .empty(fillSafeArea: let fill) where fill:
+        case let .empty(fillSafeArea: fill) where fill:
             segmentedControl.selectedSegmentIndex = 0
-        case .empty(fillSafeArea: let fill) where !fill:
+        case let .empty(fillSafeArea: fill) where !fill:
             segmentedControl.selectedSegmentIndex = 1
         case .overridden:
             segmentedControl.selectedSegmentIndex = 2
@@ -29,7 +29,7 @@ final class SafeAreaSelectionTableViewCell: SelectionTableViewCell {
             break
         }
     }
-    
+
     @objc override func segmentChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:

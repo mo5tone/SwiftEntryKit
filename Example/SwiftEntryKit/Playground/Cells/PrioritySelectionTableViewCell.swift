@@ -9,7 +9,6 @@
 import UIKit
 
 final class PrioritySelectionTableViewCell: SelectionTableViewCell {
-
     override func configure(attributesWrapper: EntryAttributeWrapper) {
         super.configure(attributesWrapper: attributesWrapper)
         titleValue = "Display Priority"
@@ -17,7 +16,7 @@ final class PrioritySelectionTableViewCell: SelectionTableViewCell {
         insertSegments(by: ["Normal", "High", "Max"])
         selectSegment()
     }
-    
+
     private func selectSegment() {
         switch attributesWrapper.attributes.precedence.priority {
         case .normal:
@@ -30,7 +29,7 @@ final class PrioritySelectionTableViewCell: SelectionTableViewCell {
             break
         }
     }
-    
+
     @objc override func segmentChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:

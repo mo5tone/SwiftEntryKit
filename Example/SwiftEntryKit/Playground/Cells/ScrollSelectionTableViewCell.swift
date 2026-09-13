@@ -16,7 +16,7 @@ final class ScrollSelectionTableViewCell: SelectionTableViewCell {
         insertSegments(by: ["Loosed", "Disabled", "One Side"])
         selectSegment()
     }
-    
+
     private func selectSegment() {
         switch attributesWrapper.attributes.scroll {
         case .enabled:
@@ -27,7 +27,7 @@ final class ScrollSelectionTableViewCell: SelectionTableViewCell {
             segmentedControl.selectedSegmentIndex = 2
         }
     }
-    
+
     @objc override func segmentChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:

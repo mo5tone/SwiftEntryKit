@@ -9,45 +9,46 @@
 import UIKit
 
 class GradientView: UIView {
-    
     struct Style {
         let gradient: EKAttributes.BackgroundStyle.Gradient
         let displayMode: EKAttributes.DisplayMode
-        
+
         init?(gradient: EKAttributes.BackgroundStyle.Gradient?,
-              displayMode: EKAttributes.DisplayMode) {
-            guard let gradient = gradient else {
+              displayMode: EKAttributes.DisplayMode)
+        {
+            guard let gradient else {
                 return nil
             }
             self.gradient = gradient
             self.displayMode = displayMode
         }
     }
-    
+
     private let gradientLayer = CAGradientLayer()
-    
+
     var style: Style? {
         didSet {
             setupColor()
         }
     }
-    
+
     init() {
         super.init(frame: .zero)
         layer.addSublayer(gradientLayer)
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         gradientLayer.frame = bounds
     }
-    
+
     private func setupColor() {
-        guard let style = style else {
+        guard let style else {
             return
         }
         gradientLayer.colors = style.gradient.colors.map {
@@ -56,8 +57,8 @@ class GradientView: UIView {
         gradientLayer.startPoint = style.gradient.startPoint
         gradientLayer.endPoint = style.gradient.endPoint
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+
+    override func traitCollectionDidChange(_: UITraitCollection?) {
         setupColor()
     }
 }

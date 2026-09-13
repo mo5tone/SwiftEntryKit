@@ -1,16 +1,15 @@
 //
-//  LocationSelectionTableViewCell.swift
+//  PositionSelectionTableViewCell.swift
 //  SwiftEntryKit_Example
 //
 //  Created by Daniel Huri on 4/24/18.
 //  Copyright (c) 2018 huri000@gmail.com. All rights reserved.
 //
 
-import UIKit
 import SwiftEntryKit
+import UIKit
 
 final class PositionSelectionTableViewCell: SelectionTableViewCell {
-    
     override func configure(attributesWrapper: EntryAttributeWrapper) {
         super.configure(attributesWrapper: attributesWrapper)
         titleValue = "Position"
@@ -18,7 +17,7 @@ final class PositionSelectionTableViewCell: SelectionTableViewCell {
         insertSegments(by: ["Top", "Bottom", "Center"])
         selectSegment()
     }
-    
+
     private func selectSegment() {
         switch attributesWrapper.attributes.position {
         case .top:
@@ -29,7 +28,7 @@ final class PositionSelectionTableViewCell: SelectionTableViewCell {
             segmentedControl.selectedSegmentIndex = 2
         }
     }
-    
+
     @objc override func segmentChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:

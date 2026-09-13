@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct HapticFeedbackGenerator {
+enum HapticFeedbackGenerator {
     @MainActor
     static func notification(type: EKAttributes.NotificationHapticFeedback) {
         guard let value = type.value else {

@@ -1,5 +1,5 @@
 //
-//  CGRect.swift
+//  CGRect+Utils.swift
 //  SwiftEntryKit_Example
 //
 //  Created by Daniel Huri on 4/28/18.
@@ -10,6 +10,6 @@ import UIKit
 
 extension CGRect {
     var minEdge: CGFloat {
-        return min(width, height)
+        min(width, height)
     }
 }

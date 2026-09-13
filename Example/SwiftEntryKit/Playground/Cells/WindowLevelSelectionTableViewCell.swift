@@ -1,5 +1,5 @@
 //
-//  WindowLevelTableViewCell.swift
+//  WindowLevelSelectionTableViewCell.swift
 //  SwiftEntryKit_Example
 //
 //  Created by Daniel Huri on 4/24/18.
@@ -9,7 +9,6 @@
 import UIKit
 
 final class WindowLevelSelectionTableViewCell: SelectionTableViewCell {
-
     override func configure(attributesWrapper: EntryAttributeWrapper) {
         super.configure(attributesWrapper: attributesWrapper)
         titleValue = "Window Level"
@@ -17,7 +16,7 @@ final class WindowLevelSelectionTableViewCell: SelectionTableViewCell {
         insertSegments(by: ["Normal", "Status Bar", "Alerts"])
         selectSegment()
     }
-    
+
     private func selectSegment() {
         switch attributesWrapper.attributes.windowLevel {
         case .normal:
@@ -30,7 +29,7 @@ final class WindowLevelSelectionTableViewCell: SelectionTableViewCell {
             break
         }
     }
-    
+
     @objc override func segmentChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:

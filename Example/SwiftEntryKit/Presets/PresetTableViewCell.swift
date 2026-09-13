@@ -10,13 +10,12 @@ import SwiftEntryKit
 import UIKit
 
 class PresetTableViewCell: UITableViewCell {
-
     // MARK: - Properties
-    
+
     private let thumbImageView = UIImageView()
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
-    
+
     var presetDescription: PresetDescription! {
         didSet {
             titleLabel.text = presetDescription.title
@@ -24,15 +23,15 @@ class PresetTableViewCell: UITableViewCell {
             thumbImageView.image = UIImage(named: presetDescription.thumb)
         }
     }
-    
+
     var displayMode: EKAttributes.DisplayMode = .inferred {
         didSet {
             setupInterfaceStyle()
         }
     }
-    
+
     // MARK: - Setup
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupImageView()
@@ -40,18 +39,19 @@ class PresetTableViewCell: UITableViewCell {
         setupDescriptionLabel()
         setupInterfaceStyle()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupImageView() {
         contentView.addSubview(thumbImageView)
         thumbImageView.contentMode = .scaleAspectFit
         thumbImageView.layoutToSuperview(.left, .top, offset: 16)
         thumbImageView.set(.width, .height, of: 50)
     }
-    
+
     private func setupTitleLabel() {
         contentView.addSubview(titleLabel)
         titleLabel.font = MainFont.medium.with(size: 18)
@@ -60,7 +60,7 @@ class PresetTableViewCell: UITableViewCell {
         titleLabel.layout(to: .top, of: thumbImageView)
         titleLabel.layoutToSuperview(.right, offset: -12)
     }
-    
+
     private func setupDescriptionLabel() {
         contentView.addSubview(descriptionLabel)
         descriptionLabel.font = MainFont.light.with(size: 14)
@@ -70,7 +70,7 @@ class PresetTableViewCell: UITableViewCell {
         descriptionLabel.layout(to: .right, of: titleLabel)
         descriptionLabel.layoutToSuperview(.bottom, offset: -16)
     }
-    
+
     private func setupInterfaceStyle() {
         contentView.backgroundColor = EKColor.standardBackground.color(
             for: traitCollection,
@@ -85,18 +85,18 @@ class PresetTableViewCell: UITableViewCell {
             mode: displayMode
         )
     }
-    
-    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+
+    override func setHighlighted(_ highlighted: Bool, animated _: Bool) {
         let color: EKColor = highlighted ? .selectedBackground : .standardBackground
         contentView.backgroundColor = color.color(
             for: traitCollection,
             mode: displayMode
         )
     }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {}
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+
+    override func setSelected(_: Bool, animated _: Bool) {}
+
+    override func traitCollectionDidChange(_: UITraitCollection?) {
         setupInterfaceStyle()
     }
 }

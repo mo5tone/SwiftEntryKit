@@ -3,13 +3,12 @@
 //  SwiftEntryKitTests
 //
 
+@testable import SwiftEntryKit
 import Testing
 import UIKit
-@testable import SwiftEntryKit
 
 @MainActor
 struct AttributesPresetsTests {
-
     @Test func toastPreset() {
         let attributes = EKAttributes.toast
         #expect(attributes.windowLevel.value == .statusBar)

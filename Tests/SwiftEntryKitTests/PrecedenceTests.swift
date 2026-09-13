@@ -3,13 +3,12 @@
 //  SwiftEntryKitTests
 //
 
+@testable import SwiftEntryKit
 import Testing
 import UIKit
-@testable import SwiftEntryKit
 
 @MainActor
 struct PrecedenceTests {
-
     @Test func priorityOrdering() {
         let min = EKAttributes.Precedence.Priority.min
         let low = EKAttributes.Precedence.Priority.low

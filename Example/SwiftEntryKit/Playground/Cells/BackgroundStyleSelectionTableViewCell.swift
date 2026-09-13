@@ -1,25 +1,24 @@
 //
-//  ScreenBackgroundStyleSelectionTableViewCell.swift
+//  BackgroundStyleSelectionTableViewCell.swift
 //  SwiftEntryKit_Example
 //
 //  Created by Daniel Huri on 4/25/18.
 //  Copyright (c) 2018 huri000@gmail.com. All rights reserved.
 //
 
-import UIKit
 import SwiftEntryKit
+import UIKit
 
 final class BackgroundStyleSelectionTableViewCell: SelectionTableViewCell {
-    
     private var focus: Focus = .entry
-    
+
     private var backgroundStyle: EKAttributes.BackgroundStyle {
         get {
             switch focus {
             case .entry:
-                return attributesWrapper.attributes.entryBackground
+                attributesWrapper.attributes.entryBackground
             case .screen:
-                return attributesWrapper.attributes.screenBackground
+                attributesWrapper.attributes.screenBackground
             }
         }
         set {
@@ -31,12 +30,12 @@ final class BackgroundStyleSelectionTableViewCell: SelectionTableViewCell {
             }
         }
     }
-    
+
     func configure(attributesWrapper: EntryAttributeWrapper, focus: Focus) {
         self.focus = focus
         configure(attributesWrapper: attributesWrapper)
     }
-    
+
     override func configure(attributesWrapper: EntryAttributeWrapper) {
         super.configure(attributesWrapper: attributesWrapper)
         titleValue = "\(focus.rawValue.capitalized) Background Style"
@@ -44,7 +43,7 @@ final class BackgroundStyleSelectionTableViewCell: SelectionTableViewCell {
         insertSegments(by: ["Clear", "Blur", "Gradient", "Color"])
         selectSegment()
     }
-    
+
     private func selectSegment() {
         switch backgroundStyle {
         case .clear:
@@ -60,7 +59,7 @@ final class BackgroundStyleSelectionTableViewCell: SelectionTableViewCell {
             break
         }
     }
-    
+
     @objc override func segmentChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
@@ -75,12 +74,11 @@ final class BackgroundStyleSelectionTableViewCell: SelectionTableViewCell {
             )
             backgroundStyle = .gradient(gradient: gradient)
         case 3:
-            let color: EKColor
-            switch focus {
+            let color: EKColor = switch focus {
             case .entry:
-                color = .amber
+                .amber
             case .screen:
-                color = EKColor.black.with(alpha: 0.5)
+                EKColor.black.with(alpha: 0.5)
             }
             backgroundStyle = .color(color: color)
         default:
@@ -88,4 +86,3 @@ final class BackgroundStyleSelectionTableViewCell: SelectionTableViewCell {
         }
     }
 }
-

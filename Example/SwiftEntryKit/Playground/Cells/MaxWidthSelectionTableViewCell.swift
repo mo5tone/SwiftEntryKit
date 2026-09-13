@@ -16,7 +16,7 @@ final class MaxWidthSelectionTableViewCell: SelectionTableViewCell {
         insertSegments(by: ["Stretch", "Min Edge", "90% Screen"])
         selectSegment()
     }
-    
+
     private func selectSegment() {
         switch attributesWrapper.attributes.positionConstraints.maxSize.width {
         case .offset(value: _):
@@ -29,7 +29,7 @@ final class MaxWidthSelectionTableViewCell: SelectionTableViewCell {
             break
         }
     }
-    
+
     @objc override func segmentChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:

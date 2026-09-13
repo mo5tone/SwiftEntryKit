@@ -3,7 +3,7 @@ import ProjectDescription
 let project = Project(
     name: "SwiftEntryKitDemo",
     packages: [
-        .local(path: "../")
+        .local(path: "../"),
     ],
     targets: [
         .target(
@@ -16,11 +16,11 @@ let project = Project(
             sources: ["SwiftEntryKit/**/*.swift"],
             resources: [
                 "SwiftEntryKit/Images.xcassets",
-                "SwiftEntryKit/Base.lproj/**"
+                "SwiftEntryKit/Base.lproj/**",
             ],
             dependencies: [
-                .package(product: "SwiftEntryKit", type: .runtime)
+                .package(product: "SwiftEntryKit", type: .runtime),
             ]
-        )
+        ),
     ]
 )

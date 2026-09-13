@@ -8,19 +8,19 @@
 
 import UIKit
 
-final public class EKRatingSymbolsContainerView: UIView {
-    
+public final class EKRatingSymbolsContainerView: UIView {
     private var message: EKRatingMessage!
     private var symbolsArray: [EKRatingSymbolView] = []
-    
+
     public func setup(with message: EKRatingMessage,
-                      externalSelection: @escaping EKRatingMessage.Selection) {
+                      externalSelection: @escaping EKRatingMessage.Selection)
+    {
         self.message = message
         let internalSelection = { [unowned self] (index: Int) in
-            self.select(index: index)
+            select(index: index)
             externalSelection(index)
         }
-        
+
         for (index, item) in message.ratingItems.enumerated() {
             let itemView = EKRatingSymbolView(unselectedImage: item.unselectedImage,
                                               selectedImage: item.selectedImage,
@@ -33,15 +33,15 @@ final public class EKRatingSymbolsContainerView: UIView {
         }
         symbolsArray.layoutToSuperview(axis: .vertically, priority: .must)
         symbolsArray.spread(.horizontally, stretchEdgesToSuperview: true)
-        
+
         select(index: message.selectedIndex)
     }
-    
+
     private func select(index: Int? = nil) {
         var delay: TimeInterval = 0
         for (i, view) in symbolsArray.enumerated() {
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                if let index = index, i <= index {
+                if let index, i <= index {
                     view.isSelected = true
                     view.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
                 } else if view.isSelected || index == nil {
@@ -53,8 +53,8 @@ final public class EKRatingSymbolsContainerView: UIView {
                                usingSpringWithDamping: 0.5,
                                initialSpringVelocity: 0,
                                options: [.allowUserInteraction], animations: {
-                    view.transform = .identity
-                }, completion: nil)
+                                   view.transform = .identity
+                               }, completion: nil)
             }
             delay += 0.05
         }

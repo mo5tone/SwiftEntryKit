@@ -6,8 +6,8 @@
 //  Copyright (c) 2018 huri000@gmail.com. All rights reserved.
 //
 
-import UIKit
 import SwiftEntryKit
+import UIKit
 
 final class ShadowSelectionTableViewCell: SelectionTableViewCell {
     override func configure(attributesWrapper: EntryAttributeWrapper) {
@@ -17,7 +17,7 @@ final class ShadowSelectionTableViewCell: SelectionTableViewCell {
         insertSegments(by: ["Off", "On"])
         selectSegment()
     }
-    
+
     private func selectSegment() {
         switch attributesWrapper.attributes.shadow {
         case .none:
@@ -26,7 +26,7 @@ final class ShadowSelectionTableViewCell: SelectionTableViewCell {
             segmentedControl.selectedSegmentIndex = 1
         }
     }
-    
+
     @objc override func segmentChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:

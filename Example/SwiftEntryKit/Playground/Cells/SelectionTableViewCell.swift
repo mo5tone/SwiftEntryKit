@@ -6,53 +6,52 @@
 //  Copyright (c) 2018 huri000@gmail.com. All rights reserved.
 //
 
-import UIKit
 import SwiftEntryKit
+import UIKit
 
 class SelectionBaseCell: UITableViewCell {
-    func configure(attributesWrapper: EntryAttributeWrapper) {}
+    func configure(attributesWrapper _: EntryAttributeWrapper) {}
 }
 
 class SelectionTableViewCell: SelectionBaseCell {
-
     enum Focus: String {
         case entry
         case screen
     }
-    
+
     enum Setting {
         case position
         case windowLevel
     }
-    
+
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
     let segmentedControl = UISegmentedControl()
-    
+
     var attributesWrapper: EntryAttributeWrapper!
-    
+
     var attributes: EKAttributes {
-        return attributesWrapper.attributes
+        attributesWrapper.attributes
     }
-    
+
     var titleValue: String {
         set {
             titleLabel.text = newValue
         }
         get {
-            return titleLabel.text ?? ""
+            titleLabel.text ?? ""
         }
     }
-    
+
     var descriptionValue: String {
         set {
             descriptionLabel.text = newValue
         }
         get {
-            return descriptionLabel.text ?? ""
+            descriptionLabel.text ?? ""
         }
     }
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupTitleLabel()
@@ -60,11 +59,12 @@ class SelectionTableViewCell: SelectionBaseCell {
         setupSegmentedControl()
         setupInterfaceStyle()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupTitleLabel() {
         contentView.addSubview(titleLabel)
         titleLabel.font = MainFont.bold.with(size: 18)
@@ -72,7 +72,7 @@ class SelectionTableViewCell: SelectionBaseCell {
         titleLabel.layoutToSuperview(axis: .horizontally, offset: 20)
         titleLabel.forceContentWrap(.vertically)
     }
-    
+
     private func setupDescriptionLabel() {
         contentView.addSubview(descriptionLabel)
         descriptionLabel.font = MainFont.light.with(size: 15)
@@ -81,7 +81,7 @@ class SelectionTableViewCell: SelectionBaseCell {
         descriptionLabel.layoutToSuperview(axis: .horizontally, offset: 20)
         descriptionLabel.forceContentWrap(.vertically)
     }
-    
+
     private func setupSegmentedControl() {
         contentView.addSubview(segmentedControl)
         segmentedControl.setTitleTextAttributes(
@@ -101,20 +101,20 @@ class SelectionTableViewCell: SelectionBaseCell {
         segmentedControl.layoutToSuperview(axis: .horizontally, offset: 20)
         segmentedControl.layoutToSuperview(.bottom, offset: -20)
     }
-    
+
     override func configure(attributesWrapper: EntryAttributeWrapper) {
         segmentedControl.removeAllSegments()
         self.attributesWrapper = attributesWrapper
     }
-    
+
     func insertSegments(by array: [String]) {
         for (index, info) in array.enumerated() {
             segmentedControl.insertSegment(withTitle: info, at: index, animated: false)
         }
     }
-    
+
     @objc func segmentChanged() {}
-    
+
     private func setupInterfaceStyle() {
         contentView.backgroundColor = EKColor.standardBackground.color(
             for: traitCollection,
@@ -129,8 +129,7 @@ class SelectionTableViewCell: SelectionBaseCell {
                 EKColor.standardContent.color(
                     for: traitCollection,
                     mode: PresetsDataSource.displayMode
-                )
-            ],
+                )],
             for: .normal
         )
         segmentedControl.setTitleTextAttributes(
@@ -138,8 +137,7 @@ class SelectionTableViewCell: SelectionBaseCell {
                 EKColor.standardContent.inverted.color(
                     for: traitCollection,
                     mode: PresetsDataSource.displayMode
-                )
-            ],
+                )],
             for: .selected
         )
         titleLabel.textColor = EKColor.standardContent.color(
@@ -151,8 +149,8 @@ class SelectionTableViewCell: SelectionBaseCell {
             mode: PresetsDataSource.displayMode
         )
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+
+    override func traitCollectionDidChange(_: UITraitCollection?) {
         setupInterfaceStyle()
     }
 }

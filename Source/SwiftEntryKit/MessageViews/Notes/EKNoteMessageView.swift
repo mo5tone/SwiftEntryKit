@@ -9,13 +9,13 @@
 import UIKit
 
 public class EKNoteMessageView: UIView {
-    
     // MARK: Props
+
     private let label = UILabel()
-    
+
     private var horizontalConstrainsts: QLAxisConstraints!
     private var verticalConstrainsts: QLAxisConstraints!
-    
+
     public var horizontalOffset: CGFloat = 10 {
         didSet {
             horizontalConstrainsts.first.constant = horizontalOffset
@@ -23,7 +23,7 @@ public class EKNoteMessageView: UIView {
             layoutIfNeeded()
         }
     }
-    
+
     public var verticalOffset: CGFloat = 5 {
         didSet {
             verticalConstrainsts.first.constant = verticalOffset
@@ -31,17 +31,19 @@ public class EKNoteMessageView: UIView {
             layoutIfNeeded()
         }
     }
-    
+
     // MARK: Setup
+
     public init(with content: EKProperty.LabelContent) {
         super.init(frame: UIScreen.main.bounds)
         setup(with: content)
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setup(with content: EKProperty.LabelContent) {
         clipsToBounds = true
         addSubview(label)

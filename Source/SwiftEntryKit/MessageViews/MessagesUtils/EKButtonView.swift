@@ -9,16 +9,15 @@
 import UIKit
 
 final class EKButtonView: UIView {
-
     // MARK: - Properties
-    
+
     private let button = UIButton()
     private let titleLabel = UILabel()
-    
+
     private let content: EKProperty.ButtonContent
-    
+
     // MARK: - Setup
-    
+
     init(content: EKProperty.ButtonContent) {
         self.content = content
         super.init(frame: .zero)
@@ -27,18 +26,19 @@ final class EKButtonView: UIView {
         setupAcceessibility()
         setupInterfaceStyle()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupAcceessibility() {
         isAccessibilityElement = false
         button.isAccessibilityElement = true
         button.accessibilityIdentifier = content.accessibilityIdentifier
         button.accessibilityLabel = content.label.text
     }
-    
+
     private func setupButton() {
         addSubview(button)
         button.fillSuperview()
@@ -49,7 +49,7 @@ final class EKButtonView: UIView {
         button.addTarget(self, action: #selector(buttonTouchUpInside),
                          for: .touchUpInside)
     }
-    
+
     private func setupTitleLabel() {
         titleLabel.numberOfLines = content.label.style.numberOfLines
         titleLabel.font = content.label.style.font
@@ -62,36 +62,37 @@ final class EKButtonView: UIView {
         titleLabel.layoutToSuperview(axis: .vertically,
                                      offset: content.contentEdgeInset)
     }
-    
+
     private func setBackground(by content: EKProperty.ButtonContent,
-                               isHighlighted: Bool) {
+                               isHighlighted: Bool)
+    {
         if isHighlighted {
             backgroundColor = content.highlightedBackgroundColor(for: traitCollection)
         } else {
             backgroundColor = content.backgroundColor(for: traitCollection)
         }
     }
-    
+
     private func setupInterfaceStyle() {
         backgroundColor = content.backgroundColor(for: traitCollection)
         titleLabel.textColor = content.label.style.color(for: traitCollection)
     }
-    
+
     // MARK: - Selectors
-    
+
     @objc func buttonTouchUpInside() {
         content.action?()
     }
-    
+
     @objc func buttonTouchDown() {
         setBackground(by: content, isHighlighted: true)
     }
-    
+
     @objc func buttonTouchUp() {
         setBackground(by: content, isHighlighted: false)
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+
+    override func traitCollectionDidChange(_: UITraitCollection?) {
         setupInterfaceStyle()
     }
 }

@@ -9,17 +9,16 @@
 import UIKit
 
 class NibExampleView: UIView {
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
-    
+
     init() {
         super.init(frame: .zero)
         setup()
     }
-    
+
     private func setup() {
         fromNib()
         clipsToBounds = true

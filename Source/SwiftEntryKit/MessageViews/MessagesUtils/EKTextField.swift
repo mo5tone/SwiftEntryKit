@@ -8,29 +8,28 @@
 import Foundation
 import UIKit
 
-final public class EKTextField: UIView {
-    
+public final class EKTextField: UIView {
     // MARK: - Properties
-    
+
     static let totalHeight: CGFloat = 45
-    
+
     private let content: EKProperty.TextFieldContent
-    
+
     private let imageView = UIImageView()
     private let textField = UITextField()
     private let separatorView = UIView()
-    
+
     public var text: String {
         set {
             textField.text = newValue
         }
         get {
-            return textField.text ?? ""
+            textField.text ?? ""
         }
     }
-    
+
     // MARK: - Setup
-    
+
     public init(with content: EKProperty.TextFieldContent) {
         self.content = content
         super.init(frame: UIScreen.main.bounds)
@@ -39,11 +38,12 @@ final public class EKTextField: UIView {
         setupSeparatorView()
         textField.accessibilityIdentifier = content.accessibilityIdentifier
     }
-    
-    required public init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupImageView() {
         addSubview(imageView)
         imageView.contentMode = .center
@@ -52,7 +52,7 @@ final public class EKTextField: UIView {
         imageView.image = content.leadingImage
         imageView.tintColor = content.tintColor(for: traitCollection)
     }
-    
+
     private func setupTextField() {
         addSubview(textField)
         textField.textFieldContent = content
@@ -62,7 +62,7 @@ final public class EKTextField: UIView {
         textField.layoutToSuperview(.top, .trailing)
         imageView.layout(to: .centerY, of: textField)
     }
-    
+
     private func setupSeparatorView() {
         addSubview(separatorView)
         separatorView.layout(.top, to: .bottom, of: textField)
@@ -74,12 +74,12 @@ final public class EKTextField: UIView {
             mode: content.displayMode
         )
     }
-    
+
     public func makeFirstResponder() {
         textField.becomeFirstResponder()
     }
-    
-    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+
+    override public func traitCollectionDidChange(_: UITraitCollection?) {
         separatorView.backgroundColor = content.bottomBorderColor(for: traitCollection)
         imageView.tintColor = content.tintColor(for: traitCollection)
         textField.textColor = content.textStyle.color(for: traitCollection)

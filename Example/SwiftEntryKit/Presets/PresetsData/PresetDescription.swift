@@ -6,16 +6,16 @@
 //  Copyright (c) 2018 huri000@gmail.com. All rights reserved.
 //
 
-import UIKit
 import SwiftEntryKit
+import UIKit
 
-// Description of a single preset to be presented
+/// Description of a single preset to be presented
 struct PresetDescription {
     let title: String
     let description: String
     let thumb: String
     let attributes: EKAttributes
-    
+
     init(with attributes: EKAttributes, title: String, description: String = "", thumb: String) {
         self.attributes = attributes
         self.title = title

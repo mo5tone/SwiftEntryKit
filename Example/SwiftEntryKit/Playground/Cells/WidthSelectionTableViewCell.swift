@@ -16,10 +16,10 @@ final class WidthSelectionTableViewCell: SelectionTableViewCell {
         insertSegments(by: ["Stretch", "20pts Offset", "90% Screen"])
         selectSegment()
     }
-    
+
     private func selectSegment() {
         switch attributesWrapper.attributes.positionConstraints.size.width {
-        case .offset(value: let value):
+        case let .offset(value: value):
             if value == 0 {
                 segmentedControl.selectedSegmentIndex = 0
             } else {
@@ -31,7 +31,7 @@ final class WidthSelectionTableViewCell: SelectionTableViewCell {
             break
         }
     }
-    
+
     @objc override func segmentChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:

@@ -9,16 +9,14 @@
 import Foundation
 
 public extension EKAttributes {
-    
     /** Display mode for the entry */
     enum DisplayMode {
-        
         /** The display mode is inferred from the current user interface style */
         case inferred
-        
+
         /** The display mode is light */
         case light
-        
+
         /** The display mode is dark */
         case dark
     }

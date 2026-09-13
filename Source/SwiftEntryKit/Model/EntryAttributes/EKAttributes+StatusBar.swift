@@ -9,48 +9,46 @@
 import UIKit
 
 public extension EKAttributes {
-    
     /** Status bar appearance */
     enum StatusBar {
-        
         /** The appearance of the status bar */
         public typealias Appearance = (visible: Bool, style: UIStatusBarStyle)
-        
-        /** Ignored. Status bar is ignored by entries with this apperance value*/
+
+        /** Ignored. Status bar is ignored by entries with this apperance value */
         case ignored
-        
+
         /** Hidden. Doesn't apply to iPhone X */
         case hidden
-        
+
         /** Visible with explicit dark style */
         case dark
-        
+
         /** Visible with explicit light style */
         case light
-        
+
         /** Keep previous state of status bar.
          In case there is an already displayed entry, keep its status bar appearance.
          In case the app is already displaying a status bar, keep its appearance */
         case inferred
-        
+
         /** Returns the status bar appearance.
          Note: See *Appearance* */
         @MainActor
         public var appearance: Appearance {
             switch self {
             case .dark:
-                return (true, .darkContent)
+                (true, .darkContent)
             case .light:
-                return (true, .lightContent)
+                (true, .lightContent)
             case .inferred:
-                return StatusBar.currentAppearance
+                StatusBar.currentAppearance
             case .hidden:
-                return (false, StatusBar.currentStyle)
+                (false, StatusBar.currentStyle)
             case .ignored:
                 fatalError("There is no defined appearance for an ignored status bar")
             }
         }
-        
+
         /** Returns the status bar according to a given appearance */
         public static func statusBar(by appearance: Appearance) -> StatusBar {
             guard appearance.visible else {
@@ -63,33 +61,33 @@ public extension EKAttributes {
                 return .dark
             }
         }
-        
+
         /** Returns the current appearance */
         @MainActor
         public static var currentAppearance: Appearance {
-            return (StatusBar.isCurrentVisible, StatusBar.currentStyle)
+            (StatusBar.isCurrentVisible, StatusBar.currentStyle)
         }
-        
+
         /** Returns the current status bar */
         @MainActor
         public static var currentStatusBar: StatusBar {
-            return statusBar(by: currentAppearance)
+            statusBar(by: currentAppearance)
         }
-        
-        // Accessors
+
+        /// Accessors
         @MainActor
         private static var currentStyle: UIStatusBarStyle {
-            return currentStatusBarManager?.statusBarStyle ?? .default
+            currentStatusBarManager?.statusBarStyle ?? .default
         }
 
         @MainActor
         private static var isCurrentVisible: Bool {
-            return currentStatusBarManager?.isStatusBarHidden == false
+            currentStatusBarManager?.isStatusBarHidden == false
         }
 
         @MainActor
         private static var currentStatusBarManager: UIStatusBarManager? {
-            return UIApplication.shared.ekActiveScene?.statusBarManager
+            UIApplication.shared.ekActiveScene?.statusBarManager
         }
     }
 }

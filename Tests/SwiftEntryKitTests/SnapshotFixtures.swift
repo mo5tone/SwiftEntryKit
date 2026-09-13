@@ -3,11 +3,10 @@
 //  SwiftEntryKitTests
 //
 
-import UIKit
 @testable import SwiftEntryKit
+import UIKit
 
 enum SnapshotFixtures {
-
     static func label(_ text: String, font: UIFont = .systemFont(ofSize: 15), color: UIColor = .black) -> EKProperty.LabelContent {
         EKProperty.LabelContent(text: text, style: .init(font: font, color: EKColor(color)))
     }
@@ -33,7 +32,7 @@ enum SnapshotFixtures {
     }
 
     static func buttonBar(count: Int) -> EKProperty.ButtonBarContent {
-        let buttons = (1...count).map { button("Button \($0)") }
+        let buttons = (1 ... count).map { button("Button \($0)") }
         return EKProperty.ButtonBarContent(with: buttons, separatorColor: EKColor(.lightGray), expandAnimatedly: false)
     }
 
@@ -54,7 +53,7 @@ enum SnapshotFixtures {
             UIColor.systemOrange.setFill()
             context.fill(CGRect(x: 0, y: 0, width: 30, height: 30))
         }
-        return (1...count).map { index in
+        return (1 ... count).map { index in
             EKProperty.EKRatingItemContent(
                 title: label("Item \(index)"),
                 description: label("Description \(index)"),

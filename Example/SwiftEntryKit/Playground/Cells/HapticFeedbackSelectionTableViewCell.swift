@@ -1,5 +1,5 @@
 //
-//  NotificationFeedbackSelectionTableViewCell.swift
+//  HapticFeedbackSelectionTableViewCell.swift
 //  SwiftEntryKit_Example
 //
 //  Created by Daniel Huri on 4/25/18.
@@ -9,7 +9,6 @@
 import Foundation
 
 final class HapticFeedbackSelectionTableViewCell: SelectionTableViewCell {
-    
     override func configure(attributesWrapper: EntryAttributeWrapper) {
         super.configure(attributesWrapper: attributesWrapper)
         titleValue = "Notification Haptic Feedback"
@@ -17,7 +16,7 @@ final class HapticFeedbackSelectionTableViewCell: SelectionTableViewCell {
         insertSegments(by: ["Off", "Success", "Warning", "Error"])
         selectSegment()
     }
-    
+
     private func selectSegment() {
         switch attributes.hapticFeedbackType {
         case .none:
@@ -30,7 +29,7 @@ final class HapticFeedbackSelectionTableViewCell: SelectionTableViewCell {
             segmentedControl.selectedSegmentIndex = 3
         }
     }
-    
+
     @objc override func segmentChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:

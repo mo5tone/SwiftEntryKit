@@ -1,5 +1,5 @@
 //
-//  VisibleDurationTableViewCell.swift
+//  DisplayDurationSelectionTableViewCell.swift
 //  SwiftEntryKit_Example
 //
 //  Created by Daniel Huri on 4/24/18.
@@ -9,7 +9,6 @@
 import UIKit
 
 final class DisplayDurationSelectionTableViewCell: SelectionTableViewCell {
-    
     override func configure(attributesWrapper: EntryAttributeWrapper) {
         super.configure(attributesWrapper: attributesWrapper)
         titleValue = "Display Duration"
@@ -17,7 +16,7 @@ final class DisplayDurationSelectionTableViewCell: SelectionTableViewCell {
         insertSegments(by: ["2 Seconds", "4 Seconds", "infinite"])
         selectSegment()
     }
-    
+
     private func selectSegment() {
         switch attributesWrapper.attributes.displayDuration {
         case 2:
@@ -30,7 +29,7 @@ final class DisplayDurationSelectionTableViewCell: SelectionTableViewCell {
             break
         }
     }
-    
+
     @objc override func segmentChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:

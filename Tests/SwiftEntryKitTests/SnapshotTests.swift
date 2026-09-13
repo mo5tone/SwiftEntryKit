@@ -3,15 +3,14 @@
 //  SwiftEntryKitTests
 //
 
-import Testing
-import UIKit
 import SnapshotTesting
 @testable import SwiftEntryKit
+import Testing
+import UIKit
 
 @Suite(.snapshots(record: .missing))
 @MainActor
 struct SnapshotTests {
-
     private func prepared(_ view: UIView, height: CGFloat, width: CGFloat = 320) -> UIView {
         view.frame = CGRect(x: 0, y: 0, width: width, height: height)
         view.layoutIfNeeded()

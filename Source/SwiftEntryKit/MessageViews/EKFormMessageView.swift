@@ -7,26 +7,26 @@
 
 import UIKit
 
-final public class EKFormMessageView: UIView {
-    
+public final class EKFormMessageView: UIView {
     private let scrollViewVerticalOffset: CGFloat = 20
-    
+
     // MARK: Props
-    
+
     private let titleLabel = UILabel()
     private let scrollView = UIScrollView()
     private let textFieldsContent: [EKProperty.TextFieldContent]
     private var textFieldViews: [EKTextField] = []
     private var buttonBarView: EKButtonBarView!
-    
+
     private let titleContent: EKProperty.LabelContent
-    
+
     // MARK: Setup
-    
+
     public init(with title: EKProperty.LabelContent,
                 textFieldsContent: [EKProperty.TextFieldContent],
-                buttonContent: EKProperty.ButtonContent) {
-        self.titleContent = title
+                buttonContent: EKProperty.ButtonContent)
+    {
+        titleContent = title
         self.textFieldsContent = textFieldsContent
         super.init(frame: UIScreen.main.bounds)
         setupScrollView()
@@ -39,11 +39,12 @@ final public class EKFormMessageView: UIView {
             of: scrollView.contentSize.height + scrollViewVerticalOffset * 2,
             priority: .defaultHigh)
     }
-    
-    required public init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupTextFields(with textFieldsContent: [EKProperty.TextFieldContent]) {
         var textFieldIndex = 0
         textFieldViews = textFieldsContent.map { content -> EKTextField in
@@ -57,8 +58,8 @@ final public class EKFormMessageView: UIView {
         textFieldViews.spread(.vertically, offset: 5)
         textFieldViews.layoutToSuperview(axis: .horizontally)
     }
-    
-    // Setup tap gesture
+
+    /// Setup tap gesture
     private func setupTapGestureRecognizer() {
         let tapGestureRecognizer = UITapGestureRecognizer(
             target: self,
@@ -67,14 +68,14 @@ final public class EKFormMessageView: UIView {
         tapGestureRecognizer.numberOfTapsRequired = 1
         addGestureRecognizer(tapGestureRecognizer)
     }
-    
+
     private func setupScrollView() {
         addSubview(scrollView)
         scrollView.layoutToSuperview(axis: .horizontally, offset: 20)
         scrollView.layoutToSuperview(axis: .vertically, offset: scrollViewVerticalOffset)
         scrollView.layoutToSuperview(.width, .height, offset: -scrollViewVerticalOffset * 2)
     }
-    
+
     private func setupTitleLabel() {
         scrollView.addSubview(titleLabel)
         titleLabel.layoutToSuperview(.top, .width)
@@ -82,7 +83,7 @@ final public class EKFormMessageView: UIView {
         titleLabel.forceContentWrap(.vertically)
         titleLabel.content = titleContent
     }
-    
+
     private func setupButton(with buttonContent: EKProperty.ButtonContent) {
         var buttonContent = buttonContent
         let action = buttonContent.action
@@ -105,25 +106,25 @@ final public class EKFormMessageView: UIView {
         buttonBarView.layoutToSuperview(.bottom)
         buttonBarView.layer.cornerRadius = 5
     }
-    
+
     private func extractTextFieldsContent() {
         for (content, textField) in zip(textFieldsContent, textFieldViews) {
             content.contentWrapper.text = textField.text
         }
     }
-    
+
     /** Makes a specific text field the first responder */
     public func becomeFirstResponder(with textFieldIndex: Int) {
         textFieldViews[textFieldIndex].makeFirstResponder()
     }
-    
-    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+
+    override public func traitCollectionDidChange(_: UITraitCollection?) {
         titleLabel.textColor = titleContent.style.color(for: traitCollection)
     }
-    
+
     // MARK: User Intractions
-    
-    // Tap Gesture
+
+    /// Tap Gesture
     @objc func tapGestureRecognized() {
         endEditing(true)
     }

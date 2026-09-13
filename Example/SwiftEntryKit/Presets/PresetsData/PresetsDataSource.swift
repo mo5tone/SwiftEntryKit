@@ -7,14 +7,13 @@
 //
 
 import Foundation
-import UIKit
 import SwiftEntryKit
+import UIKit
 
 struct PresetsDataSource {
-    
-    // Cluster of presets, aggregated under name
+    /// Cluster of presets, aggregated under name
     typealias Cluster = (title: String, data: [PresetDescription])
-    
+
     private enum ThumbDesc: String {
         case bottomToast = "ic_bottom_toast"
         case bottomFloat = "ic_bottom_float"
@@ -24,33 +23,33 @@ struct PresetsDataSource {
         case topNote = "ic_top_note"
         case bottomPopup = "ic_bottom_popup"
     }
-    
+
     private(set) var dataSource: [Cluster] = []
-    
+
     private(set) subscript(section: Int) -> Cluster {
         get {
-            return dataSource[section]
+            dataSource[section]
         }
         set {
             return dataSource[section] = newValue
         }
     }
-    
+
     private(set) subscript(section: Int, index: Int) -> PresetDescription {
         get {
-            return dataSource[section].data[index]
+            dataSource[section].data[index]
         }
         set {
             return dataSource[section].data[index] = newValue
         }
     }
-    
+
     static var displayMode = EKAttributes.DisplayMode.inferred
     private var displayMode: EKAttributes.DisplayMode {
-        return PresetsDataSource.displayMode
+        PresetsDataSource.displayMode
     }
-    
-    // Cumputed for the sake of reusability
+
+    /// Cumputed for the sake of reusability
     var bottomAlertAttributes: EKAttributes {
         var attributes = EKAttributes.bottomFloat
         attributes.hapticFeedbackType = .success
@@ -103,12 +102,13 @@ struct PresetsDataSource {
         attributes.statusBar = .dark
         return attributes
     }
-    
+
     // MARK: Setup
+
     init() {
         setup()
     }
-    
+
     mutating func setup() {
         dataSource = []
         setupToastPresets()
@@ -118,7 +118,7 @@ struct PresetsDataSource {
         setupFormPresets()
         setupCustomPresets()
     }
-    
+
     private mutating func setupToastPresets() {
         var toasts: [PresetDescription] = []
         var attributes: EKAttributes
@@ -174,7 +174,7 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         toasts.append(description)
-        
+
         // Preset III
         attributes = .bottomToast
         attributes.displayMode = displayMode
@@ -190,7 +190,7 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         toasts.append(description)
-        
+
         // Preset IV
         attributes = .bottomToast
         attributes.displayMode = displayMode
@@ -207,10 +207,10 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         toasts.append(description)
-        
+
         dataSource.append(("Toasts", toasts))
     }
-    
+
     private mutating func setupNotePresets() {
         var notes: [PresetDescription] = []
         var attributes: EKAttributes
@@ -290,7 +290,7 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         notes.append(description)
-        
+
         // Preset IV
         attributes = .topNote
         attributes.displayMode = displayMode
@@ -306,10 +306,10 @@ struct PresetsDataSource {
             )
         )
         descriptionString =
-        """
-        Appears for 5 seconds. Has a thin shadow. Displays image animation. \
-        Generates success notification haptic feedback
-        """
+            """
+            Appears for 5 seconds. Has a thin shadow. Displays image animation. \
+            Generates success notification haptic feedback
+            """
         descriptionThumb = ThumbDesc.topNote.rawValue
         description = .init(
             with: attributes,
@@ -318,7 +318,7 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         notes.append(description)
-        
+
         // Preset V
         attributes = .statusBar
         attributes.displayMode = displayMode
@@ -334,7 +334,7 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         notes.append(description)
-        
+
         // Preset VI
         attributes = .bottomNote
         attributes.displayMode = displayMode
@@ -363,10 +363,10 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         notes.append(description)
-        
+
         dataSource.append(("Notes", notes))
     }
-    
+
     private mutating func setupFloatPresets() {
         var floats: [PresetDescription] = []
         var description: PresetDescription
@@ -416,7 +416,7 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         floats.append(description)
-        
+
         // Preset II
         attributes = .bottomFloat
         attributes.displayMode = displayMode
@@ -447,10 +447,10 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         floats.append(description)
-        
+
         dataSource.append(("Floats", floats))
     }
-    
+
     private mutating func setupPopupPresets() {
         var presets: [PresetDescription] = []
         var attributes: EKAttributes
@@ -471,14 +471,14 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         presets.append(description)
-        
+
         // Preset II
         attributes = EKAttributes.centerFloat
         attributes.hapticFeedbackType = .success
         attributes.displayDuration = .infinity
         attributes.entryBackground = .gradient(
             gradient: .init(
-                colors: [EKColor(rgb: 0xfffbd5), EKColor(rgb: 0xb20a2c)],
+                colors: [EKColor(rgb: 0xFFFBD5), EKColor(rgb: 0xB20A2C)],
                 startPoint: .zero,
                 endPoint: CGPoint(x: 1, y: 1)
             )
@@ -536,7 +536,7 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         presets.append(description)
-        
+
         // Preset III
         attributes = bottomAlertAttributes
         attributes.displayMode = displayMode
@@ -566,7 +566,7 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         presets.append(description)
-        
+
         // Preset IV
         attributes = .topFloat
         attributes.displayMode = displayMode
@@ -681,7 +681,7 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         presets.append(description)
-        
+
         // Preset VI
         attributes = .centerFloat
         attributes.displayMode = displayMode
@@ -732,17 +732,17 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         presets.append(description)
-        
+
         dataSource.append(("Alerts & Popups", presets))
     }
-    
+
     private mutating func setupFormPresets() {
         var presets: [PresetDescription] = []
         var attributes: EKAttributes
         var description: PresetDescription
         var descriptionString: String
         var descriptionThumb: String
-        
+
         // Preset I
         attributes = .float
         attributes.displayMode = displayMode
@@ -789,10 +789,10 @@ struct PresetsDataSource {
             height: .intrinsic
         )
         descriptionString =
-        """
-        Keeps 10pts offset and resist screen top edge with 5pts offset. \
-        Dismissed with background tap.
-        """
+            """
+            Keeps 10pts offset and resist screen top edge with 5pts offset. \
+            Dismissed with background tap.
+            """
         descriptionThumb = ThumbDesc.bottomPopup.rawValue
         description = .init(
             with: attributes,
@@ -801,7 +801,7 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         presets.append(description)
-        
+
         // Preset II
         attributes = .float
         attributes.displayMode = displayMode
@@ -861,11 +861,11 @@ struct PresetsDataSource {
             height: .intrinsic
         )
         descriptionString =
-        """
-        Keeps 15pts offset. Resists screen top edge \
-        (Could not exceed screen top bounds when the keyboard is open). \
-        Dismissed with background tap.
-        """
+            """
+            Keeps 15pts offset. Resists screen top edge \
+            (Could not exceed screen top bounds when the keyboard is open). \
+            Dismissed with background tap.
+            """
         descriptionThumb = ThumbDesc.bottomPopup.rawValue
         description = .init(
             with: attributes,
@@ -874,7 +874,7 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         presets.append(description)
-        
+
         // Preset III
         attributes = .toast
         attributes.displayMode = displayMode
@@ -939,17 +939,17 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         presets.append(description)
-        
+
         dataSource.append(("Forms", presets))
     }
-    
+
     private mutating func setupCustomPresets() {
         var presets: [PresetDescription] = []
         var attributes: EKAttributes
         var description: PresetDescription
         var descriptionString: String
         var descriptionThumb: String
-        
+
         // Preset I
         attributes = .bottomFloat
         attributes.displayMode = displayMode
@@ -996,7 +996,7 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         presets.append(description)
-        
+
         // Preset II
         attributes = .bottomFloat
         attributes.displayMode = displayMode
@@ -1074,7 +1074,7 @@ struct PresetsDataSource {
             thumb: descriptionThumb
         )
         presets.append(description)
-        
+
         // Preset III
         attributes = .bottomFloat
         attributes.displayMode = displayMode
@@ -1146,10 +1146,10 @@ struct PresetsDataSource {
         )
         attributes.statusBar = .ignored
         descriptionString =
-        """
-        Customized view that is initialized by a nib file, \
-        it is additionally added various attributes such as round corners and a mild shadow
-        """
+            """
+            Customized view that is initialized by a nib file, \
+            it is additionally added various attributes such as round corners and a mild shadow
+            """
         descriptionThumb = ThumbDesc.bottomFloat.rawValue
         description = .init(
             with: attributes,

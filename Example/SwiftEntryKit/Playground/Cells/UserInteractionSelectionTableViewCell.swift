@@ -6,20 +6,19 @@
 //  Copyright (c) 2018 huri000@gmail.com. All rights reserved.
 //
 
-import UIKit
 import SwiftEntryKit
+import UIKit
 
 final class UserInteractionSelectionTableViewCell: SelectionTableViewCell {
-        
     var focus: Focus = .entry
-    
+
     private var interactionAction: EKAttributes.UserInteraction.Default {
         get {
             switch focus {
             case .entry:
-                return attributesWrapper.attributes.entryInteraction.defaultAction
+                attributesWrapper.attributes.entryInteraction.defaultAction
             case .screen:
-                return attributesWrapper.attributes.screenInteraction.defaultAction
+                attributesWrapper.attributes.screenInteraction.defaultAction
             }
         }
         set {
@@ -31,21 +30,21 @@ final class UserInteractionSelectionTableViewCell: SelectionTableViewCell {
             }
         }
     }
-    
+
     func configure(attributesWrapper: EntryAttributeWrapper, focus: Focus) {
         self.focus = focus
         configure(attributesWrapper: attributesWrapper)
     }
-    
+
     override func configure(attributesWrapper: EntryAttributeWrapper) {
         super.configure(attributesWrapper: attributesWrapper)
         titleValue = "\(focus.rawValue.capitalized) User Interaction"
         descriptionValue = "Describes what happens when the user taps the \(focus.rawValue). The touch can be absorbed, delay the exit, be forwarded to the window below, or dismiss the entry."
-        
+
         insertSegments(by: ["Absorb", "Delay", "Forward", "Dismiss"])
         selectSegment()
     }
-    
+
     private func selectSegment() {
         switch interactionAction {
         case .absorbTouches:
@@ -58,7 +57,7 @@ final class UserInteractionSelectionTableViewCell: SelectionTableViewCell {
             segmentedControl.selectedSegmentIndex = 3
         }
     }
-    
+
     @objc override func segmentChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:

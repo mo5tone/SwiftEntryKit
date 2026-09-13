@@ -11,42 +11,39 @@ import UIKit
  A stateless, threadsafe (unless described otherwise) entry point that contains the display and the dismissal logic of entries.
  */
 public final class SwiftEntryKit {
-    
     /** Describes the a single or multiple entries for possible dismissal states */
     public enum EntryDismissalDescriptor: Sendable {
-        
         /** Describes specific entry / entries with name */
         case specific(entryName: String)
-        
+
         /** Describes a group of entries with lower or equal display priority */
         case prioritizedLowerOrEqualTo(priority: EKAttributes.Precedence.Priority)
-        
+
         /** Describes all the entries that are currently in the queue and pending presentation */
         case enqueued
-        
+
         /** Describes all the entries */
         case all
-        
+
         /** Describes the currently displayed entry */
         case displayed
     }
-    
+
     /** The window to rollback to after dismissal */
     public enum RollbackWindow: @unchecked Sendable {
-        
         /** The main window */
         case main
-        
+
         /** A given custom window */
         case custom(window: UIWindow)
     }
-    
+
     /** Completion handler for the dismissal method */
     public typealias DismissCompletionHandler = @Sendable () -> Void
-    
+
     /** Cannot be instantiated, customized, inherited. */
     private init() {}
-    
+
     /**
      Returns the window that displays the entry.
      **Warning**: the returned `UIWindow` instance is `nil` in case
@@ -58,16 +55,16 @@ public final class SwiftEntryKit {
             EKWindowProvider.shared.entryWindow
         }
     }
-    
+
     /**
      Returns true if **any** entry is currently displayed.
      - Not thread safe - should be called from the main queue only in order to receive a reliable result.
      - Convenience computed variable. Using it is the same as invoking **isCurrentlyDisplaying() -> Bool** (witohut the name of the entry).
      */
     public class var isCurrentlyDisplaying: Bool {
-        return isCurrentlyDisplaying()
+        isCurrentlyDisplaying()
     }
-    
+
     /**
      Returns true if an entry with a given name is currently displayed.
      - Not thread safe - should be called from the main queue only in order to receive a reliable result.
@@ -80,16 +77,16 @@ public final class SwiftEntryKit {
             EKWindowProvider.shared.isCurrentlyDisplaying(entryNamed: name)
         }
     }
-    
+
     /**
      Returns true if **any** entry is currently enqueued and waiting to be displayed.
      - Not thread safe - should be called from the main queue only in order to receive a reliable result.
      - Convenience computed variable. Using it is the same as invoking **~queueContains() -> Bool** (witohut the name of the entry)
      */
     public class var isQueueEmpty: Bool {
-        return !queueContains()
+        !queueContains()
     }
-    
+
     /**
      Returns true if an entry with a given name is currently enqueued and waiting to be displayed.
      - Not thread safe - should be called from the main queue only in order to receive a reliable result.
@@ -101,7 +98,7 @@ public final class SwiftEntryKit {
             EKWindowProvider.shared.queueContains(entryNamed: name)
         }
     }
-    
+
     /**
      Displays a given entry view using an attributes struct.
      - A thread-safe method - Can be invokes from any thread
@@ -118,7 +115,7 @@ public final class SwiftEntryKit {
             }
         }
     }
-    
+
     /**
      Displays a given entry view controller using an attributes struct.
      - A thread-safe method - Can be invokes from any thread
@@ -135,7 +132,7 @@ public final class SwiftEntryKit {
             }
         }
     }
-    
+
     /**
      ALPHA FEATURE: Transform the previous entry to the current one using the previous attributes struct.
      - A thread-safe method - Can be invoked from any thread.
@@ -150,7 +147,7 @@ public final class SwiftEntryKit {
             }
         }
     }
-    
+
     /**
      Dismisses the currently presented entry and removes the presented window instance after the exit animation is concluded.
      - A thread-safe method - Can be invoked from any thread.
@@ -165,7 +162,7 @@ public final class SwiftEntryKit {
             }
         }
     }
-    
+
     /**
      Layout the view hierarchy that is rooted in the window.
      - In case you use complex animations, you can call it to refresh the AutoLayout mechanism on the entire view hierarchy.

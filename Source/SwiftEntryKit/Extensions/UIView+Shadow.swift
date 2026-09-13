@@ -11,13 +11,14 @@ extension UIView {
     func applyDropShadow(withOffset offset: CGSize,
                          opacity: Float,
                          radius: CGFloat,
-                         color: UIColor) {
+                         color: UIColor)
+    {
         layer.applyDropShadow(withOffset: offset,
                               opacity: opacity,
                               radius: radius,
                               color: color)
     }
-    
+
     func removeDropShadow() {
         layer.removeDropShadow()
     }
@@ -28,7 +29,8 @@ extension CALayer {
     func applyDropShadow(withOffset offset: CGSize,
                          opacity: Float,
                          radius: CGFloat,
-                         color: UIColor) {
+                         color: UIColor)
+    {
         shadowOffset = offset
         shadowOpacity = opacity
         shadowRadius = radius
@@ -36,7 +38,7 @@ extension CALayer {
         shouldRasterize = true
         rasterizationScale = UIScreen.main.scale
     }
-    
+
     func removeDropShadow() {
         shadowOffset = .zero
         shadowOpacity = 0

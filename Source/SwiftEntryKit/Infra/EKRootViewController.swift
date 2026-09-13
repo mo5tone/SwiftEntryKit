@@ -1,5 +1,5 @@
 //
-//  EntryViewController.swift
+//  EKRootViewController.swift
 //  SwiftEntryKit
 //
 //  Created by Daniel Huri on 4/19/18.
@@ -15,35 +15,32 @@ protocol EntryPresenterDelegate: AnyObject {
 }
 
 class EKRootViewController: UIViewController {
-    
     // MARK: - Props
-    
+
     private unowned let delegate: EntryPresenterDelegate
-    
+
     private var lastAttributes: EKAttributes!
-    
+
     private let backgroundView = EKBackgroundView()
 
-    private lazy var wrapperView: EKWrapperView = {
-        return EKWrapperView()
-    }()
-    
-    /*
+    private lazy var wrapperView: EKWrapperView = .init()
+
+    /**
      Count the total amount of currently displaying entries,
      meaning, total subviews less one - the backgorund of the entry
      */
     fileprivate var displayingEntryCount: Int {
-        return view.subviews.count - 1
+        view.subviews.count - 1
     }
-    
+
     fileprivate var isDisplaying: Bool {
-        return lastEntry != nil
+        lastEntry != nil
     }
-    
+
     private var lastEntry: EKContentView? {
-        return view.subviews.last as? EKContentView
+        view.subviews.last as? EKContentView
     }
-        
+
     private var isResponsive = false {
         didSet {
             wrapperView.isAbleToReceiveTouches = isResponsive
@@ -57,9 +54,9 @@ class EKRootViewController: UIViewController {
         }
         return lastAttributes.positionConstraints.rotation.isEnabled
     }
-    
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        guard let lastAttributes = lastAttributes else {
+        guard let lastAttributes else {
             return super.supportedInterfaceOrientations
         }
         switch lastAttributes.positionConstraints.rotation.supportedInterfaceOrientations {
@@ -69,18 +66,18 @@ class EKRootViewController: UIViewController {
             return .all
         }
     }
-    
-    // Previous status bar style
+
+    /// Previous status bar style
     private let previousStatusBar: EKAttributes.StatusBar
-    
-    private var statusBar: EKAttributes.StatusBar? = nil {
+
+    private var statusBar: EKAttributes.StatusBar? {
         didSet {
-            if let statusBar = statusBar, ![statusBar, oldValue].contains(.ignored) {
+            if let statusBar, ![statusBar, oldValue].contains(.ignored) {
                 setNeedsStatusBarAppearanceUpdate()
             }
         }
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         if [previousStatusBar, statusBar].contains(.ignored) {
             return super.preferredStatusBarStyle
@@ -94,60 +91,60 @@ class EKRootViewController: UIViewController {
         }
         return !(statusBar?.appearance.visible ?? previousStatusBar.appearance.visible)
     }
-    
+
     // MARK: - Lifecycle
-    
-    required public init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    public init(with delegate: EntryPresenterDelegate) {
+
+    init(with delegate: EntryPresenterDelegate) {
         self.delegate = delegate
         previousStatusBar = .currentStatusBar
         super.init(nibName: nil, bundle: nil)
     }
-    
-    override public func loadView() {
+
+    override func loadView() {
         view = wrapperView
         view.insertSubview(backgroundView, at: 0)
         backgroundView.isUserInteractionEnabled = false
         backgroundView.fillSuperview()
     }
-    
-    override public func viewWillDisappear(_ animated: Bool) {
+
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         statusBar = previousStatusBar
     }
-    
-    // Set status bar
+
+    /// Set status bar
     func setStatusBarStyle(for attributes: EKAttributes) {
         statusBar = attributes.statusBar
     }
-    
-    // MARK: - Setup
-    
-    func configure(entryView: EKEntryView) {
 
+    // MARK: - Setup
+
+    func configure(entryView: EKEntryView) {
         // In case the entry is a view controller, add the entry as child of root
         if let viewController = entryView.content.viewController {
             addChild(viewController)
         }
-        
+
         // Extract the attributes struct
         let attributes = entryView.attributes
-        
+
         // Assign attributes
         let previousAttributes = lastAttributes
-        
+
         // Remove the last entry
         removeLastEntry(lastAttributes: previousAttributes, keepWindow: true)
-        
+
         lastAttributes = attributes
-        
+
         let entryContentView = EKContentView(withEntryDelegate: self)
         view.addSubview(entryContentView)
         entryContentView.setup(with: entryView)
-        
+
         switch attributes.screenInteraction.defaultAction {
         case .forward:
             isResponsive = false
@@ -158,22 +155,22 @@ class EKRootViewController: UIViewController {
         if previousAttributes?.statusBar != attributes.statusBar {
             setNeedsStatusBarAppearanceUpdate()
         }
-        
+
         if shouldAutorotate {
             UIViewController.attemptRotationToDeviceOrientation()
         }
     }
-        
-    // Check priority precedence for a given entry
+
+    /// Check priority precedence for a given entry
     func canDisplay(attributes: EKAttributes) -> Bool {
-        guard let lastAttributes = lastAttributes else {
+        guard let lastAttributes else {
             return true
         }
         return attributes.precedence.priority >= lastAttributes.precedence.priority
     }
 
-    // Removes last entry - can keep the window 'ON' if necessary
-    private func removeLastEntry(lastAttributes: EKAttributes?, keepWindow: Bool) {
+    /// Removes last entry - can keep the window 'ON' if necessary
+    private func removeLastEntry(lastAttributes: EKAttributes?, keepWindow _: Bool) {
         guard let attributes = lastAttributes else {
             return
         }
@@ -183,14 +180,14 @@ class EKRootViewController: UIViewController {
             popLastEntry()
         }
     }
-    
-    // Make last entry exit using exitAnimation - animatedly
+
+    /// Make last entry exit using exitAnimation - animatedly
     func animateOutLastEntry(completionHandler: SwiftEntryKit.DismissCompletionHandler? = nil) {
         lastEntry?.dismissHandler = completionHandler
         lastEntry?.animateOut(pushOut: false)
     }
-    
-    // Pops last entry (using pop animation) - animatedly
+
+    /// Pops last entry (using pop animation) - animatedly
     func popLastEntry() {
         lastEntry?.animateOut(pushOut: true)
     }
@@ -199,8 +196,7 @@ class EKRootViewController: UIViewController {
 // MARK: - UIResponder
 
 extension EKRootViewController {
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesEnded(_: Set<UITouch>, with _: UIEvent?) {
         switch lastAttributes.screenInteraction.defaultAction {
         case .dismissEntry:
             lastEntry?.animateOut(pushOut: false)
@@ -214,50 +210,49 @@ extension EKRootViewController {
 // MARK: - EntryScrollViewDelegate
 
 extension EKRootViewController: EntryContentViewDelegate {
-    
-    func didFinishDisplaying(entry: EKEntryView, keepWindowActive: Bool, dismissCompletionHandler: (() -> Void)?) {
+    func didFinishDisplaying(entry _: EKEntryView, keepWindowActive: Bool, dismissCompletionHandler: (() -> Void)?) {
         guard !isDisplaying else {
             return
         }
-        
+
         guard !keepWindowActive else {
             return
         }
-        
+
         delegate.displayPendingEntryOrRollbackWindow(dismissCompletionHandler: dismissCompletionHandler)
     }
-    
+
     func changeToInactive(withAttributes attributes: EKAttributes, pushOut: Bool) {
         guard displayingEntryCount <= 1 else {
             return
         }
-        
+
         let clear = {
             let style = EKBackgroundView.Style(background: .clear, displayMode: attributes.displayMode)
             self.changeBackground(to: style, duration: attributes.exitAnimation.totalDuration)
         }
-        
+
         guard pushOut else {
             clear()
             return
         }
-        
+
         guard let lastBackroundStyle = lastAttributes?.screenBackground else {
             clear()
             return
         }
-        
+
         if lastBackroundStyle != attributes.screenBackground {
             clear()
         }
     }
-    
+
     func changeToActive(withAttributes attributes: EKAttributes) {
         let style = EKBackgroundView.Style(background: attributes.screenBackground,
                                            displayMode: attributes.displayMode)
         changeBackground(to: style, duration: attributes.entranceAnimation.totalDuration)
     }
-    
+
     private func changeBackground(to style: EKBackgroundView.Style, duration: TimeInterval) {
         DispatchQueue.main.async {
             UIView.animate(withDuration: duration, delay: 0, options: [], animations: {
@@ -266,4 +261,3 @@ extension EKRootViewController: EntryContentViewDelegate {
         }
     }
 }
-

@@ -9,45 +9,43 @@
 import UIKit
 
 public extension EKAttributes {
-    
     /** The background style property */
     enum BackgroundStyle: Equatable {
-        
         /** Blur style for light and dark modes */
         public struct BlurStyle: Equatable {
-            
             public static var extra: BlurStyle {
-                return BlurStyle(light: .extraLight, dark: .dark)
+                BlurStyle(light: .extraLight, dark: .dark)
             }
-            
+
             public static var standard: BlurStyle {
-                return BlurStyle(light: .light, dark: .dark)
+                BlurStyle(light: .light, dark: .dark)
             }
-            
+
             public static var prominent: BlurStyle {
-                return BlurStyle(light: .prominent, dark: .prominent)
+                BlurStyle(light: .prominent, dark: .prominent)
             }
-            
+
             public static var dark: BlurStyle {
-                return BlurStyle(light: .dark, dark: .dark)
+                BlurStyle(light: .dark, dark: .dark)
             }
-            
+
             let light: UIBlurEffect.Style
             let dark: UIBlurEffect.Style
-            
+
             public init(style: UIBlurEffect.Style) {
-                self.light = style
-                self.dark = style
+                light = style
+                dark = style
             }
-            
+
             public init(light: UIBlurEffect.Style, dark: UIBlurEffect.Style) {
                 self.light = light
                 self.dark = dark
             }
-            
+
             /** Computes a proper `UIBlurEffect.Style` instance */
             public func blurStyle(for traits: UITraitCollection,
-                                  mode: EKAttributes.DisplayMode) -> UIBlurEffect.Style {
+                                  mode: EKAttributes.DisplayMode) -> UIBlurEffect.Style
+            {
                 switch mode {
                 case .inferred:
                     switch traits.userInterfaceStyle {
@@ -64,66 +62,69 @@ public extension EKAttributes {
                     return dark
                 }
             }
-            
+
             @MainActor
             public func blurEffect(for traits: UITraitCollection,
-                                   mode: EKAttributes.DisplayMode) -> UIBlurEffect {
-                return UIBlurEffect(style: blurStyle(for: traits, mode: mode))
+                                   mode: EKAttributes.DisplayMode) -> UIBlurEffect
+            {
+                UIBlurEffect(style: blurStyle(for: traits, mode: mode))
             }
         }
-        
+
         /** Gradient background style */
         public struct Gradient {
             public var colors: [EKColor]
             public var startPoint: CGPoint
             public var endPoint: CGPoint
-            
+
             public init(colors: [EKColor],
                         startPoint: CGPoint,
-                        endPoint: CGPoint) {
+                        endPoint: CGPoint)
+            {
                 self.colors = colors
                 self.startPoint = startPoint
                 self.endPoint = endPoint
             }
         }
-        
+
         /** Visual Effect (Blurred) background style */
         case visualEffect(style: BlurStyle)
-        
+
         /** Color background style */
         case color(color: EKColor)
-        
+
         /** Gradient background style */
         case gradient(gradient: Gradient)
-        
+
         /** Image background style */
         case image(image: UIImage)
-        
+
         /** Clear background style */
         case clear
-        
+
         /** == operator overload */
         public static func == (lhs: EKAttributes.BackgroundStyle,
-                               rhs: EKAttributes.BackgroundStyle) -> Bool {
+                               rhs: EKAttributes.BackgroundStyle) -> Bool
+        {
             switch (lhs, rhs) {
-            case (visualEffect(style: let leftStyle),
-                  visualEffect(style: let rightStyle)):
+            case let (visualEffect(style: leftStyle),
+                      visualEffect(style: rightStyle)):
                 return leftStyle == rightStyle
-            case (color(color: let leftColor),
-                  color(color: let rightColor)):
+            case let (color(color: leftColor),
+                      color(color: rightColor)):
                 return leftColor == rightColor
-            case (image(image: let leftImage),
-                  image(image: let rightImage)):
+            case let (image(image: leftImage),
+                      image(image: rightImage)):
                 return leftImage == rightImage
-            case (gradient(gradient: let leftGradient),
-                  gradient(gradient: let rightGradient)):
+            case let (gradient(gradient: leftGradient),
+                      gradient(gradient: rightGradient)):
                 for (leftColor, rightColor) in zip(leftGradient.colors, rightGradient.colors) {
                     guard leftColor == rightColor else {
                         return false
                     }
                 }
                 return leftGradient.startPoint == rightGradient.startPoint &&
-                       leftGradient.endPoint == rightGradient.endPoint
+                    leftGradient.endPoint == rightGradient.endPoint
             case (clear, clear):
                 return true
             default:

@@ -8,17 +8,18 @@
 import UIKit
 
 public class EKImageNoteMessageView: EKAccessoryNoteMessageView {
-    
     // MARK: Setup
-    public required init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public init(with content: EKProperty.LabelContent, imageContent: EKProperty.ImageContent) {
         super.init(frame: UIScreen.main.bounds)
         setup(with: content, imageContent: imageContent)
     }
-    
+
     private func setup(with content: EKProperty.LabelContent, imageContent: EKProperty.ImageContent) {
         let imageView = UIImageView()
         imageView.imageContent = imageContent

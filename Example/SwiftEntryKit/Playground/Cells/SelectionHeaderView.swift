@@ -6,37 +6,37 @@
 //  Copyright (c) 2018 huri000@gmail.com. All rights reserved.
 //
 
-import UIKit
 import SwiftEntryKit
+import UIKit
 
 final class SelectionHeaderView: UITableViewHeaderFooterView {
-
     var text: String {
         set {
             textLabel?.text = newValue
         }
         get {
-            return textLabel?.text ?? ""
+            textLabel?.text ?? ""
         }
     }
-    
+
     var displayMode = EKAttributes.DisplayMode.inferred {
         didSet {
             setupInterfaceStyle()
         }
     }
-    
+
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         backgroundView = UIView()
         textLabel?.font = MainFont.bold.with(size: 17)
         setupInterfaceStyle()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupInterfaceStyle() {
         backgroundView?.backgroundColor = EKColor.headerBackground.color(
             for: traitCollection,
@@ -47,8 +47,8 @@ final class SelectionHeaderView: UITableViewHeaderFooterView {
             mode: PresetsDataSource.displayMode
         )
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+
+    override func traitCollectionDidChange(_: UITraitCollection?) {
         setupInterfaceStyle()
     }
 }

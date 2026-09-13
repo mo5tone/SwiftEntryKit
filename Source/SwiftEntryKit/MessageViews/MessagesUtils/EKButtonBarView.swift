@@ -1,5 +1,5 @@
 //
-//  ButtonsBarView.swift
+//  EKButtonBarView.swift
 //  SwiftEntryKit_Example
 //
 //  Created by Daniel Huri on 4/28/18.
@@ -14,53 +14,50 @@ import UIKit
  1-2 buttons spread horizontally
  3 or more buttons spread vertically
  */
-final public class EKButtonBarView: UIView {
-    
+public final class EKButtonBarView: UIView {
     // MARK: - Properties
-    
+
     private var buttonViews: [EKButtonView] = []
     private var separatorViews: [UIView] = []
-    
+
     private let buttonBarContent: EKProperty.ButtonBarContent
     private let spreadAxis: QLAxis
     private let oppositeAxis: QLAxis
     private let relativeEdge: NSLayoutConstraint.Attribute
-    
+
     var bottomCornerRadius: CGFloat = 0 {
         didSet {
             adjustRoundCornersIfNecessary()
         }
     }
-    
-    private lazy var buttonEdgeRatio: CGFloat = {
-        return 1.0 / CGFloat(self.buttonBarContent.content.count)
-    }()
-    
+
+    private lazy var buttonEdgeRatio: CGFloat = 1.0 / CGFloat(self.buttonBarContent.content.count)
+
     private(set) lazy var intrinsicHeight: CGFloat = {
         var height: CGFloat = 0
         switch buttonBarContent.content.count {
         case 0:
             height += 1
-        case 1...buttonBarContent.horizontalDistributionThreshold:
+        case 1 ... buttonBarContent.horizontalDistributionThreshold:
             height += buttonBarContent.buttonHeight
         default:
-            for _ in 1...buttonBarContent.content.count {
+            for _ in 1 ... buttonBarContent.content.count {
                 height += buttonBarContent.buttonHeight
             }
         }
         return height
     }()
-    
+
     private var compressedConstraint: NSLayoutConstraint!
-    private lazy var expandedConstraint: NSLayoutConstraint = {
-        return set(.height, of: intrinsicHeight, priority: .defaultLow)
-    }()
+    private lazy var expandedConstraint: NSLayoutConstraint = set(.height, of: intrinsicHeight, priority: .defaultLow)
 
     // MARK: Setup
-    required public init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public init(with buttonBarContent: EKProperty.ButtonBarContent) {
         self.buttonBarContent = buttonBarContent
         if buttonBarContent.content.count <= buttonBarContent.horizontalDistributionThreshold {
@@ -75,11 +72,11 @@ final public class EKButtonBarView: UIView {
         super.init(frame: .zero)
         setupButtonBarContent()
         setupSeparatorViews()
-        
+
         compressedConstraint = set(.height, of: 1, priority: .must)
     }
-    
-    public override func layoutSubviews() {
+
+    override public func layoutSubviews() {
         super.layoutSubviews()
         adjustRoundCornersIfNecessary()
     }
@@ -92,7 +89,7 @@ final public class EKButtonBarView: UIView {
         }
         layoutButtons()
     }
-    
+
     private func layoutButtons() {
         guard !buttonViews.isEmpty else {
             return
@@ -105,7 +102,7 @@ final public class EKButtonBarView: UIView {
         buttonViews.spread(spreadAxis, stretchEdgesToSuperview: true)
         buttonViews.layout(relativeEdge, to: self, ratio: buttonEdgeRatio, priority: .must)
     }
-    
+
     private func setupTopSeperatorView() {
         let topSeparatorView = UIView()
         addSubview(topSeparatorView)
@@ -113,7 +110,7 @@ final public class EKButtonBarView: UIView {
         topSeparatorView.layoutToSuperview(.left, .right, .top)
         separatorViews.append(topSeparatorView)
     }
-    
+
     private func setupSeperatorView(after view: UIView) {
         let midSepView = UIView()
         addSubview(midSepView)
@@ -132,7 +129,7 @@ final public class EKButtonBarView: UIView {
         midSepView.layoutToSuperview(axis: oppositeAxis)
         separatorViews.append(midSepView)
     }
-    
+
     private func setupSeparatorViews() {
         setupTopSeperatorView()
         for button in buttonViews.dropLast() {
@@ -140,20 +137,20 @@ final public class EKButtonBarView: UIView {
         }
         setupInterfaceStyle()
     }
-    
-    // Amination
+
+    /// Amination
     public func expand() {
         let expansion = {
             self.compressedConstraint.priority = .defaultLow
             self.expandedConstraint.priority = .must
-            
+
             /* NOTE: Calling layoutIfNeeded for the whole view hierarchy.
              Sometimes it's easier to just use frames instead of AutoLayout for
              hierarch complexity considerations. Here the animation influences almost the
              entire view hierarchy. */
             SwiftEntryKit.layoutIfNeeded()
         }
-        
+
         alpha = 1
         if buttonBarContent.expandAnimatedly {
             let damping: CGFloat = buttonBarContent.content.count <= 2 ? 0.4 : 0.8
@@ -165,12 +162,12 @@ final public class EKButtonBarView: UIView {
             expansion()
         }
     }
-    
+
     public func compress() {
         compressedConstraint.priority = .must
         expandedConstraint.priority = .defaultLow
     }
-    
+
     private func adjustRoundCornersIfNecessary() {
         let size = CGSize(width: bottomCornerRadius, height: bottomCornerRadius)
         let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: .bottom, cornerRadii: size)
@@ -178,14 +175,14 @@ final public class EKButtonBarView: UIView {
         maskLayer.path = path.cgPath
         layer.mask = maskLayer
     }
-    
+
     private func setupInterfaceStyle() {
         for view in separatorViews {
             view.backgroundColor = buttonBarContent.separatorColor(for: traitCollection)
         }
     }
-    
-    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+
+    override public func traitCollectionDidChange(_: UITraitCollection?) {
         setupInterfaceStyle()
     }
 }

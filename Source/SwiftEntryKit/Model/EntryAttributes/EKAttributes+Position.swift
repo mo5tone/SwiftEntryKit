@@ -9,29 +9,27 @@
 import Foundation
 
 public extension EKAttributes {
-
     /** The position of the entry. */
     enum Position {
-        
         /** The entry appears at the top of the screen. */
         case top
-        
+
         /** The entry appears at the bottom of the screen. */
         case bottom
-        
+
         /** The entry appears at the center of the screen. */
         case center
-        
+
         public var isTop: Bool {
-            return self == .top
+            self == .top
         }
-        
+
         public var isCenter: Bool {
-            return self == .center
+            self == .center
         }
-        
+
         public var isBottom: Bool {
-            return self == .bottom
+            self == .bottom
         }
     }
 }

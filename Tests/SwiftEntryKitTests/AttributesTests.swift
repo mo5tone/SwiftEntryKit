@@ -3,13 +3,12 @@
 //  SwiftEntryKitTests
 //
 
+@testable import SwiftEntryKit
 import Testing
 import UIKit
-@testable import SwiftEntryKit
 
 @MainActor
 struct AttributesTests {
-
     @Test func displayPriorityInitMax() {
         var attributes = EKAttributes()
         attributes.precedence.priority = .max

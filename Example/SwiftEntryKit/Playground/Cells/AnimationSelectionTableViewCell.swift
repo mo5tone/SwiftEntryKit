@@ -10,19 +10,18 @@ import Foundation
 import SwiftEntryKit
 
 final class AnimationSelectionTableViewCell: SelectionTableViewCell {
-    
     enum Action: String {
         case entrance
         case exit
         case pop
-        
+
         var isOut: Bool {
-            return Set([.exit, .pop]).contains(self)
+            Set([.exit, .pop]).contains(self)
         }
     }
-    
+
     var action: Action = .entrance
-    
+
     var animation: EKAttributes.Animation {
         set {
             switch action {
@@ -37,24 +36,24 @@ final class AnimationSelectionTableViewCell: SelectionTableViewCell {
         get {
             switch action {
             case .entrance:
-                return attributesWrapper.attributes.entranceAnimation
+                attributesWrapper.attributes.entranceAnimation
             case .exit:
-                return attributesWrapper.attributes.exitAnimation
+                attributesWrapper.attributes.exitAnimation
             case .pop:
-                if case EKAttributes.PopBehavior.animated(animation: let animation) = attributesWrapper.attributes.popBehavior {
-                    return animation
+                if case let EKAttributes.PopBehavior.animated(animation: animation) = attributesWrapper.attributes.popBehavior {
+                    animation
                 } else {
                     fatalError()
                 }
             }
         }
     }
-    
+
     func configure(attributesWrapper: EntryAttributeWrapper, action: Action) {
         self.action = action
         configure(attributesWrapper: attributesWrapper)
     }
-    
+
     override func configure(attributesWrapper: EntryAttributeWrapper) {
         super.configure(attributesWrapper: attributesWrapper)
         titleValue = "\(action.rawValue.capitalized) Animation"
@@ -62,7 +61,7 @@ final class AnimationSelectionTableViewCell: SelectionTableViewCell {
         insertSegments(by: ["Translate", "Scale", "Fade"])
         selectSegment()
     }
-    
+
     private func selectSegment() {
         if animation.containsTranslation {
             segmentedControl.selectedSegmentIndex = 0
@@ -72,7 +71,7 @@ final class AnimationSelectionTableViewCell: SelectionTableViewCell {
             segmentedControl.selectedSegmentIndex = 2
         }
     }
-    
+
     @objc override func segmentChanged() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
