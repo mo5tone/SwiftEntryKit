@@ -33,31 +33,31 @@ jobs:
         with:
           cache: true
 
-      - name: Generate project
-        run: tuist generate
+      # Run the Swift package tests before generating the Tuist workspace:
+      # tuist generate produces a workspace named "SwiftEntryKit" that collides
+      # with the package's auto-generated scheme of the same name.
+      - name: Test (Swift Package)
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -scheme SwiftEntryKit \
+            -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.2' \
+            -enableCodeCoverage YES \
+            -resultBundlePath TestResults.xcresult \
+            CODE_SIGNING_ALLOWED=NO | xcbeautify
 
-      # Snapshot tests compare rendered views against committed reference images.
-      # The reference images are recorded on a specific simulator OS, so the
-      # destination below MUST match the recording environment. If the runner
-      # bumps its iOS version, re-record by deleting Tests/SwiftEntryKitTests/__Snapshots__
-      # and re-running, then commit the updated images.
+      - name: Generate project
+        run: tuist generate --no-open
+
+      # Snapshot references are recorded against a fixed simulator OS; keep the
+      # destination in sync with the one used in "Test (Swift Package)".
       - name: Build example
         run: |
           set -o pipefail
           xcodebuild build \
             -workspace SwiftEntryKit.xcworkspace \
             -scheme SwiftEntryKitDemo \
-            -destination 'platform=iOS Simulator,name=iPhone 17' \
-            CODE_SIGNING_ALLOWED=NO | xcbeautify
-
-      - name: Test (Swift Package)
-        run: |
-          set -o pipefail
-          xcodebuild test \
-            -scheme SwiftEntryKit \
-            -destination 'platform=iOS Simulator,name=iPhone 17' \
-            -enableCodeCoverage YES \
-            -resultBundlePath TestResults.xcresult \
+            -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.2' \
             CODE_SIGNING_ALLOWED=NO | xcbeautify
 
       - name: Convert coverage to lcov
