@@ -16,8 +16,6 @@ class EKStyleView: UIView {
     private var roundCorners: EKAttributes.RoundCorners!
     private var border: EKAttributes.Border!
     
-    var appliedStyle = false
-    
     func applyFrameStyle(roundCorners: EKAttributes.RoundCorners, border: EKAttributes.Border) {
         self.roundCorners = roundCorners
         self.border = border
@@ -43,8 +41,6 @@ class EKStyleView: UIView {
             borderLayer.frame = bounds
             layer.addSublayer(borderLayer)
         }
-        
-        appliedStyle = true
     }
     
     override func layoutSubviews() {

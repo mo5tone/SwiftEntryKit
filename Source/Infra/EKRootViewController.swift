@@ -8,9 +8,10 @@
 
 import UIKit
 
+@MainActor
 protocol EntryPresenterDelegate: AnyObject {
     var isResponsiveToTouches: Bool { set get }
-    func displayPendingEntryOrRollbackWindow(dismissCompletionHandler: SwiftEntryKit.DismissCompletionHandler?)
+    func displayPendingEntryOrRollbackWindow(dismissCompletionHandler: (() -> Void)?)
 }
 
 class EKRootViewController: UIViewController {
@@ -74,13 +75,8 @@ class EKRootViewController: UIViewController {
     
     private var statusBar: EKAttributes.StatusBar? = nil {
         didSet {
-            guard let statusBar = statusBar, ![statusBar, oldValue].contains(.ignored) else {
-                return
-            }
-            if #available(iOS 13.0, *) {
+            if let statusBar = statusBar, ![statusBar, oldValue].contains(.ignored) {
                 setNeedsStatusBarAppearanceUpdate()
-            } else {
-                UIApplication.shared.set(statusBarStyle: statusBar)
             }
         }
     }
@@ -219,7 +215,7 @@ extension EKRootViewController {
 
 extension EKRootViewController: EntryContentViewDelegate {
     
-    func didFinishDisplaying(entry: EKEntryView, keepWindowActive: Bool, dismissCompletionHandler: SwiftEntryKit.DismissCompletionHandler?) {
+    func didFinishDisplaying(entry: EKEntryView, keepWindowActive: Bool, dismissCompletionHandler: (() -> Void)?) {
         guard !isDisplaying else {
             return
         }

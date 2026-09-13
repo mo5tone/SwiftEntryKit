@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public struct EKAttributes {
+public struct EKAttributes: @unchecked Sendable {
     
     // MARK: Identification
     

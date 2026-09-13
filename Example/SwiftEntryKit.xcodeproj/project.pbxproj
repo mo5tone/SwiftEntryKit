@@ -72,7 +72,6 @@
 		14B48B6C20B81C9700CE3EF4 /* EKAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B48B3120B81C9700CE3EF4 /* EKAttributes.swift */; };
 		14B48B6D20B81C9700CE3EF4 /* EKAttributes+UserInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B48B3220B81C9700CE3EF4 /* EKAttributes+UserInteraction.swift */; };
 		14B48B6E20B81C9700CE3EF4 /* EKAttributes+Duration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B48B3320B81C9700CE3EF4 /* EKAttributes+Duration.swift */; };
-		14B48B6F20B81C9700CE3EF4 /* EKAttributes+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B48B3420B81C9700CE3EF4 /* EKAttributes+Validations.swift */; };
 		14B48B7020B81C9700CE3EF4 /* EKAttributes+PopBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B48B3520B81C9700CE3EF4 /* EKAttributes+PopBehavior.swift */; };
 		14B48B7120B81C9700CE3EF4 /* EKAttributes+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B48B3620B81C9700CE3EF4 /* EKAttributes+Animation.swift */; };
 		14B48B7220B81C9700CE3EF4 /* EKAttributes+PositionConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B48B3720B81C9700CE3EF4 /* EKAttributes+PositionConstraints.swift */; };
@@ -80,6 +79,7 @@
 		14B48B7420B81C9700CE3EF4 /* EKAttributes+Scroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B48B3920B81C9700CE3EF4 /* EKAttributes+Scroll.swift */; };
 		14B48B7520B81C9700CE3EF4 /* EKAttributes+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B48B3A20B81C9700CE3EF4 /* EKAttributes+Presets.swift */; };
 		14B48B7620B81C9700CE3EF4 /* EKAttributes+WindowLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B48B3B20B81C9700CE3EF4 /* EKAttributes+WindowLevel.swift */; };
+		14B48B6F20B81C9700CE3EF4 /* EKAttributes+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B48B3420B81C9700CE3EF4 /* EKAttributes+Validations.swift */; };
 		14B48B7720B81C9700CE3EF4 /* EKAttributes+BackgroundStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B48B3C20B81C9700CE3EF4 /* EKAttributes+BackgroundStyle.swift */; };
 		14B48B7820B81C9700CE3EF4 /* EKAttributes+HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B48B3D20B81C9700CE3EF4 /* EKAttributes+HapticFeedback.swift */; };
 		14B48B7920B81C9700CE3EF4 /* EKAttributes+FrameStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B48B3E20B81C9700CE3EF4 /* EKAttributes+FrameStyle.swift */; };
@@ -228,7 +228,6 @@
 		14B48B3120B81C9700CE3EF4 /* EKAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EKAttributes.swift; sourceTree = "<group>"; };
 		14B48B3220B81C9700CE3EF4 /* EKAttributes+UserInteraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EKAttributes+UserInteraction.swift"; sourceTree = "<group>"; };
 		14B48B3320B81C9700CE3EF4 /* EKAttributes+Duration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EKAttributes+Duration.swift"; sourceTree = "<group>"; };
-		14B48B3420B81C9700CE3EF4 /* EKAttributes+Validations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EKAttributes+Validations.swift"; sourceTree = "<group>"; };
 		14B48B3520B81C9700CE3EF4 /* EKAttributes+PopBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EKAttributes+PopBehavior.swift"; sourceTree = "<group>"; };
 		14B48B3620B81C9700CE3EF4 /* EKAttributes+Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EKAttributes+Animation.swift"; sourceTree = "<group>"; };
 		14B48B3720B81C9700CE3EF4 /* EKAttributes+PositionConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EKAttributes+PositionConstraints.swift"; sourceTree = "<group>"; };
@@ -236,6 +235,7 @@
 		14B48B3920B81C9700CE3EF4 /* EKAttributes+Scroll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EKAttributes+Scroll.swift"; sourceTree = "<group>"; };
 		14B48B3A20B81C9700CE3EF4 /* EKAttributes+Presets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EKAttributes+Presets.swift"; sourceTree = "<group>"; };
 		14B48B3B20B81C9700CE3EF4 /* EKAttributes+WindowLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EKAttributes+WindowLevel.swift"; sourceTree = "<group>"; };
+		14B48B3420B81C9700CE3EF4 /* EKAttributes+Validations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EKAttributes+Validations.swift"; sourceTree = "<group>"; };
 		14B48B3C20B81C9700CE3EF4 /* EKAttributes+BackgroundStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EKAttributes+BackgroundStyle.swift"; sourceTree = "<group>"; };
 		14B48B3D20B81C9700CE3EF4 /* EKAttributes+HapticFeedback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EKAttributes+HapticFeedback.swift"; sourceTree = "<group>"; };
 		14B48B3E20B81C9700CE3EF4 /* EKAttributes+FrameStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EKAttributes+FrameStyle.swift"; sourceTree = "<group>"; };
@@ -471,8 +471,8 @@
 				14B48B2E20B81C9700CE3EF4 /* EKAttributes+Shadow.swift */,
 				145F56B720B84ACA0027EB67 /* EKAttributes+StatusBar.swift */,
 				14B48B3220B81C9700CE3EF4 /* EKAttributes+UserInteraction.swift */,
-				14B48B3420B81C9700CE3EF4 /* EKAttributes+Validations.swift */,
 				14B48B3B20B81C9700CE3EF4 /* EKAttributes+WindowLevel.swift */,
+				14B48B3420B81C9700CE3EF4 /* EKAttributes+Validations.swift */,
 			);
 			path = EntryAttributes;
 			sourceTree = "<group>";
@@ -928,7 +928,6 @@
 				143C1576271C814E009A7D03 /* QLUtils.swift in Sources */,
 				14B48B8820B81C9700CE3EF4 /* EKMessageContentView.swift in Sources */,
 				144E51BD20D56E150051FDCA /* EKAttributes+LifecycleActions.swift in Sources */,
-				14B48B6F20B81C9700CE3EF4 /* EKAttributes+Validations.swift in Sources */,
 				14F3FD86213A6ED900CA3010 /* EntryCachingHeuristic.swift in Sources */,
 				14B48B6620B81C9700CE3EF4 /* UIView+Shadow.swift in Sources */,
 				14B48B7A20B81C9700CE3EF4 /* EKPopUpMessage.swift in Sources */,
@@ -984,6 +983,7 @@
 				14B3A51820C16D7A002306C4 /* EKRatingSymbolView.swift in Sources */,
 				14B3A51220C16B64002306C4 /* EKRatingMessage.swift in Sources */,
 				14B48B7620B81C9700CE3EF4 /* EKAttributes+WindowLevel.swift in Sources */,
+				14B48B6F20B81C9700CE3EF4 /* EKAttributes+Validations.swift in Sources */,
 				14B48B5920B81C9700CE3EF4 /* EKEntryView.swift in Sources */,
 				14B48B8320B81C9700CE3EF4 /* EKProcessingNoteMessageView.swift in Sources */,
 				14B48B8020B81C9700CE3EF4 /* EKNoteMessageView.swift in Sources */,
@@ -1103,7 +1103,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = SwiftEntryKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huri.SwiftEntryKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1141,7 +1141,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = SwiftEntryKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.huri.SwiftEntryKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1201,7 +1201,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1249,7 +1249,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1271,7 +1271,7 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftEntryKit\"",
 				);
 				INFOPLIST_FILE = SwiftEntryKit/DemoAppInfo.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.huri.SwiftEntryKitDemo;
@@ -1296,7 +1296,7 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftEntryKit\"",
 				);
 				INFOPLIST_FILE = SwiftEntryKit/DemoAppInfo.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.huri.SwiftEntryKitDemo;

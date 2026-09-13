@@ -25,7 +25,7 @@ public extension EKAttributes {
          The display priority of the entry - Determines whether is can be overriden by other entries.
          Must be in range [0...1000]
          */
-        public struct Priority: Hashable, Equatable, RawRepresentable, Comparable {
+        public struct Priority: Hashable, Equatable, RawRepresentable, Comparable, @unchecked Sendable {
             public var rawValue: Int
             
             public var hashValue: Int {
@@ -57,7 +57,7 @@ public extension EKAttributes {
         public enum QueueingHeuristic {
             
             /** Determines the heuristic which the entry-queue is based on */
-            public static var value = QueueingHeuristic.priority
+            public nonisolated(unsafe) static var value = QueueingHeuristic.priority
             
             /** Chronological - FIFO */
             case chronological

@@ -25,12 +25,7 @@ public class EKXStatusBarMessageView: UIView {
     }
 
     private static var statusBarHeight: CGFloat {
-        if #available(iOS 13.0, *) {
-            if let height = UIApplication.shared.ekActiveScene?.statusBarManager?.statusBarFrame.height, height > 0 {
-                return height
-            }
-        }
-        return UIApplication.shared.statusBarFrame.maxY
+        return UIApplication.shared.ekActiveScene?.statusBarManager?.statusBarFrame.height ?? 0
     }
     
     private func setup(leading: EKProperty.LabelContent, trailing: EKProperty.LabelContent) {

@@ -10,7 +10,7 @@ import UIKit
 
 class EKEntryView: EKStyleView {
     
-    struct Content {
+    struct Content: @unchecked Sendable {
         var viewController: UIViewController!
         var view: UIView!
         var attributes: EKAttributes

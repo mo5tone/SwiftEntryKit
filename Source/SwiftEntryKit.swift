@@ -13,7 +13,7 @@ import UIKit
 public final class SwiftEntryKit {
     
     /** Describes the a single or multiple entries for possible dismissal states */
-    public enum EntryDismissalDescriptor {
+    public enum EntryDismissalDescriptor: Sendable {
         
         /** Describes specific entry / entries with name */
         case specific(entryName: String)
@@ -32,7 +32,7 @@ public final class SwiftEntryKit {
     }
     
     /** The window to rollback to after dismissal */
-    public enum RollbackWindow {
+    public enum RollbackWindow: @unchecked Sendable {
         
         /** The main window */
         case main
@@ -42,7 +42,7 @@ public final class SwiftEntryKit {
     }
     
     /** Completion handler for the dismissal method */
-    public typealias DismissCompletionHandler = () -> Void
+    public typealias DismissCompletionHandler = @Sendable () -> Void
     
     /** Cannot be instantiated, customized, inherited. */
     private init() {}
@@ -54,7 +54,9 @@ public final class SwiftEntryKit {
      This can be used
      */
     public class var window: UIWindow? {
-        return EKWindowProvider.shared.entryWindow
+        MainActor.assumeIsolated {
+            EKWindowProvider.shared.entryWindow
+        }
     }
     
     /**
@@ -74,7 +76,9 @@ public final class SwiftEntryKit {
      - parameter name: The name of the entry. Its default value is *nil*.
      */
     public class func isCurrentlyDisplaying(entryNamed name: String? = nil) -> Bool {
-        return EKWindowProvider.shared.isCurrentlyDisplaying(entryNamed: name)
+        MainActor.assumeIsolated {
+            EKWindowProvider.shared.isCurrentlyDisplaying(entryNamed: name)
+        }
     }
     
     /**
@@ -93,7 +97,9 @@ public final class SwiftEntryKit {
      - parameter name: The name of the entry. Its default value is *nil*.
      */
     public class func queueContains(entryNamed name: String? = nil) -> Bool {
-        return EKWindowProvider.shared.queueContains(entryNamed: name)
+        MainActor.assumeIsolated {
+            EKWindowProvider.shared.queueContains(entryNamed: name)
+        }
     }
     
     /**
@@ -107,7 +113,9 @@ public final class SwiftEntryKit {
      */
     public class func display(entry view: UIView, using attributes: EKAttributes, presentInsideKeyWindow: Bool = false, rollbackWindow: RollbackWindow = .main) {
         DispatchQueue.main.async {
-            EKWindowProvider.shared.display(view: view, using: attributes, presentInsideKeyWindow: presentInsideKeyWindow, rollbackWindow: rollbackWindow)
+            MainActor.assumeIsolated {
+                EKWindowProvider.shared.display(view: view, using: attributes, presentInsideKeyWindow: presentInsideKeyWindow, rollbackWindow: rollbackWindow)
+            }
         }
     }
     
@@ -122,7 +130,9 @@ public final class SwiftEntryKit {
      */
     public class func display(entry viewController: UIViewController, using attributes: EKAttributes, presentInsideKeyWindow: Bool = false, rollbackWindow: RollbackWindow = .main) {
         DispatchQueue.main.async {
-            EKWindowProvider.shared.display(viewController: viewController, using: attributes, presentInsideKeyWindow: presentInsideKeyWindow, rollbackWindow: rollbackWindow)
+            MainActor.assumeIsolated {
+                EKWindowProvider.shared.display(viewController: viewController, using: attributes, presentInsideKeyWindow: presentInsideKeyWindow, rollbackWindow: rollbackWindow)
+            }
         }
     }
     
@@ -135,7 +145,9 @@ public final class SwiftEntryKit {
      */
     public class func transform(to view: UIView) {
         DispatchQueue.main.async {
-            EKWindowProvider.shared.transform(to: view)
+            MainActor.assumeIsolated {
+                EKWindowProvider.shared.transform(to: view)
+            }
         }
     }
     
@@ -148,7 +160,9 @@ public final class SwiftEntryKit {
      */
     public class func dismiss(_ descriptor: EntryDismissalDescriptor = .displayed, with completion: DismissCompletionHandler? = nil) {
         DispatchQueue.main.async {
-            EKWindowProvider.shared.dismiss(descriptor, with: completion)
+            MainActor.assumeIsolated {
+                EKWindowProvider.shared.dismiss(descriptor, with: completion)
+            }
         }
     }
     
@@ -160,10 +174,14 @@ public final class SwiftEntryKit {
      */
     public class func layoutIfNeeded() {
         if Thread.isMainThread {
-            EKWindowProvider.shared.layoutIfNeeded()
+            MainActor.assumeIsolated {
+                EKWindowProvider.shared.layoutIfNeeded()
+            }
         } else {
             DispatchQueue.main.async {
-                EKWindowProvider.shared.layoutIfNeeded()
+                MainActor.assumeIsolated {
+                    EKWindowProvider.shared.layoutIfNeeded()
+                }
             }
         }
     }

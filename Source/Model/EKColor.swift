@@ -50,16 +50,12 @@ public struct EKColor: Equatable {
                       mode: EKAttributes.DisplayMode) -> UIColor {
         switch mode {
         case .inferred:
-            if #available(iOS 13, *) {
-                switch traits.userInterfaceStyle {
-                case .light, .unspecified:
-                    return light
-                case .dark:
-                    return dark
-                @unknown default:
-                    return light
-                }
-            } else {
+            switch traits.userInterfaceStyle {
+            case .light, .unspecified:
+                return light
+            case .dark:
+                return dark
+            @unknown default:
                 return light
             }
         case .light:

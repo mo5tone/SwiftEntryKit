@@ -10,7 +10,7 @@ import Foundation
 public extension EKAttributes {
     
     /** Default attributes - Can be mutated according to the hosting application theme */
-    static var `default` = EKAttributes()
+    nonisolated(unsafe) static var `default` = EKAttributes()
     
     /** Toast preset - The frame fills margins and safe area is filled with background view */
     static var toast: EKAttributes {

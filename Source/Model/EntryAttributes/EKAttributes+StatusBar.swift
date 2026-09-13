@@ -38,11 +38,7 @@ public extension EKAttributes {
         public var appearance: Appearance {
             switch self {
             case .dark:
-                if #available(iOS 13, *) {
-                    return (true, .darkContent)
-                } else {
-                    return (true, .default)
-                }
+                return (true, .darkContent)
             case .light:
                 return (true, .lightContent)
             case .inferred:
@@ -79,25 +75,15 @@ public extension EKAttributes {
         
         // Accessors
         private static var currentStyle: UIStatusBarStyle {
-            if #available(iOS 13.0, *) {
-                return currentStatusBarManager?.statusBarStyle ?? .default
-            }
-            return UIApplication.shared.statusBarStyle
+            return currentStatusBarManager?.statusBarStyle ?? .default
         }
 
         private static var isCurrentVisible: Bool {
-            if #available(iOS 13.0, *) {
-                return currentStatusBarManager?.isStatusBarHidden == false
-            }
-            return !UIApplication.shared.isStatusBarHidden
+            return currentStatusBarManager?.isStatusBarHidden == false
         }
 
-        @available(iOS 13.0, *)
         private static var currentStatusBarManager: UIStatusBarManager? {
-            if let scene = EKWindowProvider.shared.entryWindow?.windowScene {
-                return scene.statusBarManager
-            }
-            return UIApplication.shared.ekKeyWindow?.windowScene?.statusBarManager
+            return UIApplication.shared.ekActiveScene?.statusBarManager
         }
     }
 }

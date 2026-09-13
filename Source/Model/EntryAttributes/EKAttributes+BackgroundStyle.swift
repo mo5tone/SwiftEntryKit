@@ -24,7 +24,6 @@ public extension EKAttributes {
                 return BlurStyle(light: .light, dark: .dark)
             }
             
-            @available(iOS 10.0, *)
             public static var prominent: BlurStyle {
                 return BlurStyle(light: .prominent, dark: .prominent)
             }
@@ -51,16 +50,12 @@ public extension EKAttributes {
                                   mode: EKAttributes.DisplayMode) -> UIBlurEffect.Style {
                 switch mode {
                 case .inferred:
-                    if #available(iOS 13, *) {
-                        switch traits.userInterfaceStyle {
-                        case .light, .unspecified:
-                            return light
-                        case .dark:
-                            return dark
-                        @unknown default:
-                            return light
-                        }
-                    } else {
+                    switch traits.userInterfaceStyle {
+                    case .light, .unspecified:
+                        return light
+                    case .dark:
+                        return dark
+                    @unknown default:
                         return light
                     }
                 case .light:

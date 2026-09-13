@@ -19,7 +19,7 @@ public struct EKNotificationMessage {
         /** The distance between the title and the description */
         public var titleToDescription: CGFloat = 5
         
-        public static var `default` = Insets()
+        public nonisolated(unsafe) static var `default` = Insets()
     }
     
     /** Image, Title, Description */

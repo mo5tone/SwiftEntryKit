@@ -23,7 +23,6 @@ protocol EntryCachingHeuristic: AnyObject {
     
     func removeEntries(by name: String)
     func removeEntries(withPriorityLowerOrEqualTo priority: EKAttributes.Precedence.Priority)
-    func remove(entry: CachedEntry)
     func removeAll()
     
     func contains(entryNamed name: String) -> Bool
@@ -57,13 +56,6 @@ extension EntryCachingHeuristic {
         while let index = (entries.firstIndex { $0.view.attributes.name == name }) {
             entries.remove(at: index)
         }
-    }
-    
-    func remove(entry: CachedEntry) {
-        guard let index = (entries.firstIndex { $0.view == entry.view }) else {
-            return
-        }
-        entries.remove(at: index)
     }
     
     func removeAll() {

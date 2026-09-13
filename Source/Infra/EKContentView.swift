@@ -8,10 +8,11 @@
 
 import UIKit
 
+@MainActor
 protocol EntryContentViewDelegate: AnyObject {
     func changeToActive(withAttributes attributes: EKAttributes)
     func changeToInactive(withAttributes attributes: EKAttributes, pushOut: Bool)
-    func didFinishDisplaying(entry: EKEntryView, keepWindowActive: Bool, dismissCompletionHandler: SwiftEntryKit.DismissCompletionHandler?)
+    func didFinishDisplaying(entry: EKEntryView, keepWindowActive: Bool, dismissCompletionHandler: (() -> Void)?)
 }
 
 class EKContentView: UIView {
@@ -303,9 +304,6 @@ class EKContentView: UIView {
     
     // Generate a haptic feedback if needed
     private func generateHapticFeedback() {
-        guard #available(iOS 10.0, *) else {
-            return
-        }
         HapticFeedbackGenerator.notification(type: attributes.hapticFeedbackType)
     }
     

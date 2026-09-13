@@ -13,12 +13,8 @@ class EKWindow: UIWindow {
     var isAbleToReceiveTouches = false
     
     init(with rootVC: UIViewController) {
-        if #available(iOS 13.0, *) {
-            if let scene = UIApplication.shared.ekActiveScene {
-                super.init(windowScene: scene)
-            } else {
-                super.init(frame: UIScreen.main.bounds)
-            }
+        if let scene = UIApplication.shared.ekActiveScene {
+            super.init(windowScene: scene)
         } else {
             super.init(frame: UIScreen.main.bounds)
         }

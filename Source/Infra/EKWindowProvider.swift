@@ -8,16 +8,12 @@
 
 import UIKit
 
+@MainActor
 final class EKWindowProvider: EntryPresenterDelegate {
     
     /** The artificial safe area insets */
     static var safeAreaInsets: UIEdgeInsets {
-        if #available(iOS 11.0, *) {
-            return EKWindowProvider.shared.entryWindow?.rootViewController?.view?.safeAreaInsets ?? UIApplication.shared.ekKeyWindow?.rootViewController?.view.safeAreaInsets ?? .zero
-        } else {
-            let statusBarMaxY = UIApplication.shared.statusBarFrame.maxY
-            return UIEdgeInsets(top: statusBarMaxY, left: 0, bottom: 10, right: 0)
-        }
+        return EKWindowProvider.shared.entryWindow?.rootViewController?.view?.safeAreaInsets ?? UIApplication.shared.ekKeyWindow?.rootViewController?.view.safeAreaInsets ?? .zero
     }
     
     /** Single access point */
@@ -151,9 +147,7 @@ final class EKWindowProvider: EntryPresenterDelegate {
     
     /** Clear all entries immediately and display to the rollback window */
     func displayRollbackWindow() {
-        if #available(iOS 13.0, *) {
-            entryWindow.windowScene = nil
-        }
+        entryWindow.windowScene = nil
         entryWindow = nil
         entryView = nil
         switch rollbackWindow! {
@@ -169,7 +163,7 @@ final class EKWindowProvider: EntryPresenterDelegate {
     }
     
     /** Display a pending entry if there is any inside the queue */
-    func displayPendingEntryOrRollbackWindow(dismissCompletionHandler: SwiftEntryKit.DismissCompletionHandler?) {
+    func displayPendingEntryOrRollbackWindow(dismissCompletionHandler: (() -> Void)?) {
         if let next = entryQueue.dequeue() {
             
             // Execute dismiss handler if needed before dequeuing (potentially) another entry

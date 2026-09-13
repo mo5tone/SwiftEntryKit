@@ -1,4 +1,4 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
   name: "SwiftEntryKit",
   platforms: [
-    .iOS(.v9)
+    .iOS(.v14)
   ],
   products: [
     .library(name: "SwiftEntryKit", targets: ["SwiftEntryKit"])
@@ -14,10 +14,10 @@ let package = Package(
   targets: [
     .target(
       name: "SwiftEntryKit",
-      path: "Source"
+      path: "Source",
+      swiftSettings: [
+        .enableUpcomingFeature("StrictConcurrency")
+      ]
     )
-  ],
-  swiftLanguageVersions: [
-    .v5
   ]
 )
