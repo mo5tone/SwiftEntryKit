@@ -17,7 +17,6 @@ let package = Package(
   targets: [
     .target(
       name: "SwiftEntryKit",
-      path: "Source",
       swiftSettings: [
         .enableUpcomingFeature("StrictConcurrency")
       ]
@@ -28,7 +27,9 @@ let package = Package(
         "SwiftEntryKit",
         .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
       ],
-      path: "Tests"
+      resources: [
+        .copy("__Snapshots__")
+      ]
     )
   ]
 )
