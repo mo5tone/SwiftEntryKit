@@ -6,6 +6,7 @@
 //  Copyright (c) 2018 huri000@gmail.com. All rights reserved.
 //
 
+import UIKit
 import SwiftEntryKit
 
 // Description of a single preset to be presented

@@ -1,5 +1,0 @@
-target 'SwiftEntryKitDemo' do
-    platform :ios, '14.0'
-    use_frameworks!
-    pod 'SwiftEntryKit', :path => '../'
-end
