@@ -11,3 +11,7 @@ run = "swiftlint lint --strict --reporter emoji && swiftformat --lint ."
 [tasks.format]
 description = "Auto-format and auto-fix the codebase"
 run = "swiftformat . && swiftlint --fix"
+
+[tasks.coverage]
+description = "Run tests and print a per-file coverage report"
+run = "rm -rf SwiftEntryKit.xcworkspace && xcodebuild test -scheme SwiftEntryKit -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.2' -enableCodeCoverage YES -resultBundlePath /tmp/swiftentrykit-coverage.xcresult CODE_SIGNING_ALLOWED=NO >/dev/null 2>&1 && xcrun xccov view --report /tmp/swiftentrykit-coverage.xcresult"
