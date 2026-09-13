@@ -25,7 +25,7 @@ open coverage.html
 description = "Generate an HTML coverage report from TestResults.xcresult"
 run = '''
 python3 - <<'PY'
-import html, json, os, subprocess
+import html, json, os, subprocess, sys
 
 RESULT = os.environ.get("COVERAGE_RESULT", "TestResults.xcresult")
 OUTPUT = os.environ.get("COVERAGE_OUTPUT", "coverage.html")
