@@ -11,6 +11,9 @@ let package = Package(
   products: [
     .library(name: "SwiftEntryKit", targets: ["SwiftEntryKit"])
   ],
+  dependencies: [
+    .package(url: "https://github.com/pointfreeco/swift-snapshot-testing.git", from: "1.18.0")
+  ],
   targets: [
     .target(
       name: "SwiftEntryKit",
@@ -18,6 +21,14 @@ let package = Package(
       swiftSettings: [
         .enableUpcomingFeature("StrictConcurrency")
       ]
+    ),
+    .testTarget(
+      name: "SwiftEntryKitTests",
+      dependencies: [
+        "SwiftEntryKit",
+        .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
+      ],
+      path: "Tests"
     )
   ]
 )
