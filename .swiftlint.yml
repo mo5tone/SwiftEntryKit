@@ -1,0 +1,9 @@
+# SwiftLint configuration for SwiftEntryKit
+
+included:
+  - Source
+  - Tests
+  - Example/SwiftEntryKit
+
+excluded:
+  - Example/Derived

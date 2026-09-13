@@ -6,28 +6,62 @@ on:
   pull_request:
 
 jobs:
-  test:
-    name: Test (iOS)
+  lint:
+    name: Lint & Format
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
 
+      - uses: jdx/mise-action@v2
+        with:
+          cache: true
+
+      - name: SwiftLint
+        run: swiftlint lint --strict --reporter github-actions-logging
+
+      - name: SwiftFormat
+        run: swiftformat --lint .
+
+  test:
+    name: Build & Test (iOS)
+    needs: lint
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: jdx/mise-action@v2
+        with:
+          cache: true
+
+      - name: Generate project
+        run: tuist generate
+
       # Snapshot tests compare rendered views against committed reference images.
       # The reference images are recorded on a specific simulator OS, so the
       # destination below MUST match the recording environment. If the runner
-      # bumps its iOS version, re-record by deleting Tests/__Snapshots__ and
-      # re-running, then commit the updated images.
-      - name: Run tests
+      # bumps its iOS version, re-record by deleting Tests/SwiftEntryKitTests/__Snapshots__
+      # and re-running, then commit the updated images.
+      - name: Build example
         run: |
+          set -o pipefail
+          xcodebuild build \
+            -workspace SwiftEntryKit.xcworkspace \
+            -scheme SwiftEntryKitDemo \
+            -destination 'platform=iOS Simulator,name=iPhone 17' \
+            CODE_SIGNING_ALLOWED=NO | xcbeautify
+
+      - name: Test (Swift Package)
+        run: |
+          set -o pipefail
           xcodebuild test \
             -scheme SwiftEntryKit \
             -destination 'platform=iOS Simulator,name=iPhone 17' \
-            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGNING_ALLOWED=NO | xcbeautify
 
       - name: Upload snapshot artifacts on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: snapshot-artifacts
-          path: Tests/__Snapshots__/
+          path: Tests/**/__Snapshots__/
           if-no-files-found: ignore
