@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
-"""Generate a self-contained HTML coverage report from an .xcresult bundle.
+"""Render an .xcresult bundle as a self-contained HTML report.
 
-Usage: python3 generate-coverage-report.py <path.xcresult> [output.html]
+Prints a Markdown summary to stdout (for GitHub step summaries) and writes the
+HTML report to a file.
+
+Usage: python3 generate-coverage-report.py <path.xcresult> <output.html>
 """
 
 import html
@@ -21,9 +24,7 @@ def run_xccov(result_bundle):
 
 
 def pct(covered, executable):
-    if executable == 0:
-        return 0.0
-    return 100.0 * covered / executable
+    return 0.0 if executable == 0 else 100.0 * covered / executable
 
 
 def color(ratio):
@@ -34,29 +35,45 @@ def color(ratio):
     return "#e74c3c"
 
 
-def file_row(name, covered, executable):
-    ratio = pct(covered, executable)
-    return (
+def short_name(path):
+    marker = "/Source/SwiftEntryKit/"
+    return path.split(marker)[-1] if marker in path else path
+
+
+def library_targets(data):
+    """Only report the library targets, skipping *Tests targets (which re-list
+    the library sources via the test host, double-counting them)."""
+    return [t for t in data.get("targets", []) if not t.get("name", "").endswith("Tests")]
+
+
+def totals(targets):
+    covered = sum(t.get("coveredLines", 0) for t in targets)
+    executable = sum(t.get("executableLines", 0) for t in targets)
+    return covered, executable
+
+
+def file_rows(targets):
+    rows = []
+    for target in targets:
+        for f in target.get("files", []):
+            covered = f.get("coveredLines", 0)
+            executable = f.get("executableLines", 0)
+            ratio = pct(covered, executable)
+            rows.append((ratio, short_name(f.get("path") or f.get("name", "?")), covered, executable))
+    return sorted(rows)
+
+
+def build_html(targets, covered, executable):
+    overall = pct(covered, executable)
+    body = "".join(
         f"<tr>"
         f"<td class='name'>{html.escape(name)}</td>"
-        f"<td class='num'>{covered}/{executable}</td>"
+        f"<td class='num'>{c}/{e}</td>"
         f"<td><div class='bar'><div class='fill' style='width:{ratio:.1f}%;background:{color(ratio)}'></div></div></td>"
         f"<td class='num'>{ratio:.1f}%</td>"
         f"</tr>"
+        for ratio, name, c, e in file_rows(targets)
     )
-
-
-def build_report(data, result_bundle):
-    overall = pct(data.get("coveredLines", 0), data.get("executableLines", 0))
-    rows = []
-    for target in data.get("targets", []):
-        for f in sorted(
-            target.get("files", []),
-            key=lambda f: pct(f.get("coveredLines", 0), f.get("executableLines", 0)),
-        ):
-            path = f.get("path") or f.get("name", "unknown")
-            name = path.split("/Source/SwiftEntryKit/")[-1] if "/Source/" in path else path
-            rows.append(file_row(name, f.get("coveredLines", 0), f.get("executableLines", 0)))
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -78,11 +95,11 @@ def build_report(data, result_bundle):
 <body>
   <h1>SwiftEntryKit — Code Coverage</h1>
   <div class="overall">{overall:.1f}%</div>
-  <div class="meta">{data.get('coveredLines', 0)} / {data.get('executableLines', 0)} lines · {result_bundle}</div>
+  <div class="meta">{covered} / {executable} lines</div>
   <table>
     <thead><tr><th>File</th><th>Lines</th><th></th><th>Coverage</th></tr></thead>
     <tbody>
-      {''.join(rows)}
+      {body}
     </tbody>
   </table>
 </body>
@@ -90,16 +107,28 @@ def build_report(data, result_bundle):
 """
 
 
+def build_markdown(targets, covered, executable):
+    overall = pct(covered, executable)
+    lines = [f"## Code Coverage", f"", f"**{overall:.1f}%** ({covered}/{executable} lines)", ""]
+    lines += ["| Coverage | File | Lines |", "| --- | --- | --- |"]
+    for ratio, name, c, e in file_rows(targets):
+        lines.append(f"| {ratio:.1f}% | `{name}` | {c}/{e} |")
+    return "\n".join(lines)
+
+
 def main():
-    if len(sys.argv) < 2:
-        print(__doc__)
+    if len(sys.argv) < 3:
+        print(__doc__, file=sys.stderr)
         sys.exit(1)
     result_bundle = os.path.abspath(sys.argv[1])
-    output = sys.argv[2] if len(sys.argv) > 2 else "coverage.html"
+    output = sys.argv[2]
     data = json.loads(run_xccov(result_bundle))
+    targets = library_targets(data)
+    covered, executable = totals(targets)
     with open(output, "w") as fh:
-        fh.write(build_report(data, result_bundle))
-    print(f"Wrote {output}")
+        fh.write(build_html(targets, covered, executable))
+    print(build_markdown(targets, covered, executable))
+    print(f"Wrote {output}", file=sys.stderr)
 
 
 if __name__ == "__main__":

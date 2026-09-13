@@ -61,7 +61,11 @@ jobs:
             CODE_SIGNING_ALLOWED=NO | xcbeautify
 
       - name: Generate coverage report
-        run: python3 Scripts/generate-coverage-report.py TestResults.xcresult coverage.html
+        run: |
+          python3 Scripts/generate-coverage-report.py TestResults.xcresult coverage.html > coverage-summary.md
+          cat coverage-summary.md >> "$GITHUB_STEP_SUMMARY"
+          overall=$(sed -n '3p' coverage-summary.md | tr -d '*')
+          echo "::notice title=Code Coverage::$overall"
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
