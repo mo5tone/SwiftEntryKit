@@ -17,7 +17,7 @@ public struct EKNotificationMessage {
         /** The distance between the title and the description */
         public var titleToDescription: CGFloat = 5
 
-        public nonisolated(unsafe) static var `default` = Insets()
+        nonisolated(unsafe) public static var `default` = Self()
     }
 
     /** Image, Title, Description */
@@ -31,8 +31,7 @@ public struct EKNotificationMessage {
 
     public init(simpleMessage: EKSimpleMessage,
                 auxiliary: EKProperty.LabelContent? = nil,
-                insets: Insets = .default)
-    {
+                insets: Insets = .default) {
         self.simpleMessage = simpleMessage
         self.auxiliary = auxiliary
         self.insets = insets

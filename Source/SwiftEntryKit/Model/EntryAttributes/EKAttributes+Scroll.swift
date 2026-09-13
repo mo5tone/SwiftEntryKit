@@ -24,13 +24,13 @@ public extension EKAttributes {
             }
 
             /** The entry is jolted when it's pulled back into the original position */
-            public static var jolt: PullbackAnimation {
-                PullbackAnimation(duration: 0.5, damping: 0.3, initialSpringVelocity: 10)
+            public static var jolt: Self {
+                Self(duration: 0.5, damping: 0.3, initialSpringVelocity: 10)
             }
 
             /** The view eases out when it's pulled back into the original position */
-            public static var easeOut: PullbackAnimation {
-                PullbackAnimation(duration: 0.3, damping: 1, initialSpringVelocity: 10)
+            public static var easeOut: Self {
+                Self(duration: 0.3, damping: 1, initialSpringVelocity: 10)
             }
         }
 
@@ -47,6 +47,7 @@ public extension EKAttributes {
             switch self {
             case .disabled:
                 false
+
             default:
                 true
             }
@@ -56,6 +57,7 @@ public extension EKAttributes {
             switch self {
             case let .edgeCrossingDisabled(swipeable: swipeable), .enabled(swipeable: let swipeable, pullbackAnimation: _):
                 swipeable
+
             default:
                 false
             }
@@ -65,6 +67,7 @@ public extension EKAttributes {
             switch self {
             case .edgeCrossingDisabled:
                 false
+
             default:
                 true
             }

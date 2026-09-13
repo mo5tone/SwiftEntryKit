@@ -48,9 +48,8 @@ struct SnapshotTests {
             themeImage: .init(image: SnapshotFixtures.thumb(size: CGSize(width: 60, height: 60))),
             title: SnapshotFixtures.title(),
             description: SnapshotFixtures.label("A popup description."),
-            button: SnapshotFixtures.button("Continue"),
-            action: {}
-        )
+            button: SnapshotFixtures.button("Continue")
+        )            {}
         assertSnapshot(of: prepared(EKPopUpMessageView(with: message), height: 320), as: .image)
     }
 
@@ -69,7 +68,7 @@ struct SnapshotTests {
             with: SnapshotFixtures.title("Sign in"),
             textFieldsContent: [
                 SnapshotFixtures.textField(placeholder: "Email"),
-                SnapshotFixtures.textField(placeholder: "Password"),
+                SnapshotFixtures.textField(placeholder: "Password")
             ],
             buttonContent: SnapshotFixtures.button("Submit")
         )

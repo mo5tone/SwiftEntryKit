@@ -25,8 +25,10 @@ final class WidthSelectionTableViewCell: SelectionTableViewCell {
             } else {
                 segmentedControl.selectedSegmentIndex = 1
             }
-        case .ratio(value: _):
+
+        case .ratio:
             segmentedControl.selectedSegmentIndex = 2
+
         default:
             break
         }
@@ -36,10 +38,13 @@ final class WidthSelectionTableViewCell: SelectionTableViewCell {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             attributesWrapper.attributes.positionConstraints.size.width = .offset(value: 0)
+
         case 1:
             attributesWrapper.attributes.positionConstraints.size.width = .offset(value: 20)
+
         case 2:
             attributesWrapper.attributes.positionConstraints.size.width = .ratio(value: 0.9)
+
         default:
             break
         }

@@ -38,25 +38,30 @@ public extension EKAttributes {
             switch self {
             case .dark:
                 (true, .darkContent)
+
             case .light:
                 (true, .lightContent)
+
             case .inferred:
-                StatusBar.currentAppearance
+                Self.currentAppearance
+
             case .hidden:
-                (false, StatusBar.currentStyle)
+                (false, Self.currentStyle)
+
             case .ignored:
                 fatalError("There is no defined appearance for an ignored status bar")
             }
         }
 
         /** Returns the status bar according to a given appearance */
-        public static func statusBar(by appearance: Appearance) -> StatusBar {
+        public static func statusBar(by appearance: Appearance) -> Self {
             guard appearance.visible else {
                 return .hidden
             }
             switch appearance.style {
             case .lightContent:
                 return .light
+
             default:
                 return .dark
             }
@@ -65,12 +70,12 @@ public extension EKAttributes {
         /** Returns the current appearance */
         @MainActor
         public static var currentAppearance: Appearance {
-            (StatusBar.isCurrentVisible, StatusBar.currentStyle)
+            (Self.isCurrentVisible, Self.currentStyle)
         }
 
         /** Returns the current status bar */
         @MainActor
-        public static var currentStatusBar: StatusBar {
+        public static var currentStatusBar: Self {
             statusBar(by: currentAppearance)
         }
 

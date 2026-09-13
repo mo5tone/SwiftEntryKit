@@ -146,13 +146,13 @@ public extension EKAttributes {
         }
 
         /** Returns the maximum (duration+delay) amongst all animations */
-        public static var translation: Animation {
-            Animation(translate: .init(duration: 0.3))
+        public static var translation: Self {
+            Self(translate: .init(duration: 0.3))
         }
 
         /** No animation at all */
-        public static var none: Animation {
-            Animation()
+        public static var none: Self {
+            Self()
         }
 
         /** Initializer */

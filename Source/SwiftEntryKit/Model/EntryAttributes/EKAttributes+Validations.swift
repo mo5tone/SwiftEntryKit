@@ -13,7 +13,7 @@ extension EKAttributes {
     }
 
     var validateDisplayDuration: Bool {
-        guard displayDuration >= EKAttributes.minDisplayDuration else {
+        guard displayDuration >= Self.minDisplayDuration else {
             return false
         }
         return true

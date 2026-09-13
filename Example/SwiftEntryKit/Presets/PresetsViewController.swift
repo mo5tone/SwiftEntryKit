@@ -20,8 +20,10 @@ class PresetsViewController: UIViewController {
             switch self {
             case .light:
                 .light
+
             case .dark:
                 .dark
+
             case .inferred:
                 .inferred
             }
@@ -42,12 +44,14 @@ class PresetsViewController: UIViewController {
         switch PresetsDataSource.displayMode {
         case .dark:
             .lightContent
+
         case .light:
             if #available(iOS 13, *) {
                 .darkContent
             } else {
                 .default
             }
+
         case .inferred:
             super.preferredStatusBarStyle
         }
@@ -81,7 +85,7 @@ class PresetsViewController: UIViewController {
             NSAttributedString.Key.foregroundColor: EKColor.standardContent.color(
                 for: traitCollection,
                 mode: PresetsDataSource.displayMode
-            ),
+            )
         ]
         navigationController?.navigationBar.tintColor = EKColor.navigationItemColor.color(
             for: traitCollection,
@@ -400,8 +404,7 @@ class PresetsViewController: UIViewController {
                                          title: String,
                                          desc: String,
                                          textColor: EKColor,
-                                         imageName: String? = nil)
-    {
+                                         imageName: String? = nil) {
         let title = EKProperty.LabelContent(
             text: title,
             style: .init(
@@ -523,8 +526,7 @@ class PresetsViewController: UIViewController {
                                   descriptionColor: EKColor,
                                   buttonTitleColor: EKColor,
                                   buttonBackgroundColor: EKColor,
-                                  image: UIImage? = nil)
-    {
+                                  image: UIImage? = nil) {
         var themeImage: EKPopUpMessage.ThemeImage?
 
         if let image {
@@ -882,18 +884,25 @@ extension PresetsViewController: UITableViewDelegate, UITableViewDataSource {
         switch indexPath.section {
         case 0:
             toastCellSelected(with: attributes, row: indexPath.row)
+
         case 1:
             noteCellSelected(with: attributes, row: indexPath.row)
+
         case 2:
             floatCellSelected(with: attributes, row: indexPath.row)
+
         case 3:
             popupCellSelected(with: attributes, row: indexPath.row)
+
         case 4:
             formCellSelected(with: attributes, row: indexPath.row)
+
         case 5:
             customCellSelected(with: attributes, row: indexPath.row)
+
         case 6:
             showNavigationController(with: attributes)
+
         default:
             break
         }
@@ -944,8 +953,10 @@ extension PresetsViewController {
                                     desc: desc,
                                     textColor: .white,
                                     imageName: "paper-plane-light")
+
         case 1:
             showChatNotificationMessage(attributes: attributes)
+
         case 2:
             let title = "15% Discount!"
             let desc = "Receive your coupon for 15% discount at Swifty Kitty Bakery"
@@ -954,6 +965,7 @@ extension PresetsViewController {
                                     desc: desc,
                                     textColor: .standardContent,
                                     imageName: "ic_pizza")
+
         case 3:
             let title = "Simple Notification-Like Message"
             let desc =
@@ -964,6 +976,7 @@ extension PresetsViewController {
                                     title: title,
                                     desc: desc,
                                     textColor: .standardContent)
+
         default:
             break
         }
@@ -973,16 +986,22 @@ extension PresetsViewController {
         switch row {
         case 0:
             showNote(attributes: attributes)
+
         case 1:
             showProcessingNote(attributes: attributes)
+
         case 2:
             showImageNote(attributes: attributes)
+
         case 3:
             showAnimatingImageNote(attributes: attributes)
+
         case 4:
             showStatusBarMessage(attributes: attributes)
+
         case 5:
             showNote(attributes: attributes)
+
         default:
             break
         }
@@ -999,12 +1018,14 @@ extension PresetsViewController {
                                     desc: desc,
                                     textColor: .white,
                                     imageName: image)
+
         case 1:
             showNotificationMessage(attributes: attributes,
                                     title: title,
                                     desc: desc,
                                     textColor: .white,
                                     imageName: image)
+
         default:
             break
         }
@@ -1014,16 +1035,22 @@ extension PresetsViewController {
         switch row {
         case 0:
             showDarkAwesomePopupMessage(attributes: attributes)
+
         case 1:
             showLightAwesomePopupMessage(attributes: attributes)
+
         case 2:
             showLightAwesomePopupMessage(attributes: attributes)
+
         case 3:
             showButtonBarMessage(attributes: attributes)
+
         case 4:
             showAlertView(attributes: attributes)
+
         case 5:
             showRatingView(attributes: attributes)
+
         default:
             break
         }
@@ -1033,12 +1060,15 @@ extension PresetsViewController {
         switch row {
         case 0:
             showSigninForm(attributes: attributes, style: .light)
+
         case 1:
             var attributes = attributes
             showSignupForm(attributes: &attributes, style: .light)
+
         case 2:
             var attributes = attributes
             showSignupForm(attributes: &attributes, style: .metallic)
+
         default:
             break
         }
@@ -1048,10 +1078,13 @@ extension PresetsViewController {
         switch row {
         case 0:
             showNavigationController(with: attributes)
+
         case 1:
             showCustomNibView(attributes: attributes)
+
         case 2:
             showCustomViewController(attributes: attributes)
+
         default:
             break
         }

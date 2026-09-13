@@ -16,7 +16,7 @@ struct CachedEntry {
 
 @MainActor
 protocol EntryCachingHeuristic: AnyObject {
-    var entries: [CachedEntry] { set get }
+    var entries: [CachedEntry] { get set }
     var isEmpty: Bool { get }
 
     func dequeue() -> CachedEntry?

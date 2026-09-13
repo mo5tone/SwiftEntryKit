@@ -21,10 +21,13 @@ final class PrioritySelectionTableViewCell: SelectionTableViewCell {
         switch attributesWrapper.attributes.precedence.priority {
         case .normal:
             segmentedControl.selectedSegmentIndex = 0
+
         case .high:
             segmentedControl.selectedSegmentIndex = 1
+
         case .max:
             segmentedControl.selectedSegmentIndex = 2
+
         default:
             break
         }
@@ -34,10 +37,13 @@ final class PrioritySelectionTableViewCell: SelectionTableViewCell {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             attributesWrapper.attributes.precedence.priority = .normal
+
         case 1:
             attributesWrapper.attributes.precedence.priority = .high
+
         case 2:
             attributesWrapper.attributes.precedence.priority = .max
+
         default:
             break
         }

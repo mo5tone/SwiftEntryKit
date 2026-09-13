@@ -21,10 +21,13 @@ final class HapticFeedbackSelectionTableViewCell: SelectionTableViewCell {
         switch attributes.hapticFeedbackType {
         case .none:
             segmentedControl.selectedSegmentIndex = 0
+
         case .success:
             segmentedControl.selectedSegmentIndex = 1
+
         case .warning:
             segmentedControl.selectedSegmentIndex = 2
+
         case .error:
             segmentedControl.selectedSegmentIndex = 3
         }
@@ -34,12 +37,16 @@ final class HapticFeedbackSelectionTableViewCell: SelectionTableViewCell {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             attributesWrapper.attributes.hapticFeedbackType = .none
+
         case 1:
             attributesWrapper.attributes.hapticFeedbackType = .success
+
         case 2:
             attributesWrapper.attributes.hapticFeedbackType = .warning
+
         case 3:
             attributesWrapper.attributes.hapticFeedbackType = .error
+
         default:
             break
         }

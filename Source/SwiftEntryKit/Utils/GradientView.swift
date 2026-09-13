@@ -14,8 +14,7 @@ class GradientView: UIView {
         let displayMode: EKAttributes.DisplayMode
 
         init?(gradient: EKAttributes.BackgroundStyle.Gradient?,
-              displayMode: EKAttributes.DisplayMode)
-        {
+              displayMode: EKAttributes.DisplayMode) {
             guard let gradient else {
                 return nil
             }

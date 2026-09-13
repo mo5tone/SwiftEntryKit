@@ -10,7 +10,7 @@ import UIKit
 
 @MainActor
 protocol EntryPresenterDelegate: AnyObject {
-    var isResponsiveToTouches: Bool { set get }
+    var isResponsiveToTouches: Bool { get set }
     func displayPendingEntryOrRollbackWindow(dismissCompletionHandler: (() -> Void)?)
 }
 
@@ -62,6 +62,7 @@ class EKRootViewController: UIViewController {
         switch lastAttributes.positionConstraints.rotation.supportedInterfaceOrientations {
         case .standard:
             return super.supportedInterfaceOrientations
+
         case .all:
             return .all
         }
@@ -148,6 +149,7 @@ class EKRootViewController: UIViewController {
         switch attributes.screenInteraction.defaultAction {
         case .forward:
             isResponsive = false
+
         default:
             isResponsive = true
         }
@@ -201,6 +203,7 @@ extension EKRootViewController {
         case .dismissEntry:
             lastEntry?.animateOut(pushOut: false)
             fallthrough
+
         default:
             lastAttributes.screenInteraction.customTapActions.forEach { $0() }
         }

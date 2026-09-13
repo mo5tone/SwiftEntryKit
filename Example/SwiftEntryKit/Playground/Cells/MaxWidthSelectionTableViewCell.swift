@@ -19,12 +19,15 @@ final class MaxWidthSelectionTableViewCell: SelectionTableViewCell {
 
     private func selectSegment() {
         switch attributesWrapper.attributes.positionConstraints.maxSize.width {
-        case .offset(value: _):
+        case .offset:
             segmentedControl.selectedSegmentIndex = 0
-        case .constant(value: _):
+
+        case .constant:
             segmentedControl.selectedSegmentIndex = 1
+
         case .ratio(value: 0.9):
             segmentedControl.selectedSegmentIndex = 2
+
         default:
             break
         }
@@ -34,10 +37,13 @@ final class MaxWidthSelectionTableViewCell: SelectionTableViewCell {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             attributesWrapper.attributes.positionConstraints.maxSize.width = .offset(value: 0)
+
         case 1:
             attributesWrapper.attributes.positionConstraints.maxSize.width = .constant(value: UIScreen.main.minEdge - 40)
+
         case 2:
             attributesWrapper.attributes.positionConstraints.maxSize.width = .ratio(value: 0.9)
+
         default:
             break
         }

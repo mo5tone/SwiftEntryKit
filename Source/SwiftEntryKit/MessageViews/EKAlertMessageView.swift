@@ -58,6 +58,7 @@ public final class EKAlertMessageView: EKSimpleMessageView, EntryAppearanceDescr
 
             messageContentView.layoutToSuperview(axis: .horizontally)
             buttonBarView.layout(.top, to: .bottom, of: messageContentView)
+
         case .left:
             messageContentView.verticalMargins = 0
             messageContentView.horizontalMargins = 0

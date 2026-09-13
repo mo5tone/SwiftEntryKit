@@ -21,7 +21,8 @@ final class BorderSelectionTableViewCell: SelectionTableViewCell {
         switch attributesWrapper.attributes.border {
         case .none:
             segmentedControl.selectedSegmentIndex = 0
-        case .value(color: _, width: _):
+
+        case .value:
             segmentedControl.selectedSegmentIndex = 1
         }
     }
@@ -30,8 +31,10 @@ final class BorderSelectionTableViewCell: SelectionTableViewCell {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             attributesWrapper.attributes.border = .none
+
         case 1:
             attributesWrapper.attributes.border = .value(color: UIColor.black, width: 0.5)
+
         default:
             break
         }

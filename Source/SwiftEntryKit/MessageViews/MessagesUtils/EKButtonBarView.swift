@@ -38,8 +38,10 @@ public final class EKButtonBarView: UIView {
         switch buttonBarContent.content.count {
         case 0:
             height += 1
+
         case 1 ... buttonBarContent.horizontalDistributionThreshold:
             height += buttonBarContent.buttonHeight
+
         default:
             for _ in 1 ... buttonBarContent.content.count {
                 height += buttonBarContent.buttonHeight
@@ -120,6 +122,7 @@ public final class EKButtonBarView: UIView {
         case .vertically:
             sepAttribute = .centerX
             buttonAttribute = .right
+
         case .horizontally:
             sepAttribute = .centerY
             buttonAttribute = .bottom

@@ -22,7 +22,8 @@ final class ShadowSelectionTableViewCell: SelectionTableViewCell {
         switch attributesWrapper.attributes.shadow {
         case .none:
             segmentedControl.selectedSegmentIndex = 0
-        case .active(with: _):
+
+        case .active:
             segmentedControl.selectedSegmentIndex = 1
         }
     }
@@ -31,9 +32,11 @@ final class ShadowSelectionTableViewCell: SelectionTableViewCell {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             attributesWrapper.attributes.shadow = .none
+
         case 1:
             let value = EKAttributes.Shadow.Value(color: .black, opacity: 0.5, radius: 10, offset: .zero)
             attributesWrapper.attributes.shadow = .active(with: value)
+
         default:
             break
         }

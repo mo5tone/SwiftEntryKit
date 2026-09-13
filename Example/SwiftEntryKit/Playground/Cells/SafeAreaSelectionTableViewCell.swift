@@ -21,10 +21,13 @@ final class SafeAreaSelectionTableViewCell: SelectionTableViewCell {
         switch attributesWrapper.attributes.positionConstraints.safeArea {
         case let .empty(fillSafeArea: fill) where fill:
             segmentedControl.selectedSegmentIndex = 0
+
         case let .empty(fillSafeArea: fill) where !fill:
             segmentedControl.selectedSegmentIndex = 1
+
         case .overridden:
             segmentedControl.selectedSegmentIndex = 2
+
         default:
             break
         }
@@ -34,10 +37,13 @@ final class SafeAreaSelectionTableViewCell: SelectionTableViewCell {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             attributesWrapper.attributes.positionConstraints.safeArea = .empty(fillSafeArea: true)
+
         case 1:
             attributesWrapper.attributes.positionConstraints.safeArea = .empty(fillSafeArea: false)
+
         case 2:
             attributesWrapper.attributes.positionConstraints.safeArea = .overridden
+
         default:
             break
         }

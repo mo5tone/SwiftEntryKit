@@ -28,6 +28,7 @@ public extension EKAttributes {
             switch self {
             case .none:
                 false
+
             default:
                 true
             }
@@ -37,10 +38,13 @@ public extension EKAttributes {
             switch self {
             case let .all(radius: radius):
                 (value: .allCorners, radius: radius)
+
             case let .top(radius: radius):
                 (value: .top, radius: radius)
+
             case let .bottom(radius: radius):
                 (value: .bottom, radius: radius)
+
             case .none:
                 nil
             }
@@ -59,6 +63,7 @@ public extension EKAttributes {
             switch self {
             case .none:
                 false
+
             default:
                 true
             }
@@ -68,6 +73,7 @@ public extension EKAttributes {
             switch self {
             case let .value(color: color, width: width):
                 (color: color, width: width)
+
             case .none:
                 nil
             }

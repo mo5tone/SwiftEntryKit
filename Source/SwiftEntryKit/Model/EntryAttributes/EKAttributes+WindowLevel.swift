@@ -28,10 +28,13 @@ public extension EKAttributes {
             switch self {
             case .alerts:
                 .alert
+
             case .statusBar:
                 .statusBar
+
             case .normal:
                 .normal
+
             case let .custom(level: level):
                 level
             }

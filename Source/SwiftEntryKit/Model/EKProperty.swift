@@ -38,8 +38,7 @@ public struct EKProperty {
                     contentEdgeInset: CGFloat = 5,
                     displayMode: EKAttributes.DisplayMode = .inferred,
                     accessibilityIdentifier: String? = nil,
-                    action: @escaping Action = {})
-        {
+                    action: @escaping Action = {}) {
             self.label = label
             self.backgroundColor = backgroundColor
             self.highlightedBackgroundColor = highlightedBackgroundColor
@@ -78,8 +77,7 @@ public struct EKProperty {
 
         public init(text: String,
                     style: LabelStyle,
-                    accessibilityIdentifier: String? = nil)
-        {
+                    accessibilityIdentifier: String? = nil) {
             self.text = text
             self.style = style
             self.accessibilityIdentifier = accessibilityIdentifier
@@ -107,8 +105,7 @@ public struct EKProperty {
                     color: EKColor,
                     alignment: NSTextAlignment = .left,
                     displayMode: EKAttributes.DisplayMode = .inferred,
-                    numberOfLines: Int = 0)
-        {
+                    numberOfLines: Int = 0) {
             self.font = font
             self.color = color
             self.alignment = alignment
@@ -164,8 +161,7 @@ public struct EKProperty {
                     contentMode: UIView.ContentMode = .scaleToFill,
                     tint: EKColor? = nil,
                     makesRound: Bool = false,
-                    accessibilityIdentifier: String? = nil)
-        {
+                    accessibilityIdentifier: String? = nil) {
             let image = UIImage(named: imageName)!
             self.init(image: image,
                       displayMode: displayMode,
@@ -183,8 +179,7 @@ public struct EKProperty {
                     tint: EKColor? = nil,
                     contentMode: UIView.ContentMode = .scaleToFill,
                     makesRound: Bool = false,
-                    accessibilityIdentifier: String? = nil)
-        {
+                    accessibilityIdentifier: String? = nil) {
             images = [image]
             self.size = size
             self.tint = tint
@@ -204,8 +199,7 @@ public struct EKProperty {
                     tint: EKColor? = nil,
                     contentMode: UIView.ContentMode = .scaleToFill,
                     makesRound: Bool = false,
-                    accessibilityIdentifier: String? = nil)
-        {
+                    accessibilityIdentifier: String? = nil) {
             self.images = images
             self.size = size
             self.displayMode = displayMode
@@ -225,8 +219,7 @@ public struct EKProperty {
                     tint: EKColor? = nil,
                     contentMode: UIView.ContentMode = .scaleToFill,
                     makesRound: Bool = false,
-                    accessibilityIdentifier: String? = nil)
-        {
+                    accessibilityIdentifier: String? = nil) {
             let images = imagesNames.map { UIImage(named: $0)! }
             self.init(images: images,
                       imageSequenceAnimationDuration: imageSequenceAnimationDuration,
@@ -241,9 +234,8 @@ public struct EKProperty {
 
         /** Quick thumbail property generator */
         public static func thumb(with image: UIImage,
-                                 edgeSize: CGFloat) -> ImageContent
-        {
-            ImageContent(images: [image],
+                                 edgeSize: CGFloat) -> Self {
+            Self(images: [image],
                          size: CGSize(width: edgeSize, height: edgeSize),
                          contentMode: .scaleAspectFill,
                          makesRound: true)
@@ -251,9 +243,8 @@ public struct EKProperty {
 
         /** Quick thumbail property generator */
         public static func thumb(with imageName: String,
-                                 edgeSize: CGFloat) -> ImageContent
-        {
-            ImageContent(imagesNames: [imageName],
+                                 edgeSize: CGFloat) -> Self {
+            Self(imagesNames: [imageName],
                          size: CGSize(width: edgeSize, height: edgeSize),
                          contentMode: .scaleAspectFill,
                          makesRound: true)
@@ -300,8 +291,7 @@ public struct EKProperty {
                     isSecure: Bool = false,
                     leadingImage: UIImage? = nil,
                     bottomBorderColor: EKColor = .clear,
-                    accessibilityIdentifier: String? = nil)
-        {
+                    accessibilityIdentifier: String? = nil) {
             self.delegate = delegate
             self.keyboardType = keyboardType
             self.placeholder = placeholder
@@ -348,8 +338,7 @@ public struct EKProperty {
                     horizontalDistributionThreshold: Int = 2,
                     buttonHeight: CGFloat = 50,
                     displayMode: EKAttributes.DisplayMode = .inferred,
-                    expandAnimatedly: Bool)
-        {
+                    expandAnimatedly: Bool) {
             self.init(with: buttonContents,
                       separatorColor: separatorColor,
                       horizontalDistributionThreshold: horizontalDistributionThreshold,
@@ -363,8 +352,7 @@ public struct EKProperty {
                     horizontalDistributionThreshold: Int = 2,
                     buttonHeight: CGFloat = 50,
                     displayMode: EKAttributes.DisplayMode = .inferred,
-                    expandAnimatedly: Bool)
-        {
+                    expandAnimatedly: Bool) {
             guard horizontalDistributionThreshold > 0 else {
                 fatalError("horizontalDistributionThreshold Must have a positive value!")
             }
@@ -393,8 +381,7 @@ public struct EKProperty {
                     description: EKProperty.LabelContent,
                     unselectedImage: EKProperty.ImageContent,
                     selectedImage: EKProperty.ImageContent,
-                    size: CGSize = CGSize(width: 50, height: 50))
-        {
+                    size: CGSize = CGSize(width: 50, height: 50)) {
             self.title = title
             self.description = description
             self.unselectedImage = unselectedImage

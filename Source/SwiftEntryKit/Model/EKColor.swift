@@ -46,20 +46,23 @@ public struct EKColor: Equatable {
 
     /** Computes the proper UIColor */
     public func color(for traits: UITraitCollection,
-                      mode: EKAttributes.DisplayMode) -> UIColor
-    {
+                      mode: EKAttributes.DisplayMode) -> UIColor {
         switch mode {
         case .inferred:
             switch traits.userInterfaceStyle {
             case .light, .unspecified:
                 return light
+
             case .dark:
                 return dark
+
             @unknown default:
                 return light
             }
+
         case .light:
             return light
+
         case .dark:
             return dark
         }

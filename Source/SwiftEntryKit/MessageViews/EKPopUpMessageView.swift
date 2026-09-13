@@ -45,6 +45,7 @@ public final class EKPopUpMessageView: UIView {
         switch themeImage.position {
         case let .centerToTop(offset: value):
             imageView.layout(.centerY, to: .top, of: self, offset: value)
+
         case let .topToTop(offset: value):
             imageView.layoutToSuperview(.top, offset: value)
         }

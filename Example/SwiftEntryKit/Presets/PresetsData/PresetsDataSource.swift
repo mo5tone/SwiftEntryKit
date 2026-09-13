@@ -46,7 +46,7 @@ struct PresetsDataSource {
 
     static var displayMode = EKAttributes.DisplayMode.inferred
     private var displayMode: EKAttributes.DisplayMode {
-        PresetsDataSource.displayMode
+        Self.displayMode
     }
 
     /// Cumputed for the sake of reusability

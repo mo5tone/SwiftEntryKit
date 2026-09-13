@@ -21,10 +21,13 @@ final class HeightSelectionTableViewCell: SelectionTableViewCell {
         switch attributesWrapper.attributes.positionConstraints.size.height {
         case .intrinsic:
             segmentedControl.selectedSegmentIndex = 0
+
         case .constant(value: 100):
             segmentedControl.selectedSegmentIndex = 1
+
         case .ratio(value: 0.5):
             segmentedControl.selectedSegmentIndex = 2
+
         default:
             break
         }
@@ -34,10 +37,13 @@ final class HeightSelectionTableViewCell: SelectionTableViewCell {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             attributesWrapper.attributes.positionConstraints.size.height = .intrinsic
+
         case 1:
             attributesWrapper.attributes.positionConstraints.size.height = .constant(value: 100)
+
         case 2:
             attributesWrapper.attributes.positionConstraints.size.height = .ratio(value: 0.5)
+
         default:
             break
         }

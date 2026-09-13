@@ -31,16 +31,16 @@ public extension EKAttributes {
             }
 
             public init(_ rawValue: Int) {
-                assert(rawValue.isValidDisplayPriority, "Display Priority must be in range [\(Priority.minRawValue)...\(Priority.maxRawValue)]")
+                assert(rawValue.isValidDisplayPriority, "Display Priority must be in range [\(Self.minRawValue)...\(Self.maxRawValue)]")
                 self.rawValue = rawValue
             }
 
             public init(rawValue: Int) {
-                assert(rawValue.isValidDisplayPriority, "Display Priority must be in range [\(Priority.minRawValue)...\(Priority.maxRawValue)]")
+                assert(rawValue.isValidDisplayPriority, "Display Priority must be in range [\(Self.minRawValue)...\(Self.maxRawValue)]")
                 self.rawValue = rawValue
             }
 
-            public static func < (lhs: Priority, rhs: Priority) -> Bool {
+            public static func < (lhs: Self, rhs: Self) -> Bool {
                 lhs.rawValue < rhs.rawValue
             }
         }
@@ -50,7 +50,7 @@ public extension EKAttributes {
          */
         public enum QueueingHeuristic {
             /** Determines the heuristic which the entry-queue is based on */
-            public nonisolated(unsafe) static var value = QueueingHeuristic.priority
+            nonisolated(unsafe) public static var value = Self.priority
 
             /** Chronological - FIFO */
             case chronological
@@ -64,6 +64,7 @@ public extension EKAttributes {
                 switch self {
                 case .chronological:
                     EKEntryChronologicalQueue()
+
                 case .priority:
                     EKEntryPriorityQueue()
                 }
@@ -88,6 +89,7 @@ public extension EKAttributes {
             switch self {
             case .enqueue:
                 true
+
             default:
                 false
             }
@@ -97,8 +99,9 @@ public extension EKAttributes {
         public var priority: Priority {
             set {
                 switch self {
-                case .enqueue(priority: _):
+                case .enqueue:
                     self = .enqueue(priority: newValue)
+
                 case .override(priority: _, dropEnqueuedEntries: let dropEnqueuedEntries):
                     self = .override(priority: newValue, dropEnqueuedEntries: dropEnqueuedEntries)
                 }
@@ -107,6 +110,7 @@ public extension EKAttributes {
                 switch self {
                 case let .enqueue(priority: priority):
                     priority
+
                 case .override(priority: let priority, dropEnqueuedEntries: _):
                     priority
                 }
@@ -120,7 +124,7 @@ public extension EKAttributes {
  High priority entry overrides any other entry including another equal priority one.
  You can you on of the values (.max, high, normal, low, min) and also set your own values. */
 public extension EKAttributes.Precedence.Priority {
-    static let maxRawValue = 1000
+    static let maxRawValue = 1_000
     static let highRawValue = 750
     static let normalRawValue = 500
     static let lowRawValue = 250

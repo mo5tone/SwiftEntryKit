@@ -39,8 +39,7 @@ public class EKSimpleMessageView: UIView {
     }
 
     private func setupMessageContentView(with title: EKProperty.LabelContent,
-                                         description: EKProperty.LabelContent)
-    {
+                                         description: EKProperty.LabelContent) {
         messageContentView.titleContent = title
         messageContentView.subtitleContent = description
         addSubview(messageContentView)

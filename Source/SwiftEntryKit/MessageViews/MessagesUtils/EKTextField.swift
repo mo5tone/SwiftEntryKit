@@ -47,7 +47,7 @@ public final class EKTextField: UIView {
     private func setupImageView() {
         addSubview(imageView)
         imageView.contentMode = .center
-        imageView.set(.width, .height, of: EKTextField.totalHeight)
+        imageView.set(.width, .height, of: Self.totalHeight)
         imageView.layoutToSuperview(.leading)
         imageView.image = content.leadingImage
         imageView.tintColor = content.tintColor(for: traitCollection)
@@ -57,7 +57,7 @@ public final class EKTextField: UIView {
         addSubview(textField)
         textField.textFieldContent = content
         textField.delegate = content.delegate
-        textField.set(.height, of: EKTextField.totalHeight)
+        textField.set(.height, of: Self.totalHeight)
         textField.layout(.leading, to: .trailing, of: imageView)
         textField.layoutToSuperview(.top, .trailing)
         imageView.layout(to: .centerY, of: textField)

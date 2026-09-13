@@ -33,6 +33,7 @@ public extension EKAttributes {
             switch defaultAction {
             case .forward:
                 false
+
             default:
                 true
             }
@@ -42,6 +43,7 @@ public extension EKAttributes {
             switch defaultAction {
             case .delayExit:
                 true
+
             default:
                 false
             }
@@ -59,23 +61,23 @@ public extension EKAttributes {
         }
 
         /** Dismiss action */
-        public static var dismiss: UserInteraction {
-            UserInteraction(defaultAction: .dismissEntry)
+        public static var dismiss: Self {
+            Self(defaultAction: .dismissEntry)
         }
 
         /** Forward action */
-        public static var forward: UserInteraction {
-            UserInteraction(defaultAction: .forward)
+        public static var forward: Self {
+            Self(defaultAction: .forward)
         }
 
         /** Absorb touches action */
-        public static var absorbTouches: UserInteraction {
-            UserInteraction(defaultAction: .absorbTouches)
+        public static var absorbTouches: Self {
+            Self(defaultAction: .absorbTouches)
         }
 
         /** Delay exit action */
-        public static func delayExit(by delay: TimeInterval) -> UserInteraction {
-            UserInteraction(defaultAction: .delayExit(by: delay))
+        public static func delayExit(by delay: TimeInterval) -> Self {
+            Self(defaultAction: .delayExit(by: delay))
         }
     }
 }

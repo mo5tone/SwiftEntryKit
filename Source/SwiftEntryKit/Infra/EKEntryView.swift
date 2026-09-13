@@ -89,7 +89,6 @@ class EKEntryView: EKStyleView {
             previousView!.alpha = 0
 
             SwiftEntryKit.layoutIfNeeded()
-
         }, completion: { _ in
             view.alpha = 0
 
@@ -136,6 +135,7 @@ class EKEntryView: EKStyleView {
                             opacity: value.opacity,
                             radius: value.radius,
                             color: value.color.color(for: traitCollection, mode: attributes.displayMode))
+
         case .none:
             removeDropShadow()
         }
@@ -159,12 +159,14 @@ class EKEntryView: EKStyleView {
             switch attributes.position {
             case .top:
                 topInset = -EKWindowProvider.safeAreaInsets.top
+
             case .bottom, .center:
                 bottomInset = EKWindowProvider.safeAreaInsets.bottom
             }
 
             backgroundView.layoutToSuperview(.top, offset: topInset)
             backgroundView.layoutToSuperview(.bottom, offset: bottomInset)
+
         default: // Float case or a Toast with unfilled safe area
             contentView.insertSubview(backgroundView, at: 0)
             backgroundView.fillSuperview()

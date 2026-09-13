@@ -17,6 +17,7 @@ final class UserInteractionSelectionTableViewCell: SelectionTableViewCell {
             switch focus {
             case .entry:
                 attributesWrapper.attributes.entryInteraction.defaultAction
+
             case .screen:
                 attributesWrapper.attributes.screenInteraction.defaultAction
             }
@@ -25,6 +26,7 @@ final class UserInteractionSelectionTableViewCell: SelectionTableViewCell {
             switch focus {
             case .entry:
                 attributesWrapper.attributes.entryInteraction.defaultAction = newValue
+
             case .screen:
                 attributesWrapper.attributes.screenInteraction.defaultAction = newValue
             }
@@ -49,10 +51,13 @@ final class UserInteractionSelectionTableViewCell: SelectionTableViewCell {
         switch interactionAction {
         case .absorbTouches:
             segmentedControl.selectedSegmentIndex = 0
-        case .delayExit(by: _):
+
+        case .delayExit:
             segmentedControl.selectedSegmentIndex = 1
+
         case .forward:
             segmentedControl.selectedSegmentIndex = 2
+
         case .dismissEntry:
             segmentedControl.selectedSegmentIndex = 3
         }
@@ -62,12 +67,16 @@ final class UserInteractionSelectionTableViewCell: SelectionTableViewCell {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             interactionAction = .absorbTouches
+
         case 1:
             interactionAction = .delayExit(by: 4)
+
         case 2:
             interactionAction = .forward
+
         case 3:
             interactionAction = .dismissEntry
+
         default:
             break
         }

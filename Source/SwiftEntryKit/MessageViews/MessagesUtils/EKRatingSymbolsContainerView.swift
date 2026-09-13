@@ -13,8 +13,7 @@ public final class EKRatingSymbolsContainerView: UIView {
     private var symbolsArray: [EKRatingSymbolView] = []
 
     public func setup(with message: EKRatingMessage,
-                      externalSelection: @escaping EKRatingMessage.Selection)
-    {
+                      externalSelection: @escaping EKRatingMessage.Selection) {
         self.message = message
         let internalSelection = { [unowned self] (index: Int) in
             select(index: index)

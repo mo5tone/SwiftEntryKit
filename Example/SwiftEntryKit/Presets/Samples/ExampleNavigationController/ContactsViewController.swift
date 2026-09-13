@@ -14,7 +14,7 @@ class ContactsViewController: UIViewController {
     private let dataSource = ["John", "Gregory", "David", "Jack", "Tony", "Torvi", "Walter", "Dexter", "Ramsay"]
 
     init() {
-        super.init(nibName: type(of: self).className, bundle: nil)
+        super.init(nibName: Self.className, bundle: nil)
     }
 
     @available(*, unavailable)

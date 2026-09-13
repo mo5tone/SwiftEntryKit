@@ -49,8 +49,7 @@ public struct EKRatingMessage {
                 initialDescription: EKProperty.LabelContent,
                 ratingItems: [EKProperty.EKRatingItemContent],
                 buttonBarContent: EKProperty.ButtonBarContent,
-                selection: Selection? = nil)
-    {
+                selection: Selection? = nil) {
         self.initialTitle = initialTitle
         self.initialDescription = initialDescription
         self.ratingItems = ratingItems

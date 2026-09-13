@@ -22,11 +22,14 @@ final class RoundCornersSelectionTableViewCell: SelectionTableViewCell {
         switch attributesWrapper.attributes.roundCorners {
         case .none:
             segmentedControl.selectedSegmentIndex = 0
-        case .top(radius: _):
+
+        case .top:
             segmentedControl.selectedSegmentIndex = 1
-        case .bottom(radius: _):
+
+        case .bottom:
             segmentedControl.selectedSegmentIndex = 2
-        case .all(radius: _):
+
+        case .all:
             segmentedControl.selectedSegmentIndex = 3
         }
     }
@@ -35,12 +38,16 @@ final class RoundCornersSelectionTableViewCell: SelectionTableViewCell {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             attributesWrapper.attributes.roundCorners = .none
+
         case 1:
             attributesWrapper.attributes.roundCorners = .top(radius: 10)
+
         case 2:
             attributesWrapper.attributes.roundCorners = .bottom(radius: 10)
+
         case 3:
             attributesWrapper.attributes.roundCorners = .all(radius: 10)
+
         default:
             break
         }

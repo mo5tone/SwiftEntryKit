@@ -17,6 +17,7 @@ final class BackgroundStyleSelectionTableViewCell: SelectionTableViewCell {
             switch focus {
             case .entry:
                 attributesWrapper.attributes.entryBackground
+
             case .screen:
                 attributesWrapper.attributes.screenBackground
             }
@@ -25,6 +26,7 @@ final class BackgroundStyleSelectionTableViewCell: SelectionTableViewCell {
             switch focus {
             case .entry:
                 attributesWrapper.attributes.entryBackground = newValue
+
             case .screen:
                 attributesWrapper.attributes.screenBackground = newValue
             }
@@ -48,12 +50,16 @@ final class BackgroundStyleSelectionTableViewCell: SelectionTableViewCell {
         switch backgroundStyle {
         case .clear:
             segmentedControl.selectedSegmentIndex = 0
-        case .visualEffect(style: _):
+
+        case .visualEffect:
             segmentedControl.selectedSegmentIndex = 1
-        case .gradient(gradient: _):
+
+        case .gradient:
             segmentedControl.selectedSegmentIndex = 2
-        case .color(color: _):
+
+        case .color:
             segmentedControl.selectedSegmentIndex = 3
+
         default:
             // TODO: Image isn't handled yet
             break
@@ -64,8 +70,10 @@ final class BackgroundStyleSelectionTableViewCell: SelectionTableViewCell {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             backgroundStyle = .clear
+
         case 1:
             backgroundStyle = .visualEffect(style: .standard)
+
         case 2:
             let gradient = EKAttributes.BackgroundStyle.Gradient(
                 colors: [Color.BlueGray.c100, Color.BlueGray.c300],
@@ -73,14 +81,17 @@ final class BackgroundStyleSelectionTableViewCell: SelectionTableViewCell {
                 endPoint: CGPoint(x: 1, y: 1)
             )
             backgroundStyle = .gradient(gradient: gradient)
+
         case 3:
             let color: EKColor = switch focus {
             case .entry:
                 .amber
+
             case .screen:
                 EKColor.black.with(alpha: 0.5)
             }
             backgroundStyle = .color(color: color)
+
         default:
             break
         }

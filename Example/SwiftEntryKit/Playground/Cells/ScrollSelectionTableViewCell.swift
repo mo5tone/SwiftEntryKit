@@ -21,8 +21,10 @@ final class ScrollSelectionTableViewCell: SelectionTableViewCell {
         switch attributesWrapper.attributes.scroll {
         case .enabled:
             segmentedControl.selectedSegmentIndex = 0
+
         case .disabled:
             segmentedControl.selectedSegmentIndex = 1
+
         case .edgeCrossingDisabled:
             segmentedControl.selectedSegmentIndex = 2
         }
@@ -32,10 +34,13 @@ final class ScrollSelectionTableViewCell: SelectionTableViewCell {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             attributesWrapper.attributes.scroll = .enabled(swipeable: true, pullbackAnimation: .jolt)
+
         case 1:
             attributesWrapper.attributes.scroll = .disabled
+
         case 2:
             attributesWrapper.attributes.scroll = .edgeCrossingDisabled(swipeable: true)
+
         default:
             break
         }

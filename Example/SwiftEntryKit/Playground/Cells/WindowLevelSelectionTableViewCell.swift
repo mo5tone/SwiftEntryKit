@@ -21,10 +21,13 @@ final class WindowLevelSelectionTableViewCell: SelectionTableViewCell {
         switch attributesWrapper.attributes.windowLevel {
         case .normal:
             segmentedControl.selectedSegmentIndex = 0
+
         case .statusBar:
             segmentedControl.selectedSegmentIndex = 1
+
         case .alerts:
             segmentedControl.selectedSegmentIndex = 2
+
         default:
             break
         }
@@ -34,10 +37,13 @@ final class WindowLevelSelectionTableViewCell: SelectionTableViewCell {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             attributesWrapper.attributes.windowLevel = .normal
+
         case 1:
             attributesWrapper.attributes.windowLevel = .statusBar
+
         case 2:
             attributesWrapper.attributes.windowLevel = .alerts
+
         default:
             break
         }

@@ -22,8 +22,10 @@ final class PositionSelectionTableViewCell: SelectionTableViewCell {
         switch attributesWrapper.attributes.position {
         case .top:
             segmentedControl.selectedSegmentIndex = 0
+
         case .bottom:
             segmentedControl.selectedSegmentIndex = 1
+
         case .center:
             segmentedControl.selectedSegmentIndex = 2
         }
@@ -33,10 +35,13 @@ final class PositionSelectionTableViewCell: SelectionTableViewCell {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             attributesWrapper.attributes.position = .top
+
         case 1:
             attributesWrapper.attributes.position = .bottom
+
         case 2:
             attributesWrapper.attributes.position = .center
+
         default:
             break
         }

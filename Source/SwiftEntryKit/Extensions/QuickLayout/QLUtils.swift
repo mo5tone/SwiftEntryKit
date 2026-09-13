@@ -67,12 +67,12 @@ public struct QLFillConstraints {
 public struct QLPriorityPair {
     public let horizontal: QLPriority
     public let vertical: QLPriority
-    public static var required: QLPriorityPair {
-        QLPriorityPair(.required, .required)
+    public static var required: Self {
+        Self(.required, .required)
     }
 
-    public static var must: QLPriorityPair {
-        QLPriorityPair(.must, .must)
+    public static var must: Self {
+        Self(.must, .must)
     }
 
     public init(_ horizontal: QLPriority, _ vertical: QLPriority) {
@@ -96,6 +96,7 @@ public enum QLAxis {
         case .horizontally:
             first = .left
             second = .right
+
         case .vertically:
             first = .top
             second = .bottom

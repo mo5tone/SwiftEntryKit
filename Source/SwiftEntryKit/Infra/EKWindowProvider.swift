@@ -12,7 +12,7 @@ import UIKit
 final class EKWindowProvider: EntryPresenterDelegate {
     /** The artificial safe area insets */
     static var safeAreaInsets: UIEdgeInsets {
-        EKWindowProvider.shared.entryWindow?.rootViewController?.view?.safeAreaInsets ?? UIApplication.shared.ekKeyWindow?.rootViewController?.view.safeAreaInsets ?? .zero
+        Self.shared.entryWindow?.rootViewController?.view?.safeAreaInsets ?? UIApplication.shared.ekKeyWindow?.rootViewController?.view.safeAreaInsets ?? .zero
     }
 
     /** Single access point */
@@ -92,8 +92,10 @@ final class EKWindowProvider: EntryPresenterDelegate {
                 entryQueue.removeAll()
             }
             show(entryView: entryView, presentInsideKeyWindow: presentInsideKeyWindow, rollbackWindow: rollbackWindow)
+
         case .enqueue where isCurrentlyDisplaying():
             entryQueue.enqueue(entry: .init(view: entryView, presentInsideKeyWindow: presentInsideKeyWindow, rollbackWindow: rollbackWindow))
+
         case .enqueue:
             show(entryView: entryView, presentInsideKeyWindow: presentInsideKeyWindow, rollbackWindow: rollbackWindow)
         }
@@ -156,6 +158,7 @@ final class EKWindowProvider: EntryPresenterDelegate {
             } else {
                 UIApplication.shared.ekKeyWindow?.makeKeyAndVisible()
             }
+
         case let .custom(window: window):
             window.makeKeyAndVisible()
         }
@@ -187,18 +190,22 @@ final class EKWindowProvider: EntryPresenterDelegate {
         switch descriptor {
         case .displayed:
             rootVC.animateOutLastEntry(completionHandler: completion)
+
         case let .specific(entryName: name):
             entryQueue.removeEntries(by: name)
             if entryView?.attributes.name == name {
                 rootVC.animateOutLastEntry(completionHandler: completion)
             }
+
         case let .prioritizedLowerOrEqualTo(priority: priorityThreshold):
             entryQueue.removeEntries(withPriorityLowerOrEqualTo: priorityThreshold)
             if let currentPriority = entryView?.attributes.precedence.priority, currentPriority <= priorityThreshold {
                 rootVC.animateOutLastEntry(completionHandler: completion)
             }
+
         case .enqueued:
             entryQueue.removeAll()
+
         case .all:
             entryQueue.removeAll()
             rootVC.animateOutLastEntry(completionHandler: completion)

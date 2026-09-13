@@ -20,6 +20,7 @@ public extension EKAttributes {
             switch self {
             case .overridden:
                 true
+
             case .animated:
                 false
             }
@@ -29,6 +30,7 @@ public extension EKAttributes {
             switch self {
             case let .animated(animation: animation):
                 animation
+
             case .overridden:
                 nil
             }

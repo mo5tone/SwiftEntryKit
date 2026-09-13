@@ -23,6 +23,7 @@ public extension EKAttributes {
                 switch self {
                 case .overridden:
                     true
+
                 default:
                     false
                 }
@@ -44,7 +45,7 @@ public extension EKAttributes {
             case intrinsic
 
             /** Edge totally filled */
-            public static var fill: Edge {
+            public static var fill: Self {
                 .offset(value: 0)
             }
         }
@@ -64,18 +65,18 @@ public extension EKAttributes {
             }
 
             /** The content's size. Entry's content view must have tight constraints */
-            public static var intrinsic: Size {
-                Size(width: .intrinsic, height: .intrinsic)
+            public static var intrinsic: Self {
+                Self(width: .intrinsic, height: .intrinsic)
             }
 
             /** The content's size. Entry's content view must have tight constraints */
-            public static var sizeToWidth: Size {
-                Size(width: .offset(value: 0), height: .intrinsic)
+            public static var sizeToWidth: Self {
+                Self(width: .offset(value: 0), height: .intrinsic)
             }
 
             /** Screen size, without horizontal or vertical offset */
-            public static var screen: Size {
-                Size(width: .fill, height: .fill)
+            public static var screen: Self {
+                Self(width: .fill, height: .fill)
             }
         }
 
@@ -95,8 +96,8 @@ public extension EKAttributes {
                 }
 
                 /** None offset */
-                public static var none: Offset {
-                    Offset()
+                public static var none: Self {
+                    Self()
                 }
             }
 
@@ -112,8 +113,9 @@ public extension EKAttributes {
             /** Returns true if the entry is bound to the keyboard */
             public var isBound: Bool {
                 switch self {
-                case .bind(offset: _):
+                case .bind:
                     true
+
                 case .unbind:
                     false
                 }
@@ -163,18 +165,18 @@ public extension EKAttributes {
         }
 
         /** Returns a floating entry (float-like) */
-        public static var float: PositionConstraints {
-            PositionConstraints(verticalOffset: 10, size: .init(width: .offset(value: 20), height: .intrinsic))
+        public static var float: Self {
+            Self(verticalOffset: 10, size: .init(width: .offset(value: 20), height: .intrinsic))
         }
 
         /** A full width entry (toast-like) */
-        public static var fullWidth: PositionConstraints {
-            PositionConstraints(verticalOffset: 0, size: .sizeToWidth)
+        public static var fullWidth: Self {
+            Self(verticalOffset: 0, size: .sizeToWidth)
         }
 
         /** A full screen entry - fills the entire screen, modal-like */
-        public static var fullScreen: PositionConstraints {
-            PositionConstraints(verticalOffset: 0, size: .screen)
+        public static var fullScreen: Self {
+            Self(verticalOffset: 0, size: .screen)
         }
 
         /** Initialize with default parameters */

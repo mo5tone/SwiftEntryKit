@@ -12,10 +12,10 @@ import UIKit
 
 struct TextFieldOptionSet: OptionSet {
     let rawValue: Int
-    static let fullName = TextFieldOptionSet(rawValue: 1 << 0)
-    static let mobile = TextFieldOptionSet(rawValue: 1 << 1)
-    static let email = TextFieldOptionSet(rawValue: 1 << 2)
-    static let password = TextFieldOptionSet(rawValue: 1 << 3)
+    static let fullName = Self(rawValue: 1 << 0)
+    static let mobile = Self(rawValue: 1 << 1)
+    static let email = Self(rawValue: 1 << 2)
+    static let password = Self(rawValue: 1 << 3)
 }
 
 enum FormStyle {
@@ -33,6 +33,7 @@ enum FormStyle {
         switch self {
         case .metallic:
             .white
+
         case .light:
             .standardContent
         }
@@ -42,6 +43,7 @@ enum FormStyle {
         switch self {
         case .metallic:
             .black
+
         case .light:
             .white
         }
@@ -51,6 +53,7 @@ enum FormStyle {
         switch self {
         case .metallic:
             .white
+
         case .light:
             .redish
         }
@@ -61,6 +64,7 @@ enum FormStyle {
         switch self {
         case .metallic:
             return .init(font: font, color: UIColor(white: 0.8, alpha: 1).ekColor)
+
         case .light:
             return .init(font: font, color: UIColor(white: 0.5, alpha: 1).ekColor)
         }
@@ -79,8 +83,7 @@ final class FormFieldPresetFactory {
     class func email(placeholderStyle: EKProperty.LabelStyle,
                      textStyle: EKProperty.LabelStyle,
                      separatorColor: EKColor,
-                     style: FormStyle) -> EKProperty.TextFieldContent
-    {
+                     style: FormStyle) -> EKProperty.TextFieldContent {
         let emailPlaceholder = EKProperty.LabelContent(
             text: "Email Address",
             style: placeholderStyle
@@ -98,8 +101,7 @@ final class FormFieldPresetFactory {
     class func fullName(placeholderStyle: EKProperty.LabelStyle,
                         textStyle: EKProperty.LabelStyle,
                         separatorColor: EKColor,
-                        style: FormStyle) -> EKProperty.TextFieldContent
-    {
+                        style: FormStyle) -> EKProperty.TextFieldContent {
         let fullNamePlaceholder = EKProperty.LabelContent(
             text: "Full Name",
             style: placeholderStyle
@@ -117,8 +119,7 @@ final class FormFieldPresetFactory {
     class func mobile(placeholderStyle: EKProperty.LabelStyle,
                       textStyle: EKProperty.LabelStyle,
                       separatorColor: EKColor,
-                      style: FormStyle) -> EKProperty.TextFieldContent
-    {
+                      style: FormStyle) -> EKProperty.TextFieldContent {
         let mobilePlaceholder = EKProperty.LabelContent(
             text: "Mobile Phone",
             style: placeholderStyle
@@ -136,8 +137,7 @@ final class FormFieldPresetFactory {
     class func password(placeholderStyle: EKProperty.LabelStyle,
                         textStyle: EKProperty.LabelStyle,
                         separatorColor: EKColor,
-                        style: FormStyle) -> EKProperty.TextFieldContent
-    {
+                        style: FormStyle) -> EKProperty.TextFieldContent {
         let passwordPlaceholder = EKProperty.LabelContent(text: "Password",
                                                           style: placeholderStyle)
         return .init(keyboardType: .namePhonePad,
@@ -152,8 +152,7 @@ final class FormFieldPresetFactory {
     }
 
     class func fields(by set: TextFieldOptionSet,
-                      style: FormStyle) -> [EKProperty.TextFieldContent]
-    {
+                      style: FormStyle) -> [EKProperty.TextFieldContent] {
         var array: [EKProperty.TextFieldContent] = []
         let placeholderStyle = style.placeholder
         let textStyle = EKProperty.LabelStyle(

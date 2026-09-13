@@ -137,11 +137,13 @@ class EKContentView: UIView {
             inOffset = overrideSafeArea ? 0 : safeAreaInsets.top
             inOffset += attributes.positionConstraints.verticalOffset
             spacerView?.layout(.bottom, to: .top, of: self)
+
         case .bottom:
             messageInAnchor = .bottom
             inOffset = overrideSafeArea ? 0 : -safeAreaInsets.bottom
             inOffset -= attributes.positionConstraints.verticalOffset
             spacerView?.layout(.top, to: .bottom, of: self)
+
         case .center:
             messageInAnchor = .centerY
         }
@@ -160,6 +162,7 @@ class EKContentView: UIView {
         switch attributes.position {
         case .top:
             verticalLimit = inOffset
+
         case .bottom, .center:
             verticalLimit = UIScreen.main.bounds.height + inOffset
         }
@@ -171,6 +174,7 @@ class EKContentView: UIView {
                 resistanceConstraint = layoutToSuperview(.top, relation: .greaterThanOrEqual, offset: screenEdgeResistance, priority: .defaultLow)
             }
             inKeyboardConstraint = layoutToSuperview(.bottom, priority: .defaultLow)
+
         default:
             break
         }
@@ -182,10 +186,13 @@ class EKContentView: UIView {
             var anchor = switch translation.anchorPosition {
             case .top:
                 OutTranslationAnchor(.bottom, to: .top)
+
             case .bottom:
                 OutTranslationAnchor(.top, to: .bottom)
+
             case .automatic where attributes.position.isTop:
                 OutTranslationAnchor(.bottom, to: .top)
+
             case .automatic: // attributes.position.isBottom:
                 OutTranslationAnchor(.top, to: .bottom)
             }
@@ -217,10 +224,13 @@ class EKContentView: UIView {
         switch attributes.positionConstraints.size.width {
         case let .offset(value: offset):
             layoutToSuperview(axis: .horizontally, offset: offset, priority: .must)
+
         case let .ratio(value: ratio):
             layoutToSuperview(.width, ratio: ratio, priority: .must)
+
         case let .constant(value: constant):
             set(.width, of: constant, priority: .must)
+
         case .intrinsic:
             break
         }
@@ -229,10 +239,13 @@ class EKContentView: UIView {
         switch attributes.positionConstraints.size.height {
         case let .offset(value: offset):
             layoutToSuperview(.height, offset: -offset * 2, priority: .must)
+
         case let .ratio(value: ratio):
             layoutToSuperview(.height, ratio: ratio, priority: .must)
+
         case let .constant(value: constant):
             set(.height, of: constant, priority: .must)
+
         case .intrinsic:
             break
         }
@@ -244,11 +257,14 @@ class EKContentView: UIView {
         case let .offset(value: offset):
             layout(to: .left, of: superview!, relation: .greaterThanOrEqual, offset: offset)
             layout(to: .right, of: superview!, relation: .lessThanOrEqual, offset: -offset)
+
         case let .ratio(value: ratio):
             layoutToSuperview(.centerX)
             layout(to: .width, of: superview!, relation: .lessThanOrEqual, ratio: ratio)
+
         case let .constant(value: constant):
             set(.width, of: constant, relation: .lessThanOrEqual)
+
         case .intrinsic:
             break
         }
@@ -257,10 +273,13 @@ class EKContentView: UIView {
         switch attributes.positionConstraints.maxSize.height {
         case let .offset(value: offset):
             layout(to: .height, of: superview!, relation: .lessThanOrEqual, offset: -offset * 2)
+
         case let .ratio(value: ratio):
             layout(to: .height, of: superview!, relation: .lessThanOrEqual, ratio: ratio)
+
         case let .constant(value: constant):
             set(.height, of: constant, relation: .lessThanOrEqual)
+
         case .intrinsic:
             break
         }
@@ -286,6 +305,7 @@ class EKContentView: UIView {
         switch attributes.entryInteraction.defaultAction {
         case .forward:
             return
+
         default:
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapGestureRecognized))
             tapGestureRecognizer.numberOfTapsRequired = 1
@@ -416,10 +436,13 @@ class EKContentView: UIView {
         switch type {
         case .exit:
             exitOutConstraint.priority = .must
+
         case .pop:
             popOutConstraint.priority = .must
+
         case .swipeUp:
             swipeUpOutConstraint.priority = .must
+
         case .swipeDown:
             swipeDownOutConstraint.priority = .must
         }
@@ -582,10 +605,12 @@ extension EKContentView {
     /// Tap gesture handler
     @objc func tapGestureRecognized() {
         switch attributes.entryInteraction.defaultAction {
-        case .delayExit(by: _) where attributes.displayDuration.isFinite:
+        case .delayExit where attributes.displayDuration.isFinite:
             scheduleAnimateOut()
+
         case .dismissEntry:
             animateOut(pushOut: false)
+
         default:
             break
         }
@@ -611,6 +636,7 @@ extension EKContentView {
                 switch gr.state {
                 case .ended, .failed, .cancelled:
                     animateRubberBandPullback()
+
                 default:
                     break
                 }
@@ -620,8 +646,10 @@ extension EKContentView {
             case .ended, .failed, .cancelled:
                 let velocity = gr.velocity(in: superview!).y
                 swipeEnded(withVelocity: velocity)
+
             case .changed:
                 inConstraint.constant += translation
+
             default:
                 break
             }
@@ -709,8 +737,10 @@ extension EKContentView {
         switch state {
         case .began:
             outDispatchWorkItem?.cancel()
+
         case .ended, .failed, .cancelled:
             scheduleAnimateOut()
+
         default:
             break
         }

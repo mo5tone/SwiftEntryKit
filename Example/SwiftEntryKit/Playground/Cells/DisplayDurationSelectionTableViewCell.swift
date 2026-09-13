@@ -21,10 +21,13 @@ final class DisplayDurationSelectionTableViewCell: SelectionTableViewCell {
         switch attributesWrapper.attributes.displayDuration {
         case 2:
             segmentedControl.selectedSegmentIndex = 0
+
         case 4:
             segmentedControl.selectedSegmentIndex = 1
+
         case .infinity:
             segmentedControl.selectedSegmentIndex = 2
+
         default:
             break
         }
@@ -34,10 +37,13 @@ final class DisplayDurationSelectionTableViewCell: SelectionTableViewCell {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             attributesWrapper.attributes.displayDuration = 2
+
         case 1:
             attributesWrapper.attributes.displayDuration = 4
+
         case 2:
             attributesWrapper.attributes.displayDuration = .infinity
+
         default:
             break
         }

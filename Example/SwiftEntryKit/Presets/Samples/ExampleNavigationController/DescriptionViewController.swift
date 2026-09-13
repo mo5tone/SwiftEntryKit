@@ -15,7 +15,7 @@ class DescriptionViewController: UIViewController {
 
     init(screenTitle: String) {
         self.screenTitle = screenTitle
-        super.init(nibName: type(of: self).className, bundle: nil)
+        super.init(nibName: Self.className, bundle: nil)
     }
 
     @available(*, unavailable)

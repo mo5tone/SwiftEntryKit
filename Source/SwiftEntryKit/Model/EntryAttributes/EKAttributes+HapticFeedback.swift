@@ -20,10 +20,13 @@ public extension EKAttributes {
             switch self {
             case .success:
                 .success
+
             case .warning:
                 .warning
+
             case .error:
                 .error
+
             case .none:
                 nil
             }
