@@ -70,7 +70,7 @@ public extension EKAttributes {
         /** Returns the current appearance */
         @MainActor
         public static var currentAppearance: Appearance {
-            (Self.isCurrentVisible, Self.currentStyle)
+            (isCurrentVisible, currentStyle)
         }
 
         /** Returns the current status bar */

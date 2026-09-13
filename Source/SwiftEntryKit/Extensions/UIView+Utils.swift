@@ -93,7 +93,8 @@ extension UIImageView {
 
             if case let .animate(duration: duration,
                                  options: options,
-                                 transform: transform) = newValue.animation {
+                                 transform: transform) = newValue.animation
+            {
                 let options: UIView.AnimationOptions = [.repeat, .autoreverse, options]
                 // A hack that forces the animation to run on the main thread,
                 // on one of the next run loops
@@ -120,7 +121,7 @@ extension UITextField {
                 string: newValue.text,
                 attributes: [
                     .font: newValue.style.font,
-                    .foregroundColor: newValue.style.color(for: traitCollection)
+                    .foregroundColor: newValue.style.color(for: traitCollection),
                 ]
             )
         }

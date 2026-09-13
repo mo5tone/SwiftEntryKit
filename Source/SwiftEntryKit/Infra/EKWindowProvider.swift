@@ -12,7 +12,7 @@ import UIKit
 final class EKWindowProvider: EntryPresenterDelegate {
     /** The artificial safe area insets */
     static var safeAreaInsets: UIEdgeInsets {
-        Self.shared.entryWindow?.rootViewController?.view?.safeAreaInsets ?? UIApplication.shared.ekKeyWindow?.rootViewController?.view.safeAreaInsets ?? .zero
+        shared.entryWindow?.rootViewController?.view?.safeAreaInsets ?? UIApplication.shared.ekKeyWindow?.rootViewController?.view.safeAreaInsets ?? .zero
     }
 
     /** Single access point */

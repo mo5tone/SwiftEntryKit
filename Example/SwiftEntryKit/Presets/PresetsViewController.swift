@@ -85,7 +85,7 @@ class PresetsViewController: UIViewController {
             NSAttributedString.Key.foregroundColor: EKColor.standardContent.color(
                 for: traitCollection,
                 mode: PresetsDataSource.displayMode
-            )
+            ),
         ]
         navigationController?.navigationBar.tintColor = EKColor.navigationItemColor.color(
             for: traitCollection,
@@ -404,7 +404,8 @@ class PresetsViewController: UIViewController {
                                          title: String,
                                          desc: String,
                                          textColor: EKColor,
-                                         imageName: String? = nil) {
+                                         imageName: String? = nil)
+    {
         let title = EKProperty.LabelContent(
             text: title,
             style: .init(
@@ -526,7 +527,8 @@ class PresetsViewController: UIViewController {
                                   descriptionColor: EKColor,
                                   buttonTitleColor: EKColor,
                                   buttonBackgroundColor: EKColor,
-                                  image: UIImage? = nil) {
+                                  image: UIImage? = nil)
+    {
         var themeImage: EKPopUpMessage.ThemeImage?
 
         if let image {
@@ -909,15 +911,20 @@ extension PresetsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PresetTableViewCell.className,
-                                                 for: indexPath) as! PresetTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PresetTableViewCell.className,
+                                                       for: indexPath) as? PresetTableViewCell
+        else {
+            fatalError("Failed to dequeue PresetTableViewCell")
+        }
         cell.presetDescription = dataSource[indexPath.section, indexPath.row]
         cell.displayMode = PresetsDataSource.displayMode
         return cell
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: SelectionHeaderView.className) as! SelectionHeaderView
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: SelectionHeaderView.className) as? SelectionHeaderView else {
+            return nil
+        }
         header.text = dataSource[section].title
         header.displayMode = PresetsDataSource.displayMode
         return header

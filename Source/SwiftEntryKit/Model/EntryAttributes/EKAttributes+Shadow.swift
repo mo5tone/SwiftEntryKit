@@ -28,7 +28,8 @@ public extension EKAttributes {
             public init(color: EKColor = .black,
                         opacity: Float,
                         radius: CGFloat,
-                        offset: CGSize = .zero) {
+                        offset: CGSize = .zero)
+            {
                 self.color = color
                 self.radius = radius
                 self.offset = offset

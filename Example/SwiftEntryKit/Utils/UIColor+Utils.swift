@@ -10,9 +10,9 @@ import SwiftEntryKit
 import UIKit
 
 extension UIColor {
-    static func by(r: Int, g: Int, b: Int, a: CGFloat = 1) -> UIColor {
-        let d = CGFloat(255)
-        return UIColor(red: CGFloat(r) / d, green: CGFloat(g) / d, blue: CGFloat(b) / d, alpha: a)
+    static func by(red: Int, green: Int, blue: Int, alpha: CGFloat = 1) -> UIColor {
+        let maxComponent = CGFloat(255)
+        return UIColor(red: CGFloat(red) / maxComponent, green: CGFloat(green) / maxComponent, blue: CGFloat(blue) / maxComponent, alpha: alpha)
     }
 
     convenience init(red: Int, green: Int, blue: Int) {

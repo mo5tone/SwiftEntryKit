@@ -64,7 +64,8 @@ final class EKButtonView: UIView {
     }
 
     private func setBackground(by content: EKProperty.ButtonContent,
-                               isHighlighted: Bool) {
+                               isHighlighted: Bool)
+    {
         if isHighlighted {
             backgroundColor = content.highlightedBackgroundColor(for: traitCollection)
         } else {

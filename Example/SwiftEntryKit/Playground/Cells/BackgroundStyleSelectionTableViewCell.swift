@@ -61,7 +61,7 @@ final class BackgroundStyleSelectionTableViewCell: SelectionTableViewCell {
             segmentedControl.selectedSegmentIndex = 3
 
         default:
-            // TODO: Image isn't handled yet
+            // Image isn't handled yet
             break
         }
     }

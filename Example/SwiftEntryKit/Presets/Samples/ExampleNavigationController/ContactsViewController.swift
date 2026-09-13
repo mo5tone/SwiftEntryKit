@@ -44,7 +44,7 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let vc = DescriptionViewController(screenTitle: dataSource[indexPath.row])
-        navigationController!.pushViewController(vc, animated: true)
+        let viewController = DescriptionViewController(screenTitle: dataSource[indexPath.row])
+        navigationController!.pushViewController(viewController, animated: true)
     }
 }

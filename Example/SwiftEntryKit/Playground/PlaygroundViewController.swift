@@ -97,7 +97,7 @@ final class PlaygroundViewController: UIViewController {
 
     // MARK: Actions
 
-    @IBAction func play() {
+    @IBAction private func play() {
         let title = EKProperty.LabelContent(
             text: "Hi there!",
             style: EKProperty.LabelStyle(
@@ -131,13 +131,19 @@ final class PlaygroundViewController: UIViewController {
 
 extension PlaygroundViewController: UITableViewDelegate, UITableViewDataSource {
     private func selectionCell(by id: String,
-                               and indexPath: IndexPath) -> SelectionBaseCell {
-        tableView.dequeueReusableCell(withIdentifier: id,
-                                      for: indexPath) as! SelectionBaseCell
+                               and indexPath: IndexPath) -> SelectionBaseCell
+    {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: id,
+                                                       for: indexPath) as? SelectionBaseCell
+        else {
+            fatalError("Failed to dequeue \(id) as SelectionBaseCell")
+        }
+        return cell
     }
 
     func tableView(_: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
         let cell: SelectionBaseCell
         cell = selectionCell(by: Cells.cells[indexPath.section][indexPath.row].className,
                              and: indexPath)
@@ -150,20 +156,28 @@ extension PlaygroundViewController: UITableViewDelegate, UITableViewDataSource {
             cell.configure(attributesWrapper: attributesWrapper)
 
         case (1, 3):
-            let cell = cell as! BackgroundStyleSelectionTableViewCell
-            cell.configure(attributesWrapper: attributesWrapper, focus: .screen)
+            guard let backgroundCell = cell as? BackgroundStyleSelectionTableViewCell else {
+                fatalError("Expected BackgroundStyleSelectionTableViewCell")
+            }
+            backgroundCell.configure(attributesWrapper: attributesWrapper, focus: .screen)
 
         case (1, 4):
-            let cell = cell as! BackgroundStyleSelectionTableViewCell
-            cell.configure(attributesWrapper: attributesWrapper, focus: .entry)
+            guard let backgroundCell = cell as? BackgroundStyleSelectionTableViewCell else {
+                fatalError("Expected BackgroundStyleSelectionTableViewCell")
+            }
+            backgroundCell.configure(attributesWrapper: attributesWrapper, focus: .entry)
 
         case (2, 0):
-            let cell = cell as! UserInteractionSelectionTableViewCell
-            cell.configure(attributesWrapper: attributesWrapper, focus: .screen)
+            guard let interactionCell = cell as? UserInteractionSelectionTableViewCell else {
+                fatalError("Expected UserInteractionSelectionTableViewCell")
+            }
+            interactionCell.configure(attributesWrapper: attributesWrapper, focus: .screen)
 
         case (2, 1):
-            let cell = cell as! UserInteractionSelectionTableViewCell
-            cell.configure(attributesWrapper: attributesWrapper, focus: .entry)
+            guard let interactionCell = cell as? UserInteractionSelectionTableViewCell else {
+                fatalError("Expected UserInteractionSelectionTableViewCell")
+            }
+            interactionCell.configure(attributesWrapper: attributesWrapper, focus: .entry)
 
         case (2, 2 ... 4):
             cell.configure(attributesWrapper: attributesWrapper)
@@ -172,27 +186,36 @@ extension PlaygroundViewController: UITableViewDelegate, UITableViewDataSource {
             cell.configure(attributesWrapper: attributesWrapper)
 
         case (4, 0):
-            let cell = cell as! AnimationSelectionTableViewCell
-            cell.configure(attributesWrapper: attributesWrapper, action: .entrance)
+            guard let animationCell = cell as? AnimationSelectionTableViewCell else {
+                fatalError("Expected AnimationSelectionTableViewCell")
+            }
+            animationCell.configure(attributesWrapper: attributesWrapper, action: .entrance)
 
         case (4, 1):
-            let cell = cell as! AnimationSelectionTableViewCell
-            cell.configure(attributesWrapper: attributesWrapper, action: .exit)
+            guard let animationCell = cell as? AnimationSelectionTableViewCell else {
+                fatalError("Expected AnimationSelectionTableViewCell")
+            }
+            animationCell.configure(attributesWrapper: attributesWrapper, action: .exit)
 
         case (4, 2):
-            let cell = cell as! AnimationSelectionTableViewCell
-            cell.configure(attributesWrapper: attributesWrapper, action: .pop)
+            guard let animationCell = cell as? AnimationSelectionTableViewCell else {
+                fatalError("Expected AnimationSelectionTableViewCell")
+            }
+            animationCell.configure(attributesWrapper: attributesWrapper, action: .pop)
 
         default:
-            fatalError()
+            fatalError("Unhandled cell configuration")
         }
 
         return cell
     }
 
     func tableView(_ tableView: UITableView,
-                   viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: Cells.header.className) as! SelectionHeaderView
+                   viewForHeaderInSection section: Int) -> UIView?
+    {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: Cells.header.className) as? SelectionHeaderView else {
+            return nil
+        }
         header.text = Cells.sectionTitles[section]
         return header
     }
@@ -202,18 +225,21 @@ extension PlaygroundViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_: UITableView,
-                   numberOfRowsInSection section: Int) -> Int {
+                   numberOfRowsInSection section: Int) -> Int
+    {
         Cells.cells[section].count
     }
 
     /// iOS 9, 10 support
     func tableView(_: UITableView,
-                   estimatedHeightForRowAt _: IndexPath) -> CGFloat {
+                   estimatedHeightForRowAt _: IndexPath) -> CGFloat
+    {
         80
     }
 
     func tableView(_: UITableView,
-                   estimatedHeightForHeaderInSection _: Int) -> CGFloat {
+                   estimatedHeightForHeaderInSection _: Int) -> CGFloat
+    {
         50
     }
 }

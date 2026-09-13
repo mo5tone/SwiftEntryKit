@@ -13,7 +13,8 @@ public final class EKRatingSymbolsContainerView: UIView {
     private var symbolsArray: [EKRatingSymbolView] = []
 
     public func setup(with message: EKRatingMessage,
-                      externalSelection: @escaping EKRatingMessage.Selection) {
+                      externalSelection: @escaping EKRatingMessage.Selection)
+    {
         self.message = message
         let internalSelection = { [unowned self] (index: Int) in
             select(index: index)
@@ -38,9 +39,9 @@ public final class EKRatingSymbolsContainerView: UIView {
 
     private func select(index: Int? = nil) {
         var delay: TimeInterval = 0
-        for (i, view) in symbolsArray.enumerated() {
+        for (offset, view) in symbolsArray.enumerated() {
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                if let index, i <= index {
+                if let index, offset <= index {
                     view.isSelected = true
                     view.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
                 } else if view.isSelected || index == nil {

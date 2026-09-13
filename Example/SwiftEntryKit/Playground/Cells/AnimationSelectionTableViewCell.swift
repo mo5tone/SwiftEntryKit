@@ -47,7 +47,7 @@ final class AnimationSelectionTableViewCell: SelectionTableViewCell {
                 if case let EKAttributes.PopBehavior.animated(animation: animation) = attributesWrapper.attributes.popBehavior {
                     animation
                 } else {
-                    fatalError()
+                    fatalError("Unexpected pop behavior")
                 }
             }
         }

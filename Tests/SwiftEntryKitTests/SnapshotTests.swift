@@ -49,7 +49,7 @@ struct SnapshotTests {
             title: SnapshotFixtures.title(),
             description: SnapshotFixtures.label("A popup description."),
             button: SnapshotFixtures.button("Continue")
-        )            {}
+        ) {}
         assertSnapshot(of: prepared(EKPopUpMessageView(with: message), height: 320), as: .image)
     }
 
@@ -68,7 +68,7 @@ struct SnapshotTests {
             with: SnapshotFixtures.title("Sign in"),
             textFieldsContent: [
                 SnapshotFixtures.textField(placeholder: "Email"),
-                SnapshotFixtures.textField(placeholder: "Password")
+                SnapshotFixtures.textField(placeholder: "Password"),
             ],
             buttonContent: SnapshotFixtures.button("Submit")
         )

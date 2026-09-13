@@ -1,8 +1,8 @@
 # SwiftFormat configuration for SwiftEntryKit
 #
-# Run locally with: mise x -- swiftformat --lint .
-# Auto-format with: mise x -- swiftformat .
+# Run locally with: mise run lint  (format-check + lint)
+# Auto-format with:  mise run format
 
 --swift-version 5.10
 --indent 4
---exclude Example/Derived
+--exclude Example/Derived,Example/Project.swift,Workspace.swift

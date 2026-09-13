@@ -26,8 +26,8 @@ public extension EKAttributes {
         public struct Priority: Hashable, Equatable, RawRepresentable, Comparable, @unchecked Sendable {
             public var rawValue: Int
 
-            public var hashValue: Int {
-                rawValue
+            public func hash(into hasher: inout Hasher) {
+                hasher.combine(rawValue)
             }
 
             public init(_ rawValue: Int) {
@@ -50,7 +50,7 @@ public extension EKAttributes {
          */
         public enum QueueingHeuristic {
             /** Determines the heuristic which the entry-queue is based on */
-            nonisolated(unsafe) public static var value = Self.priority
+            public nonisolated(unsafe) static var value = Self.priority
 
             /** Chronological - FIFO */
             case chronological
@@ -124,7 +124,7 @@ public extension EKAttributes {
  High priority entry overrides any other entry including another equal priority one.
  You can you on of the values (.max, high, normal, low, min) and also set your own values. */
 public extension EKAttributes.Precedence.Priority {
-    static let maxRawValue = 1_000
+    static let maxRawValue = 1000
     static let highRawValue = 750
     static let normalRawValue = 500
     static let lowRawValue = 250

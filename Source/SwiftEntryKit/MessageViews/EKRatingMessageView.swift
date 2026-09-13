@@ -50,7 +50,8 @@ public final class EKRatingMessageView: UIView, EntryAppearanceDescriptor {
     }
 
     private func set(title: EKProperty.LabelContent,
-                     description: EKProperty.LabelContent) {
+                     description: EKProperty.LabelContent)
+    {
         messageContentView.titleContent = title
         messageContentView.subtitleContent = description
         UIView.animate(withDuration: 0.4,

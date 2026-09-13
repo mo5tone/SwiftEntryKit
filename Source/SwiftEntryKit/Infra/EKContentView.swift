@@ -295,7 +295,7 @@ class EKContentView: UIView {
     /// Setup general attributes
     private func setupAttributes() {
         clipsToBounds = false
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognized(gr:)))
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognized(gestureRecognizer:)))
         panGestureRecognizer.isEnabled = attributes.scroll.isEnabled
         addGestureRecognizer(panGestureRecognizer)
     }
@@ -522,13 +522,18 @@ extension EKContentView {
         let end: CGRect
 
         init?(withRawValue rawValue: [AnyHashable: Any]?) {
-            guard let rawValue else {
+            guard let rawValue,
+                  let duration = rawValue[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval,
+                  let curveValue = rawValue[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt,
+                  let beginValue = rawValue[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue,
+                  let endValue = rawValue[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
+            else {
                 return nil
             }
-            duration = rawValue[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
-            curve = .init(rawValue: rawValue[UIResponder.keyboardAnimationCurveUserInfoKey] as! UInt)
-            begin = (rawValue[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-            end = (rawValue[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+            self.duration = duration
+            curve = .init(rawValue: curveValue)
+            begin = beginValue.cgRectValue
+            end = endValue.cgRectValue
         }
 
         var height: CGFloat {
@@ -618,22 +623,22 @@ extension EKContentView {
     }
 
     /// Pan gesture handler
-    @objc func panGestureRecognized(gr: UIPanGestureRecognizer) {
+    @objc func panGestureRecognized(gestureRecognizer: UIPanGestureRecognizer) {
         guard keyboardState.isHidden else {
             return
         }
 
         // Delay the exit of the entry if needed
-        handleExitDelayIfNeeded(byPanState: gr.state)
+        handleExitDelayIfNeeded(byPanState: gestureRecognizer.state)
 
-        let translation = gr.translation(in: superview!).y
+        let translation = gestureRecognizer.translation(in: superview!).y
 
         if shouldStretch(with: translation) {
             if attributes.scroll.isEdgeCrossingEnabled {
                 totalTranslation += translation
                 calculateLogarithmicOffset(forOffset: totalTranslation, currentTranslation: translation)
 
-                switch gr.state {
+                switch gestureRecognizer.state {
                 case .ended, .failed, .cancelled:
                     animateRubberBandPullback()
 
@@ -642,9 +647,9 @@ extension EKContentView {
                 }
             }
         } else {
-            switch gr.state {
+            switch gestureRecognizer.state {
             case .ended, .failed, .cancelled:
-                let velocity = gr.velocity(in: superview!).y
+                let velocity = gestureRecognizer.velocity(in: superview!).y
                 swipeEnded(withVelocity: velocity)
 
             case .changed:
@@ -654,7 +659,7 @@ extension EKContentView {
                 break
             }
         }
-        gr.setTranslation(.zero, in: superview!)
+        gestureRecognizer.setTranslation(.zero, in: superview!)
     }
 
     private func swipeEnded(withVelocity velocity: CGFloat) {

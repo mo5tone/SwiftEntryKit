@@ -44,7 +44,8 @@ public extension EKAttributes {
 
             /** Computes a proper `UIBlurEffect.Style` instance */
             public func blurStyle(for traits: UITraitCollection,
-                                  mode: EKAttributes.DisplayMode) -> UIBlurEffect.Style {
+                                  mode: EKAttributes.DisplayMode) -> UIBlurEffect.Style
+            {
                 switch mode {
                 case .inferred:
                     switch traits.userInterfaceStyle {
@@ -68,7 +69,8 @@ public extension EKAttributes {
 
             @MainActor
             public func blurEffect(for traits: UITraitCollection,
-                                   mode: EKAttributes.DisplayMode) -> UIBlurEffect {
+                                   mode: EKAttributes.DisplayMode) -> UIBlurEffect
+            {
                 UIBlurEffect(style: blurStyle(for: traits, mode: mode))
             }
         }
@@ -81,7 +83,8 @@ public extension EKAttributes {
 
             public init(colors: [EKColor],
                         startPoint: CGPoint,
-                        endPoint: CGPoint) {
+                        endPoint: CGPoint)
+            {
                 self.colors = colors
                 self.startPoint = startPoint
                 self.endPoint = endPoint
@@ -105,7 +108,8 @@ public extension EKAttributes {
 
         /** == operator overload */
         public static func == (lhs: EKAttributes.BackgroundStyle,
-                               rhs: EKAttributes.BackgroundStyle) -> Bool {
+                               rhs: EKAttributes.BackgroundStyle) -> Bool
+        {
             switch (lhs, rhs) {
             case let (visualEffect(style: leftStyle),
                       visualEffect(style: rightStyle)):
