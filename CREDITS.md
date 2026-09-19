@@ -1,5 +1,11 @@
 # CREDITS
 
+## Code attribution
+
+SwiftEntryKit was originally created by Daniel Huri and is distributed under
+the MIT License (see [LICENSE](LICENSE)). This repository is a
+community-maintained fork; see [NOTICE.md](NOTICE.md) for details.
+
 ## Attributions - Example Project Icons
 
 Please be aware that any use of the icons included in the project requires attribution.

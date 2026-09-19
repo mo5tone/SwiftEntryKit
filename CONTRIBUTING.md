@@ -4,6 +4,41 @@ When contributing to this repository, please first discuss the change you wish t
 
 Please note we have a code of conduct, please follow it in all your interactions with the project.
 
+## Commit Messages
+
+This project uses [Conventional Commits](https://www.conventionalcommits.org/).
+Releases are automated with [release-please](https://github.com/googleapis/release-please),
+which derives the next version and the changelog from commit messages.
+
+- `fix:` — backward-compatible bug fix (patch)
+- `feat:` — backward-compatible feature (minor)
+- `feat!:` / `fix!:` / any type with `!` — breaking change (major)
+- `chore:`, `docs:`, `test:`, `ci:`, `refactor:` — no release on their own
+
+Use squash-merge so the PR title becomes the commit on `master`.
+
+## Release Process
+
+1. Merge conventional-commit PRs into `master`.
+2. release-please opens/updates a **Release PR** that bumps the version,
+   updates `CHANGELOG.md`, `version.txt`, and `SwiftEntryKit.podspec`.
+3. Merge the Release PR — release-please then tags the commit and creates a
+   GitHub Release.
+
+`version.txt` is the version source of truth. Do not hand-edit `CHANGELOG.md`
+release sections; release-please owns them.
+
+## Contributing Back Upstream
+
+This is a community-maintained fork of
+[huri000/SwiftEntryKit](https://github.com/huri000/SwiftEntryKit). To send a
+change upstream:
+
+- Branch off the upstream `master` (the `origin` remote) and open a pull
+  request against upstream from a clean topic branch.
+- Keep release/version-bump commits on this fork's `master` only, so upstream
+  PRs stay focused on the actual change.
+
 ## Pull Request Process
 
 1. Ensure any install or build dependencies are removed before the end of the layer when doing a 

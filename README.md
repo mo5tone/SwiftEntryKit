@@ -2,11 +2,19 @@
 
 [![Platform](http://img.shields.io/badge/platform-iOS-blue.svg?style=flat)](https://developer.apple.com/iphone/index.action)
 [![Language](http://img.shields.io/badge/language-Swift-brightgreen.svg?style=flat)](https://developer.apple.com/swift)
-[![Version](https://img.shields.io/cocoapods/v/SwiftEntryKit.svg?style=flat-square)](http://cocoapods.org/pods/SwiftEntryKit)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Accio: Supported](https://img.shields.io/badge/Accio-supported-0A7CF5.svg?style=flat)](https://github.com/JamitLabs/Accio)
 [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](http://mit-license.org)
-![](https://travis-ci.com/huri000/SwiftEntryKit.svg?branch=master)
+[![CI](https://github.com/mo5tone/SwiftEntryKit/actions/workflows/ci.yml/badge.svg)](https://github.com/mo5tone/SwiftEntryKit/actions/workflows/ci.yml)
+
+> **Note:** This is a community-maintained fork of
+> [SwiftEntryKit](https://github.com/huri000/SwiftEntryKit) by Daniel Huri.
+> Original work © 2018 Daniel Huri, licensed under the MIT License.
+> Not affiliated with or endorsed by the original author. See [NOTICE.md](NOTICE.md).
+>
+> This fork continues the upstream `2.0.0` line. Its first release is `3.0.0`,
+> which raises the minimum deployment target to iOS 15. This project follows
+> [Semantic Versioning](https://semver.org/).
 
  🤗 Donations can be made [here](#donations).
 
@@ -95,11 +103,11 @@ You can either use the terminal or git client such as Source Tree.
 #### Terminal Users
 
 ```bash
-$ git clone https://github.com/huri000/SwiftEntryKit.git
+$ git clone https://github.com/mo5tone/SwiftEntryKit.git
 ```
 
 #### Git Client (Source Tree)
-Clone https://github.com/huri000/SwiftEntryKit.git 
+Clone https://github.com/mo5tone/SwiftEntryKit.git 
 
 ### Presets
 
@@ -145,11 +153,11 @@ $ gem install cocoapods
 To integrate SwiftEntryKit into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-source 'https://github.com/cocoapods/specs.git'
-platform :ios, '9.0'
+platform :ios, '15.0'
 use_frameworks!
 
-pod 'SwiftEntryKit', '2.0.0'
+# Upstream is not published to CocoaPods trunk; use the maintained fork via git.
+pod 'SwiftEntryKit', :git => 'https://github.com/mo5tone/SwiftEntryKit.git'
 ```
 
 Then, run the following command:
@@ -172,7 +180,7 @@ $ brew install carthage
 To integrate SwiftEntryKit into your Xcode project using Carthage, specify the following in your `Cartfile`:
 
 ```ogdl
-github "huri000/SwiftEntryKit" == 2.0.0
+github "mo5tone/SwiftEntryKit" ~> 3.0
 ```
 
 ### Accio
@@ -189,7 +197,7 @@ $ brew install accio
 To integrate SwiftEntryKit into your Xcode project using Accio, specify the following in your `Package.swift` manifest:
 
 ```swift
-.package(url: "https://github.com/huri000/SwiftEntryKit", .exact("2.0.0"))
+.package(url: "https://github.com/mo5tone/SwiftEntryKit", .upToNextMajor(from: "3.0.0"))
 ```
 
 After specifying `"SwiftEntryKit"` as a dependency of the target in which you want to use it, run `accio install`.
@@ -898,7 +906,8 @@ Yet, it is pretty easy to integrate SwiftEntryKit into an Objective-C project us
 
 ## Author
 
-Daniel Huri, huri000@gmail.com
+Original author: Daniel Huri, huri000@gmail.com
+Maintained since 2026 by [mo5tone](https://github.com/mo5tone).
 
 ## Donations
 

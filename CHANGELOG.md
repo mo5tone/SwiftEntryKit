@@ -1,11 +1,6 @@
 # Change Log
 Any notable changes to this project will be documented in this file.
 
-## Unreleased
-
-### Breaking
-- Raise minimum deployment target to iOS 15 and drop lower-version compatibility shims.
-
 ## 2.0.0
 
 - Embed QuickLayout's source files within SwiftEntryKit 
