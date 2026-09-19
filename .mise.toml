@@ -4,6 +4,10 @@ swiftlint = "0.65.1"
 xcbeautify = "3.2.1"
 tuist = "4.208.0"
 
+[tasks.clean]
+description = "Remove all git-ignored files and directories"
+run = "git clean -fdX"
+
 [tasks.lint]
 description = "Lint and format-check the codebase (emoji output)"
 run = "swiftlint lint --strict --reporter emoji && swiftformat --lint ."
