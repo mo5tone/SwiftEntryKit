@@ -124,10 +124,9 @@ The Playground Screen | Top Toast Sample
 
 ## Requirements
 
-- iOS 9 or any higher version.
-- Xcode 9 or any higher version.
-- Swift 4.0 or any higher version.
-- The library has not been tested with iOS 8.x.y or a lower version.
+- iOS 15 or any higher version.
+- Xcode 15 or any higher version.
+- Swift 5.9 or any higher version.
 
 ## Installation
 
@@ -853,7 +852,7 @@ Swipe | Jolt |
 ### Dealing with safe area:
 *EKAttributes.PositionConstraints.SafeArea* may be used to override the safe area with the entry's content, or to fill the safe area with a background color (like [Toasts](https://github.com/huri000/assets/blob/master/swift-entrykit/toasts.gif) do), or even leave the safe area empty (Like [Floats](https://github.com/huri000/assets/blob/master/swift-entrykit/floats.gif) do).
 
-SwiftEntryKit supports iOS 11.x.y and is backward compatible to iOS 9.x.y, so the status bar area is treated as same as the safe area in earlier iOS versions.
+SwiftEntryKit supports iOS 15.x.y and higher, so the status bar area is treated as same as the safe area.
 
 ### Dealing with orientation change:
 SwiftEntryKit identifies orientation changes and adjust the entry's layout to those changes.

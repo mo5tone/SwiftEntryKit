@@ -11,7 +11,7 @@ let project = Project(
             destinations: .iOS,
             product: .app,
             bundleId: "com.huri.SwiftEntryKitDemo",
-            deploymentTargets: .iOS("14.0"),
+            deploymentTargets: .iOS("15.0"),
             infoPlist: .file(path: "SwiftEntryKit/DemoAppInfo.plist"),
             sources: ["SwiftEntryKit/**/*.swift"],
             resources: [

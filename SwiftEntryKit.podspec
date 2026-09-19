@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.version = '2.0.0'
   s.summary = 'A simple banner and pop-up displayer for iOS. Written in Swift.'
   s.platform = :ios
-  s.ios.deployment_target = '14.0'
+  s.ios.deployment_target = '15.0'
   s.swift_version = '5.10'
   s.requires_arc = true
 

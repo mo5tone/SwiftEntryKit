@@ -64,7 +64,7 @@ Responsible for the display/dismiss/queue decision logic:
 - `displayPendingEntryOrRollbackWindow` dequeues the next entry or restores the rollback window after a dismissal completes.
 
 ### `EKWindow`
-`UIWindow` subclass. Custom `hitTest` forwards touches to the entry only when `isAbleToReceiveTouches` is set; otherwise returns the underlying entry view or `nil`, letting touches pass through to the app window. iOS 13+ patches in a `UIWindowScene` for SwiftUI host apps.
+`UIWindow` subclass. Custom `hitTest` forwards touches to the entry only when `isAbleToReceiveTouches` is set; otherwise returns the underlying entry view or `nil`, letting touches pass through to the app window. Patches in a `UIWindowScene` for SwiftUI host apps.
 
 ### `EKRootViewController`
 Hosts entries as subviews of its `view` (`EKWrapperView`). Manages:

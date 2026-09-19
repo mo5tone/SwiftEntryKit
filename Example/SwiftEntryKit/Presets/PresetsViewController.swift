@@ -46,11 +46,7 @@ class PresetsViewController: UIViewController {
             .lightContent
 
         case .light:
-            if #available(iOS 13, *) {
-                .darkContent
-            } else {
-                .default
-            }
+            .darkContent
 
         case .inferred:
             super.preferredStatusBarStyle
@@ -127,8 +123,6 @@ class PresetsViewController: UIViewController {
             for: traitCollection,
             mode: PresetsDataSource.displayMode
         )
-        // Just in case view-controller-based-status-bar-appearance is being tinkered with
-        UIApplication.shared.statusBarStyle = preferredStatusBarStyle
         setNeedsStatusBarAppearanceUpdate()
     }
 
@@ -246,7 +240,7 @@ class PresetsViewController: UIViewController {
 
     /// Bumps a status bar replacement entry
     private func showStatusBarMessage(attributes: EKAttributes) {
-        let statusBarHeight = UIApplication.shared.statusBarFrame.maxY
+        let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.maxY ?? 0
         let contentView: UIView
         let font = MainFont.light.with(size: 12)
         let labelStyle = EKProperty.LabelStyle(

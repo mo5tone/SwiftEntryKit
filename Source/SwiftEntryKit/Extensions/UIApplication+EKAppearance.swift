@@ -9,9 +9,12 @@
 import UIKit
 
 extension UIApplication {
-    /// The app's current key window across all scenes (multi-window safe replacement for the deprecated `keyWindow`).
+    /// The app's current key window across all scenes.
     var ekKeyWindow: UIWindow? {
-        windows.first { $0.isKeyWindow }
+        connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap(\.windows)
+            .first { $0.isKeyWindow }
     }
 
     /// The active `UIWindowScene` — the key window's scene, falling back to the first foreground scene.
