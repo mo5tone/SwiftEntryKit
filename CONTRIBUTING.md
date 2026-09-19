@@ -15,7 +15,9 @@ which derives the next version and the changelog from commit messages.
 - `feat!:` / `fix!:` / any type with `!` — breaking change (major)
 - `chore:`, `docs:`, `test:`, `ci:`, `refactor:` — no release on their own
 
-Use squash-merge so the PR title becomes the commit on `master`.
+Use squash-merge so the PR title becomes the commit on `master`. PR titles
+are validated in CI by the `PR Title` check, so a non-conventional title cannot
+be merged.
 
 ## Release Process
 
