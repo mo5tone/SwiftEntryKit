@@ -1,6 +1,23 @@
 # Change Log
 Any notable changes to this project will be documented in this file.
 
+## [3.0.0](https://github.com/mo5tone/SwiftEntryKit/compare/2.0.0...3.0.0) (2026-09-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* require iOS 15 and drop lower-version compatibility
+
+### Features
+
+* require iOS 15 and drop lower-version compatibility ([a876aeb](https://github.com/mo5tone/SwiftEntryKit/commit/a876aeb634107263f69ce4dd7c3e7801aba9e0ec))
+
+
+### Bug Fixes
+
+* adopt UIWindowScene APIs for multi-window support ([36ab6f5](https://github.com/mo5tone/SwiftEntryKit/commit/36ab6f5b252a8d645b596f55c44b28d64f2c7830))
+* import sys in the coverage report task ([46779cb](https://github.com/mo5tone/SwiftEntryKit/commit/46779cbe98ca0903ea94fc52fa41cd8275427238))
+
 ## 2.0.0
 
 - Embed QuickLayout's source files within SwiftEntryKit 

@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name = 'SwiftEntryKit'
-  s.version = '2.0.0' # x-release-please-version
+  s.version = '3.0.0' # x-release-please-version
   s.summary = 'A simple banner and pop-up displayer for iOS. Written in Swift.'
   s.platform = :ios
   s.ios.deployment_target = '15.0'
