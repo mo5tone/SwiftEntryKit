@@ -1,6 +1,13 @@
 # Change Log
 Any notable changes to this project will be documented in this file.
 
+## [3.0.1](https://github.com/mo5tone/SwiftEntryKit/compare/3.0.0...3.0.1) (2026-10-01)
+
+
+### Bug Fixes
+
+* attach entry window to an available scene ([#3](https://github.com/mo5tone/SwiftEntryKit/issues/3)) ([4cb468c](https://github.com/mo5tone/SwiftEntryKit/commit/4cb468cd86cfdd958c78bcb8133f1c1c79b50b08))
+
 ## [3.0.0](https://github.com/mo5tone/SwiftEntryKit/compare/2.0.0...3.0.0) (2026-09-19)
 
 
