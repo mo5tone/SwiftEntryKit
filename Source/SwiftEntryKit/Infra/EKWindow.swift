@@ -11,8 +11,14 @@ import UIKit
 class EKWindow: UIWindow {
     var isAbleToReceiveTouches = false
 
+    /// Attaches the window to the best available scene.
+    ///
+    /// A `UIWindow` created with `init(frame:)` has a `nil` `windowScene` and is never displayed.
+    /// `EKWindowProvider` only builds the entry window once `ekCanHostEntryWindow` is `true`, so a
+    /// scene exists here in every scene-based app. The `init(frame:)` branch is for legacy apps —
+    /// note that it is deprecated in favour of `init(windowScene:)` as of iOS 26.
     init(with rootVC: UIViewController) {
-        if let scene = UIApplication.shared.ekActiveScene {
+        if let scene = UIApplication.shared.ekEntryScene {
             super.init(windowScene: scene)
         } else {
             super.init(frame: UIScreen.main.bounds)

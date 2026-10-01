@@ -224,4 +224,44 @@ struct WindowProviderAndPublicAPITests {
         #expect(!SwiftEntryKit.isCurrentlyDisplaying)
         #expect(SwiftEntryKit.isQueueEmpty)
     }
+
+    // MARK: - Scene availability
+
+    /// A window with a `nil` `windowScene` never appears on screen, so an entry window must always
+    /// end up attached to one — either explicitly, or through UIKit's `_UIScreenBasedWindowScene`
+    /// fallback for apps that don't adopt scenes.
+    @Test func entryWindowAlwaysEndsUpAttachedToAScene() {
+        #expect(EKWindow(with: UIViewController()).windowScene != nil)
+    }
+
+    /// When a scene is resolvable the entry window must use exactly that scene, rather than
+    /// leaving UIKit to pick one.
+    @Test func entryWindowUsesTheResolvedSceneWhenOneIsAvailable() {
+        guard let resolved = UIApplication.shared.ekEntryScene else {
+            return
+        }
+        #expect(EKWindow(with: UIViewController()).windowScene === resolved)
+    }
+
+    /// A host that doesn't adopt scenes has no `UIWindowScene`s to wait for, so it must never be
+    /// made to wait for one — otherwise legacy apps would defer their entries forever. The test
+    /// host is `xctest.tool`, which declares no scene manifest.
+    @Test func hostsWithoutASceneManifestAreAlwaysAbleToHostEntries() {
+        #expect(!UIApplication.shared.ekUsesScenes)
+        #expect(UIApplication.shared.ekEntryScene == nil)
+        #expect(UIApplication.shared.ekCanHostEntryWindow)
+    }
+
+    /// Displaying in a host that can already show windows must not be deferred behind a scene
+    /// activation that will never arrive.
+    @Test func displayIsNotDeferredWhenAHostWindowIsAvailable() async {
+        await TestSupport.resetEntryKit()
+        #expect(UIApplication.shared.ekCanHostEntryWindow)
+
+        await display("notDeferred")
+        #expect(SwiftEntryKit.window != nil)
+        #expect(SwiftEntryKit.isCurrentlyDisplaying(entryNamed: "notDeferred"))
+
+        await TestSupport.resetEntryKit()
+    }
 }
