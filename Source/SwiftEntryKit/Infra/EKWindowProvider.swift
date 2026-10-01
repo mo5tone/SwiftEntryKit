@@ -37,6 +37,12 @@ final class EKWindowProvider: EntryPresenterDelegate {
 
     private weak var entryView: EKEntryView!
 
+    /** Display requests that arrived before a scene was available to host the entry window */
+    private var deferredDisplays: [() -> Void] = []
+
+    /** `true` while waiting for a scene to activate on behalf of `deferredDisplays` */
+    private var isObservingSceneActivation = false
+
     /** Cannot be instantiated, customized, inherited */
     private init() {}
 
@@ -86,6 +92,21 @@ final class EKWindowProvider: EntryPresenterDelegate {
      Privately used to display an entry
      */
     private func display(entryView: EKEntryView, using _: EKAttributes, presentInsideKeyWindow: Bool, rollbackWindow: SwiftEntryKit.RollbackWindow) {
+        // A scene-less `UIWindow` is never displayed, so a scene-based app can only build its
+        // entry window once a scene exists. Scene activation is the earliest moment that is
+        // guaranteed, so park the request and replay it then.
+        guard UIApplication.shared.ekCanHostEntryWindow else {
+            deferDisplayUntilSceneIsAvailable { [weak self] in
+                self?.display(
+                    entryView: entryView,
+                    using: entryView.attributes,
+                    presentInsideKeyWindow: presentInsideKeyWindow,
+                    rollbackWindow: rollbackWindow
+                )
+            }
+            return
+        }
+
         switch entryView.attributes.precedence {
         case .override(priority: _, dropEnqueuedEntries: let dropEnqueuedEntries):
             if dropEnqueuedEntries {
@@ -99,6 +120,47 @@ final class EKWindowProvider: EntryPresenterDelegate {
         case .enqueue:
             show(entryView: entryView, presentInsideKeyWindow: presentInsideKeyWindow, rollbackWindow: rollbackWindow)
         }
+    }
+
+    // MARK: - Scene availability
+
+    /// Parks a display request until a scene activates, then replays it.
+    private func deferDisplayUntilSceneIsAvailable(_ work: @escaping () -> Void) {
+        deferredDisplays.append(work)
+        guard !isObservingSceneActivation else {
+            return
+        }
+        isObservingSceneActivation = true
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(sceneDidActivate(_:)),
+            name: UIScene.didActivateNotification,
+            object: nil
+        )
+    }
+
+    @objc private func sceneDidActivate(_: Notification) {
+        guard UIApplication.shared.ekCanHostEntryWindow, !deferredDisplays.isEmpty else {
+            return
+        }
+        stopObservingSceneActivation()
+        let displays = deferredDisplays
+        deferredDisplays.removeAll()
+        displays.forEach { $0() }
+    }
+
+    /// Drops display requests that were waiting for a scene, and stops observing for one.
+    private func discardDeferredDisplays() {
+        deferredDisplays.removeAll()
+        stopObservingSceneActivation()
+    }
+
+    private func stopObservingSceneActivation() {
+        guard isObservingSceneActivation else {
+            return
+        }
+        isObservingSceneActivation = false
+        NotificationCenter.default.removeObserver(self, name: UIScene.didActivateNotification, object: nil)
     }
 
     // MARK: - Exposed Actions
@@ -183,6 +245,15 @@ final class EKWindowProvider: EntryPresenterDelegate {
 
     /** Dismiss entries according to a given descriptor */
     func dismiss(_ descriptor: SwiftEntryKit.EntryDismissalDescriptor, with completion: SwiftEntryKit.DismissCompletionHandler? = nil) {
+        switch descriptor {
+        case .all, .enqueued:
+            // Requests still waiting for a scene aren't displayed yet, but these descriptors mean
+            // "clear everything pending" — so drop them before the early return below.
+            discardDeferredDisplays()
+        default:
+            break
+        }
+
         guard let rootVC else {
             return
         }
